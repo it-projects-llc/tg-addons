@@ -5,9 +5,9 @@
     "name": """Passport Portal Editing""",
     "summary": """Allows portal users change passport information in portal""",
     "category": "Marketing",
-    # "live_test_url": "http://apps.it-projects.info/shop/product/portal-event-tickets?version=10.0",
+    # "live_test_url": "http://apps.it-projects.info/shop/product/portal-event-tickets?version=12.0",
     "images": ["images/banner.jpg"],
-    "version": "10.0.1.0.2",
+    "version": "12.0.1.0.2",
     "application": False,
 
     "author": "IT-Projects LLC, Kolushov Alexandr",
@@ -19,7 +19,7 @@
 
     "depends": [
         "website_event_attendee_fields_custom",
-        "website_portal",
+        "portal",
     ],
     "external_dependencies": {"python": [], "bin": []},
     "data": [
