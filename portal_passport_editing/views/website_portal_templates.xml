@@ -3,7 +3,7 @@
     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html). -->
 <odoo>
 
-    <template id="details_passport" inherit_id="website_portal.details">
+    <template id="details_passport" inherit_id="portal.portal_my_details">
         <xpath expr="//select[@name='state_id']/.." position="after">
             <br />
             <div t-attf-class="form-group col-lg-12">
