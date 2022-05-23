@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--Copyright 2019 Kolushov Alexandr <https://it-projects.info/team/KolushovAlexandr>
+    Copyright 2019 Artem Rafailov <https://it-projects.info/team/Ommo73>
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html). -->
+<odoo>
+
+    <record id="view_partner_form_vat" model="ir.ui.view">
+        <field name="name">res.partner.form.vat</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base_vat.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']/.." position="inside">
+                <td class="o_td_label oe_inline">
+                    <label for="ruc_vat_panama" />
+                </td>
+                <div name="ruc_vat_panama" class="o_row">
+                    <field name="ruc_vat_panama" />
+                </div>
+                <td class="o_td_label oe_inline">
+                    <label for="dv_vat_panama" />
+                </td>
+                <div name="dv_vat_panama" class="o_row">
+                    <field name="dv_vat_panama" style="width: 100%" />
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
