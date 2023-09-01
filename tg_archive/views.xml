@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="invoice_supplier_form" model="ir.ui.view">
+        <field name="name">account.invoice.supplier.form.tg.archive</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="before">
+                <field name="attachment_archive_url" widget="url" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="invoice_form" model="ir.ui.view">
+        <field name="name">account.invoice.form.tc.archive</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_invoice']" position="before">
+                <field name="attachment_archive_url" widget="url" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sale_receipt_form" model="ir.ui.view">
+        <field name="name">account.voucher.sale.form.tg.archive</field>
+        <field name="model">account.voucher</field>
+        <field name="inherit_id" ref="account_voucher.view_sale_receipt_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='journal_id']" position="before">
+                <field name="attachment_archive_url" widget="url" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_purchase_receipt_form" model="ir.ui.view">
+        <field name="name">account.voucher.purchase.form.tg.archive</field>
+        <field name="model">account.voucher</field>
+        <field name="inherit_id" ref="account_voucher.view_purchase_receipt_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='journal_id']" position="before">
+                <field name="attachment_archive_url" widget="url" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
