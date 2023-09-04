@@ -2,6 +2,11 @@
 # pylint: disable=logging-not-lazy
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-module-docstring
+
+
+# WARNING
+# This script is for 10.0 only
+
 import os
 import logging
 import google.auth
