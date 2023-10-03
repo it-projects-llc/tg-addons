@@ -8,4 +8,4 @@ class WebsiteEventSaleExtendController(WebsiteEventSaleController):
         order = request.website.sale_get_order(force_create=False)
         if order:
             order.sudo().unlink()
-        return super(WebsiteEventSaleController, self).registration_confirm(*args, **post)
+        return super(WebsiteEventSaleExtendController, self).registration_confirm(*args, **post)
