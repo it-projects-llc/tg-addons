@@ -3,6 +3,7 @@
     <template id="assets" inherit_id="point_of_sale.assets">
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/tg_pos/static/src/js/Screens/PaymentScreen/PaymentScreen.js"></script>
+            <script type="text/javascript" src="/tg_pos/static/src/js/models.js"></script>
         </xpath>
     </template>
 </odoo>

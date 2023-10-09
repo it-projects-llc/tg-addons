@@ -4,6 +4,8 @@
 
 * Allows to scan customer in payment screen (feature was implemented in point_of_sale module from 10.0)
 
+* Added user group "Point of Sale - Show customer button"
+
 Credits
 =======
 

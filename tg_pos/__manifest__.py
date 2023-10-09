@@ -10,11 +10,13 @@
     ],
     "external_dependencies": {"python": [], "bin": []},
     "data": [
+        "security/point_of_sale_security.xml",
         'views/assets.xml',
     ],
     "demo": [
     ],
     "qweb": [
+        "static/src/xml/Screens/ProductScreen/ActionpadWidget.xml",
     ],
 
     "post_load": None,
