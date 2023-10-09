@@ -30,6 +30,14 @@ odoo.define("tg_pos.PaymentScreen", function (require) {
         _barcodeErrorAction(code) {
             this.showPopup('ErrorBarcodePopup', { code: this._codeRepr(code) });
         }
+
+        _codeRepr(code) {
+            if (code.code.length > 32) {
+                return code.code.substring(0, 29) + '...';
+            } else {
+                return code.code;
+            }
+        }
     };
 
     Registries.Component.extend(PaymentScreen, TGPaymentScreen);
