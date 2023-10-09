@@ -16,6 +16,7 @@
     "demo": [
     ],
     "qweb": [
+        "static/src/xml/Screens/PaymentScreen/PaymentScreen.xml",
         "static/src/xml/Screens/ProductScreen/ActionpadWidget.xml",
     ],
 
