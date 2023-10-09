@@ -2,6 +2,7 @@
 <odoo>
     <template id="assets" inherit_id="point_of_sale.assets">
         <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/tg_pos/static/src/css/pos.css" />
             <script type="text/javascript" src="/tg_pos/static/src/js/Screens/PaymentScreen/PaymentScreen.js"></script>
             <script type="text/javascript" src="/tg_pos/static/src/js/models.js"></script>
         </xpath>
