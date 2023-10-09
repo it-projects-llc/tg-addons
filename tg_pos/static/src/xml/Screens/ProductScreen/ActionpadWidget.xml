@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="ActionpadWidget" t-inherit="point_of_sale.ActionpadWidget" t-inherit-mode="extension" owl="1">
+        <xpath expr="//button[hasclass('set-customer')]" position="attributes">
+            <attribute name="t-if">env.pos.get_cashier().hasGroupShowCustomerButton</attribute>
+        </xpath>
+        <xpath expr="//button[hasclass('set-customer')]" position="after">
+            <button class="button set-customer" t-if="!env.pos.get_cashier().hasGroupShowCustomerButton">(disabled)</button>
+        </xpath>
+    </t>
+</templates>
