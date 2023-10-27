@@ -4,6 +4,8 @@
 
 * Allows to set country as archived
 
+* Allows accountant without admin previledges to merge contacts with existing journal entries
+
 Credits
 =======
 
