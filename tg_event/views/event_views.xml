@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="event_view_form" model="ir.ui.view">
+        <field name="name">event.event.form.tg</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='auto_confirm']" position="after">
+                <field name="subscribe_in_registrations" widget="many2many_tags" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
