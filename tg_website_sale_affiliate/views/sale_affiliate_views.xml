@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="sale_affiliate_view_form" model="ir.ui.view">
+        <field name="name">sale.affiliate.form.tg</field>
+        <field name="model">sale.affiliate</field>
+        <field name="inherit_id" ref="website_sale_affiliate.sale_affiliate_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="referal_link" widget="url" />
+                <field name="pricelist_id" />
+                <field name="order_count" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
