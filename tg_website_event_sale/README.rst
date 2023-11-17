@@ -4,6 +4,8 @@
 
 * Resets cart, when user registers in event in frontend
 
+* Makes event pages urls compatible for ``website_sale_affiliate`` features
+
 Credits
 =======
 
