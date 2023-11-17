@@ -7,6 +7,7 @@
     "license": "LGPL-3",
     "depends": [
         "website_event_sale",
+        "website_sale_affiliate",
     ],
     "data": [],
     "demo": [],
