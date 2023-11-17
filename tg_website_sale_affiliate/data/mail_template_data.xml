@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <record id="send_invitation_mail_template" model="mail.template">
+        <field name="name">Affiliate: send invitation</field>
+        <field name="model_id" ref="website_sale_affiliate.model_sale_affiliate" />
+        <field name="subject">Affiliate Invitation</field>
+        <field
+            name="email_from"
+        >"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
+        <field name="email_to">${object.partner_id.email_formatted | safe}</field>
+        <field name="lang">${object.partner_id.lang}</field>
+        <field name="body_html" type="html">
+            <p>Hello, ${object.name}! Your affiliate link: <a
+                    href="${object.referal_link}"
+                >${object.referal_link}</a></p>
+        </field>
+    </record>
+</odoo>

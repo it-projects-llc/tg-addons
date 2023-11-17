@@ -1,0 +1,1 @@
+git+https://github.com/em230418/e-commerce@14.0-mig-website_sale_affiliate#subdirectory=setup/website_sale_affiliate
