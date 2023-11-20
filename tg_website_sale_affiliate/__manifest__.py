@@ -7,6 +7,7 @@
     "license": "LGPL-3",
     "depends": [
         "website_sale_affiliate",
+        "sale_coupon",
     ],
     "data": [
         "views/res_partner_views.xml",

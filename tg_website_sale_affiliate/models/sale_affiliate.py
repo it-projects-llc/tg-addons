@@ -7,7 +7,12 @@ class SaleAffiliate(models.Model):
     _inherit = "sale.affiliate"
 
     partner_id = fields.Many2one("res.partner")
-    pricelist_id = fields.Many2one("product.pricelist")
+    code_promo_program_id = fields.Many2one(
+        'coupon.program',
+        string="Promo Program",
+        domain="[('promo_code_usage', '=', 'code_needed'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+        copy=False,
+    )
     order_count = fields.Integer(compute="_compute_order_count")
     referal_link = fields.Char(compute="_compute_referal_link")
 

@@ -6,7 +6,7 @@
 
 * Adds following fields to affiliate model
 
-  * (NOT WORKING) Pricelist, which will used when visiting via affiliated link (
+  * Promotion program, which will used when creating sale order via affiliate
 
 Credits
 =======

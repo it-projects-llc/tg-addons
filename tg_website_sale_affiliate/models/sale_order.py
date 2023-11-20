@@ -6,7 +6,8 @@ class SaleOrder(models.Model):
 
     @api.model
     def create(self, vals):
-        res = super(SaleOrder, self).create(vals)
-#        AffiliateRequest = self.env["sale.affiliate.request"]
-#        res.affiliate_request_id = AffiliateRequest.current_qualified()
-        return res
+        record = super(SaleOrder, self).create(vals)
+        # TODO: не применяется
+        record.code_promo_program_id = record.affiliate_request_id.affiliate_id.code_promo_program_id
+        record.recompute_coupon_lines()
+        return record

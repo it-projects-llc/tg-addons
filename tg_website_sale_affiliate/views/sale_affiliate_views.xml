@@ -10,7 +10,7 @@
             </xpath>
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="referal_link" widget="url" />
-                <field name="pricelist_id" />
+                <field name="code_promo_program_id" />
                 <field name="order_count" />
             </xpath>
         </field>
