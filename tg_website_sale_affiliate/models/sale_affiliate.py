@@ -16,19 +16,33 @@ class SaleAffiliate(models.Model):
     order_count = fields.Integer(compute="_compute_order_count")
     referal_link = fields.Char(compute="_compute_referal_link")
 
-    def _compute_order_count(self):
+    def _get_order_dict(self):
         self.env.cr.execute("""
-SELECT sar.affiliate_id, COUNT(so.id)
+SELECT sar.affiliate_id, array_agg(so.id)
 FROM sale_affiliate_request sar
 LEFT JOIN sale_order so ON so.affiliate_request_id = sar.id
 WHERE sar.affiliate_id IN %s
 GROUP BY sar.affiliate_id
         """, [tuple(self.ids)])
 
-        r = dict((row[0], row[1]) for row in self.env.cr.fetchall())
+        return dict((row[0], row[1]) for row in self.env.cr.fetchall())
+
+    def _compute_order_count(self):
+        r = self._get_order_dict()
+
         for record in self:
-            record.order_count = r.get(record.id, 0)
+            record.order_count = len(r.get(record.id, []))
 
     def _compute_referal_link(self):
         for record in self:
             record.referal_link = urljoin(record.get_base_url(), f"/events?aff_ref={record.id}")
+
+    def action_show_orders(self):
+        order_dict = self._get_order_dict()
+        action = self.env["ir.actions.actions"]._for_xml_id("sale.action_quotations")
+        action['domain'] = [('id', 'in', order_dict.get(self.id) or [])]
+        action['context'] = {
+            'create': False,
+            'edit': False,
+        }
+        return action

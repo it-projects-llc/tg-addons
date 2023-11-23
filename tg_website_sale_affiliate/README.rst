@@ -2,9 +2,13 @@
  Affiliate Program customizations for Tribal Gathering
 =======================================================
 
-* Partner field in affiliate form is mandatory
+* In affiliate form:
 
-* Adds following fields to affiliate model
+  * partner field in affiliate form is mandatory
+
+  * added smartbutton to show orders
+
+* In affiliate model
 
   * Promotion program, which will used when creating sale order via affiliate
 
