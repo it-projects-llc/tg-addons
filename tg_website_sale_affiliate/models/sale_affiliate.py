@@ -4,7 +4,11 @@ from urllib.parse import urljoin
 
 
 class SaleAffiliate(models.Model):
-    _inherit = "sale.affiliate"
+    _inherit = ["sale.affiliate", "mail.thread"]
+    _name = "sale.affiliate"
+
+    valid_hours = fields.Integer(default=-1)
+    valid_sales = fields.Integer(default=-1)
 
     partner_id = fields.Many2one("res.partner")
     code_promo_program_id = fields.Many2one(
@@ -46,3 +50,18 @@ GROUP BY sar.affiliate_id
             'edit': False,
         }
         return action
+
+    def _subscribe_partner(self):
+        for record in self:
+            record.message_subscribe(partner_ids=record.partner_id.ids)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super(SaleAffiliate, self).create(vals_list)
+        records._subscribe_partner()
+        return records
+
+    def write(self, vals):
+        res = super(SaleAffiliate, self).write(vals)
+        self._subscribe_partner()
+        return res

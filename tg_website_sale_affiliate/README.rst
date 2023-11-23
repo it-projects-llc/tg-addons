@@ -12,6 +12,8 @@
 
   * Promotion program, which will used when creating sale order via affiliate
 
+  * "Valid hours" and "Valid sales" settings are set to -1 (infinity)
+
 Credits
 =======
 

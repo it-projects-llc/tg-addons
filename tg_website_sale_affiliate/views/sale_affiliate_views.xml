@@ -21,6 +21,12 @@
                 <field name="referal_link" widget="url" />
                 <field name="code_promo_program_id" />
             </xpath>
+            <xpath expr="//sheet" position="after">
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </xpath>
         </field>
     </record>
 </odoo>
