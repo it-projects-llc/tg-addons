@@ -1,4 +1,5 @@
-from odoo.http import route, request
+from odoo.http import request, route
+
 from odoo.addons.website_event_sale.controllers.main import WebsiteEventSaleController
 from odoo.addons.website_sale_affiliate.controllers.main import WebsiteSale
 
@@ -11,7 +12,9 @@ class WebsiteEventSaleExtendController(WebsiteEventSaleController):
         order = request.website.sale_get_order(force_create=False)
         if order:
             order.sudo().unlink()
-        return super(WebsiteEventSaleExtendController, self).registration_confirm(*args, **post)
+        return super(WebsiteEventSaleExtendController, self).registration_confirm(
+            *args, **post
+        )
 
     @route()
     def events(self, *args, **kw):
