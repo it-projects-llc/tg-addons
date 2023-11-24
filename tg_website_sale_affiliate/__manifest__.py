@@ -10,6 +10,7 @@
         "sale_coupon",
     ],
     "data": [
+        "data/mail_template_data.xml",
         "views/res_partner_views.xml",
         "views/sale_affiliate_views.xml",
     ],
