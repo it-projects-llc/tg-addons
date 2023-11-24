@@ -1,6 +1,6 @@
-from odoo import api, fields, models
-from odoo.tools import defaultdict
 from urllib.parse import urljoin
+
+from odoo import api, fields, models
 
 
 class SaleAffiliate(models.Model):
@@ -12,24 +12,27 @@ class SaleAffiliate(models.Model):
 
     partner_id = fields.Many2one("res.partner")
     code_promo_program_id = fields.Many2one(
-        'coupon.program',
+        "coupon.program",
         string="Promo Program",
-        domain="[('promo_code_usage', '=', 'code_needed'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+        domain="[('promo_code_usage', '=', 'code_needed'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",  # noqa: E950
         copy=False,
     )
     order_count = fields.Integer(compute="_compute_order_count")
     referal_link = fields.Char(compute="_compute_referal_link")
 
     def _get_order_dict(self):
-        self.env.cr.execute("""
+        self.env.cr.execute(
+            """
 SELECT sar.affiliate_id, array_agg(so.id)
 FROM sale_affiliate_request sar
 LEFT JOIN sale_order so ON so.affiliate_request_id = sar.id
 WHERE sar.affiliate_id IN %s
 GROUP BY sar.affiliate_id
-        """, [tuple(self.ids)])
+        """,
+            [tuple(self.ids)],
+        )
 
-        return dict((row[0], row[1]) for row in self.env.cr.fetchall())
+        return {row[0]: row[1] for row in self.env.cr.fetchall()}
 
     def _compute_order_count(self):
         r = self._get_order_dict()
@@ -39,15 +42,17 @@ GROUP BY sar.affiliate_id
 
     def _compute_referal_link(self):
         for record in self:
-            record.referal_link = urljoin(record.get_base_url(), f"/events?aff_ref={record.id}")
+            record.referal_link = urljoin(
+                record.get_base_url(), f"/events?aff_ref={record.id}"
+            )
 
     def action_show_orders(self):
         order_dict = self._get_order_dict()
         action = self.env["ir.actions.actions"]._for_xml_id("sale.action_quotations")
-        action['domain'] = [('id', 'in', order_dict.get(self.id) or [])]
-        action['context'] = {
-            'create': False,
-            'edit': False,
+        action["domain"] = [("id", "in", order_dict.get(self.id) or [])]
+        action["context"] = {
+            "create": False,
+            "edit": False,
         }
         return action
 
@@ -56,7 +61,9 @@ GROUP BY sar.affiliate_id
             record.message_subscribe(partner_ids=record.partner_id.ids)
 
     def _send_invitation(self):
-        template = self.env.ref("tg_website_sale_affiliate.send_invitation_mail_template")
+        template = self.env.ref(
+            "tg_website_sale_affiliate.send_invitation_mail_template"
+        )
         template.send_mail(self.id, force_send=True, raise_exception=True)
 
     @api.model_create_multi

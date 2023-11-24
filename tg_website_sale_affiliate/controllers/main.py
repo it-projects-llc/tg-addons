@@ -1,4 +1,4 @@
-from odoo.http import request, route
+from odoo.http import request
 
 from odoo.addons.website_sale_affiliate.controllers.main import WebsiteSale as Base
 
@@ -10,7 +10,9 @@ class WebsiteSale(Base):
         if not aff_request_id:
             return
 
-        aff_request = request.env.user.sudo().env["sale.affiliate.request"].browse(aff_request_id)
+        aff_request = (
+            request.env.user.sudo().env["sale.affiliate.request"].browse(aff_request_id)
+        )
         affiliate = aff_request.affiliate_id
         pricelist = affiliate.pricelist_id
 

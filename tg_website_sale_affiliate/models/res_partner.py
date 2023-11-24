@@ -9,12 +9,11 @@ class Partner(models.Model):
 
     def action_show_affiliates(self):
         affiliates = self.mapped("affiliates")
-        action = self.env["ir.actions.actions"]._for_xml_id("website_sale_affiliate.sale_affiliate_action")
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "website_sale_affiliate.sale_affiliate_action"
+        )
         if len(affiliates) == 1:
-            action.update(
-                views=[(False, "form")],
-                res_id = affiliates.id
-            )
+            action.update(views=[(False, "form")], res_id=affiliates.id)
         else:
             action["domain"] = [("id", "in", affiliates.ids)]
 
