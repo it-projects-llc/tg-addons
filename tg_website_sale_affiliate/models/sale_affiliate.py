@@ -55,6 +55,10 @@ GROUP BY sar.affiliate_id
         for record in self:
             record.message_subscribe(partner_ids=record.partner_id.ids)
 
+    def _send_invitation(self):
+        template = self.env.ref("tg_website_sale_affiliate.send_invitation_mail_template")
+        template.send_mail(self.id, force_send=True, raise_exception=True)
+
     @api.model_create_multi
     def create(self, vals_list):
         records = super(SaleAffiliate, self).create(vals_list)
