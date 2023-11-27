@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="portal_my_orders"
+        inherit_id="sale.portal_my_orders"
+        primary="True"
+        priority="100"
+    >
+        <xpath expr="//a[@t-att-href='order.get_portal_url()']" position="replace">
+            <t t-esc="order.name" />
+        </xpath>
+        <xpath expr="//span[@t-field='order.amount_total']" position="attributes">
+            <attribute name="t-field">order.amount_total_with_agents</attribute>
+        </xpath>
+    </template>
+</odoo>
