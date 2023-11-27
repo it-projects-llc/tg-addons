@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="partner_view_form" model="ir.ui.view">
+        <field name="name">res.partner.form.agent.tg</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="sale_commission.view_partner_form_agent" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='agent_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath
+                expr="//page[@name='sales_purchases']//field[@name='agent']"
+                position="attributes"
+            >
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='agent_information']" position="attributes">
+                <attribute name="attrs" />
+            </xpath>
+            <xpath expr="//page[@name='agent_information']/group" position="before">
+                <group>
+                    <field name="agent" />
+                </group>
+            </xpath>
+            <xpath
+                expr="//page[@name='agent_information']/group[2]"
+                position="attributes"
+            >
+                <attribute
+                    name="attrs"
+                >{'invisible': [('agent', '=', False)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
