@@ -8,11 +8,15 @@
 
   * added smartbutton to show orders
 
+  * added smartbutton to show invoices
+
 * In affiliate model
 
   * Promotion program, which will used when creating sale order via affiliate
 
   * "Valid hours" and "Valid sales" settings are set to -1 (infinity)
+
+  * added possibility to disable affiliate by archiving it
 
 Credits
 =======

@@ -14,6 +14,9 @@ class WebsiteSale(Base):
             request.env.user.sudo().env["sale.affiliate.request"].browse(aff_request_id)
         )
         affiliate = aff_request.affiliate_id
+        if not affiliate.active:
+            return
+
         pricelist = affiliate.pricelist_id
 
         if not pricelist:
