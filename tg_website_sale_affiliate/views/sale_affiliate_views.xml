@@ -36,6 +36,7 @@
             </xpath>
             <xpath expr="//field[@name='partner_id']" position="attributes">
                 <attribute name="required">1</attribute>
+                <attribute name="options">{'no_create': True}</attribute>
             </xpath>
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="referal_link" widget="url" />
