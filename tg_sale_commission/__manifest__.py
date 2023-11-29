@@ -9,13 +9,7 @@
         "sale_commission",
         "tg_website_sale_affiliate",
     ],
-    "external_dependencies": {
-        "python": [
-            "git+https://github.com/em230418/e-commerce@14.0-mig-website_sale_affiliate#subdirectory=setup/website_sale_affiliate"  # noqa: B950
-        ]
-    },
     "data": [
-        "views/sale_affiliate_view.xml",
         "views/res_partner_views.xml",
     ],
     "demo": [],

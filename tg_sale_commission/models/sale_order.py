@@ -11,6 +11,7 @@ class SaleOrderLine(models.Model):
             lambda x: x.order_id.affiliate_request_id
         )
         for line in affiliated_order_lines:
-            agent = line.order_id.affiliate_request_id.affiliate_id.partner
+            agent = line.order_id.affiliate_request_id.affiliate_id.partner_id
             if not line.commission_free:
                 line.agent_ids = [(0, 0, self._prepare_agent_vals(agent))]
+        print(self, self.mapped("agent_ids"))
