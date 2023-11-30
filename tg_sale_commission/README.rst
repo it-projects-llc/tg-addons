@@ -10,7 +10,7 @@
 
 * In sale order agent is calculated from affiliate request
 
-* Added company-dependent config to disable making settlements
+* In company model added field "Commission settlement company" and logic with this field
 
 Credits
 =======

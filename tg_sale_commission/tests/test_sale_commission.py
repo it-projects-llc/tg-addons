@@ -40,7 +40,6 @@ class TestSaleCommission(Base):
                     "company_id": cls.company.id,
                 }
             )
-        cls.company.commission_settlement_company = cls.company2
 
     def _create_sale_order(self, agent, commission):
         agent.commission_id = commission
@@ -78,6 +77,29 @@ class TestSaleCommission(Base):
         )
 
         return sale_order
+
+    def test_biweekly_other_company(self):
+        self.company.commission_settlement_company = self.company2
+        agent = self.agent_biweekly
+        commission = self.commission_net_invoice
+        sale_order = self._create_sale_order(agent, commission)
+        sale_order.action_confirm()
+        invoice = self._invoice_sale_order(sale_order, date="2022-01-01")
+        invoice.action_post()
+        sale_order2 = self._create_sale_order(agent, commission)
+        sale_order2.action_confirm()
+        invoice2 = self._invoice_sale_order(sale_order2, date="2022-01-16")
+        invoice2.action_post()
+        sale_order3 = self._create_sale_order(agent, commission)
+        sale_order3.action_confirm()
+        invoice3 = self._invoice_sale_order(sale_order3, date="2022-01-31")
+        invoice3.action_post()
+        self._settle_agent(agent=self.agent_biweekly, date="2022-02-01")
+        settlements = self.settle_model.search(
+            [("agent_id", "=", self.agent_biweekly.id)]
+        )
+        self.assertEqual(len(settlements), 2)
+        self.assertEqual(settlements.mapped("company_id"), self.company2)
 
     def test_commission_propagation(self):
         # propagation feature is disabled
