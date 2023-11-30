@@ -2,8 +2,12 @@ from odoo.addons.sale_commission.tests.test_sale_commission import (
     TestSaleCommission as Base,
 )
 
+Base.__unittest_skip__ = True  # do not run tests of original sale_commission
+
 
 class TestSaleCommission(Base):
+    __unittest_skip__ = False
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -36,20 +40,33 @@ class TestSaleCommission(Base):
                     "company_id": cls.company.id,
                 }
             )
-        # cls.company.commission_settlement_company = cls.company2
+        cls.company.commission_settlement_company = cls.company2
 
     def _create_sale_order(self, agent, commission):
-        # не используй родительский. Сразу создавай как надо
-        # TODO:
-        if (agent, commission) == (self.agent_semi, self.commission_section_invoice):
-            import wdb
-
-            wdb.set_trace()
-        record = super(TestSaleCommission, self)._create_sale_order(agent, commission)
-        affiliate = self.env["sale.affiliate"].search([("partner_id", "=", agent.id)])
         agent.commission_id = commission
+
+        affiliate = self.env["sale.affiliate"].search([("partner_id", "=", agent.id)])
         self.assertTrue(affiliate)
-        record.affiliate_request_id = self.env["sale.affiliate.request"].create(
+
+        sale_order = self.sale_order_model.create(
+            {
+                "partner_id": self.partner.id,
+                "order_line": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": self.product.name,
+                            "product_id": self.product.id,
+                            "product_uom_qty": 1.0,
+                            "product_uom": self.ref("uom.product_uom_unit"),
+                            "price_unit": self.product.lst_price,
+                        },
+                    )
+                ],
+            }
+        )
+        sale_order.affiliate_request_id = self.env["sale.affiliate.request"].create(
             {
                 "name": "test",
                 "affiliate_id": affiliate.id,
@@ -59,7 +76,8 @@ class TestSaleCommission(Base):
                 "accept_language": "",
             }
         )
-        return record
+
+        return sale_order
 
     def test_commission_propagation(self):
         # propagation feature is disabled
