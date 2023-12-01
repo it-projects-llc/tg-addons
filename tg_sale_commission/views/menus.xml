@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem
+        id="menu_agents"
+        parent="tg_website_sale_affiliate.affiliate_menu_root"
+        action="sale_commission.action_agent_form"
+        sequence="2"
+    />
+
+    <menuitem
+        name="Settlements"
+        id="menu_settlements"
+        parent="tg_website_sale_affiliate.affiliate_menu_root"
+        action="sale_commission.action_settle_commission"
+        sequence="4"
+    />
+</odoo>

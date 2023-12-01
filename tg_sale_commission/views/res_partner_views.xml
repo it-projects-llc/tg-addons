@@ -8,6 +8,28 @@
             <xpath expr="//field[@name='agent_ids']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <xpath
+                expr="//page[@name='sales_purchases']//field[@name='agent']"
+                position="attributes"
+            >
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='agent_information']" position="attributes">
+                <attribute name="attrs" />
+            </xpath>
+            <xpath expr="//page[@name='agent_information']/group" position="before">
+                <group>
+                    <field name="agent" />
+                </group>
+            </xpath>
+            <xpath
+                expr="//page[@name='agent_information']/group[2]"
+                position="attributes"
+            >
+                <attribute
+                    name="attrs"
+                >{'invisible': [('agent', '=', False)]}</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>
