@@ -26,10 +26,10 @@ class SaleAffiliate(models.Model):
     def _get_order_dict(self):
         self.env.cr.execute(
             """
-SELECT sar.affiliate_id, array_agg(so.id)
+SELECT sar.affiliate_id, array_agg(DISTINCT so.id)
 FROM sale_affiliate_request sar
 LEFT JOIN sale_order so ON so.affiliate_request_id = sar.id
-WHERE sar.affiliate_id IN %s
+WHERE so.id IS NOT NULL AND sar.affiliate_id IN %s
 GROUP BY sar.affiliate_id
         """,
             [tuple(self.ids)],
