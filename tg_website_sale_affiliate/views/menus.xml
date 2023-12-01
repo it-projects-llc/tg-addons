@@ -16,4 +16,12 @@
         action="website_sale_affiliate.sale_affiliate_action"
     />
 
+    <menuitem
+        id="menu_coupons"
+        name="Commision programs"
+        sequence="3"
+        parent="affiliate_menu_root"
+        action="coupon.coupon_program_action_coupon_program"
+    />
+
 </odoo>
