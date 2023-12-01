@@ -18,6 +18,8 @@
 
   * added possibility to disable affiliate by archiving it
 
+* Added "Affiliate Management" root menu
+
 Credits
 =======
 
