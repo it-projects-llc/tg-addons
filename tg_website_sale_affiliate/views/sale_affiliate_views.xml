@@ -62,4 +62,23 @@
         <field name="state">code</field>
         <field name="code">action = records._send_invitation()</field>
     </record>
+
+    <record id="sale_affilaite_view_search" model="ir.ui.view">
+        <field name="name">sale.affiliate.search.tg</field>
+        <field name="model">sale.affiliate</field>
+        <field
+            name="inherit_id"
+            ref="website_sale_affiliate.sale_affiliate_view_search"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <separator />
+                <filter
+                    name="inactive"
+                    string="Archived"
+                    domain="[('active', '=', False)]"
+                />
+            </xpath>
+        </field>
+    </record>
 </odoo>
