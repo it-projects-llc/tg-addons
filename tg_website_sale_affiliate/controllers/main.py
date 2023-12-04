@@ -17,6 +17,9 @@ class WebsiteSale(Base):
         if not affiliate.active:
             return
 
+        if not affiliate.partner_id:
+            return
+
         pricelist = affiliate.pricelist_id
 
         if not pricelist:

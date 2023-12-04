@@ -16,7 +16,8 @@ class SaleAffiliate(models.Model):
     code_promo_program_id = fields.Many2one(
         "coupon.program",
         string="Promo Program",
-        domain="[('promo_code_usage', '=', 'code_needed'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",  # noqa: E950
+        context="{'form_view_ref': 'coupon.coupon_program_view_promo_program_form', 'lock_promo_code_usage': 1, 'default_program_type': 'promotion_program', 'default_promo_code_usage': 'code_needed', 'default_company_id': company_id}",  # noqa: E950
+        domain="[('program_type', '=', 'promotion_program'), ('promo_code_usage', '=', 'code_needed'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",  # noqa: E950
         copy=False,
     )
     order_count = fields.Integer(compute="_compute_order_count")

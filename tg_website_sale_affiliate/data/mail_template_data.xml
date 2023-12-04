@@ -10,7 +10,7 @@
         <field name="email_to">${object.partner_id.email_formatted | safe}</field>
         <field name="lang">${object.partner_id.lang}</field>
         <field name="body_html" type="html">
-            <p>Hello, ${object.name}! You affiliate link: <a
+            <p>Hello, ${object.name}! Your affiliate link: <a
                     href="${object.referal_link}"
                 >${object.referal_link}</a></p>
         </field>

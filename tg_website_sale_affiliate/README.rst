@@ -18,7 +18,13 @@
 
   * added possibility to disable affiliate by archiving it
 
-* Added "Affiliate Management" root menu
+* Added "Affiliate Management" with following submenus
+
+  * Affiliates
+
+  * Affiliate Requests
+
+  * Promotion programs
 
 Credits
 =======
