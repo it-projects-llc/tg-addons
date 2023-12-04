@@ -12,5 +12,7 @@ class SaleOrderLine(models.Model):
         )
         for line in affiliated_order_lines:
             agent = line.order_id.affiliate_request_id.affiliate_id.partner_id
+            if not agent.commission_id:
+                continue
             if not line.commission_free:
                 line.agent_ids = [(0, 0, self._prepare_agent_vals(agent))]
