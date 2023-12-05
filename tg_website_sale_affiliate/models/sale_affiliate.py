@@ -23,6 +23,7 @@ class SaleAffiliate(models.Model):
     order_count = fields.Integer(compute="_compute_order_count")
     invoice_count = fields.Integer(compute="_compute_invoice_count")
     referal_link = fields.Char(compute="_compute_referal_link")
+    portal_link = fields.Char(compute="_compute_referal_link")
 
     _sql_constraints = [
         (
@@ -83,6 +84,7 @@ GROUP BY sar.affiliate_id
             else:
                 base_url = record.get_base_url()
             record.referal_link = urljoin(base_url, f"/events?aff_ref={record.id}")
+            record.portal_link = urljoin(record.get_base_url(), "/my/affiliates")
 
     def action_show_orders(self):
         order_dict = self._get_order_dict()

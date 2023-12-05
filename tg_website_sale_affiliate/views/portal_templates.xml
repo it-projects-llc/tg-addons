@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="portal_my_home_affiliate"
+        name="Show Affiliates"
+        customize_show="True"
+        inherit_id="portal.portal_my_home"
+        priority="20"
+    >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Affiliates</t>
+                <t t-set="url" t-value="'/my/affiliates'" />
+                <t t-set="placeholder_count" t-value="'affiliate_count'" />
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_affiliates" name="My Affiliates">
+        <t t-call="portal.portal_layout">
+            <t t-if="not affiliates">
+                <p>There are currently no affiliates for your account.</p>
+            </t>
+            <t t-if="affiliates" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Name</th>
+                        <th />
+                    </tr>
+                </thead>
+                <t t-foreach="affiliates" t-as="affiliate">
+                    <tr>
+                        <td><t t-esc="affiliate.name" /></td>
+                        <td class="text-right">
+                            <a
+                                class="btn btn-primary"
+                                t-attf-href="/my/affiliates/{{ affiliate.id }}/orders?{{ keep_query() }}"
+                            >Sale Orders</a>
+                            <a
+                                class="btn btn-secondary"
+                                t-att-href="affiliate.referal_link"
+                            >Referal link</a>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
