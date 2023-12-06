@@ -60,7 +60,7 @@ class CustomerPortal(CustomerPortal):
         order_ids = affiliate._get_order_dict().get(affiliate.id, [])
         domain = [("id", "in", order_ids)]
 
-        orders = SaleOrder.search(domain)
+        orders = SaleOrder.sudo().search(domain)
         values.update(
             {
                 "orders": orders,
