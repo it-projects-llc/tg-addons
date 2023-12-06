@@ -10,6 +10,7 @@
         "sale_coupon",
     ],
     "data": [
+        "security/ir.model.access.csv",
         "data/mail_template_data.xml",
         "views/coupon_program_views.xml",
         "views/portal_templates.xml",
