@@ -10,6 +10,7 @@
         "tg_website_sale_affiliate",
     ],
     "data": [
+        "views/sale_order_view.xml",
         "views/menus.xml",
         "views/res_company_views.xml",
         "views/res_partner_views.xml",

@@ -8,7 +8,11 @@
 
 * Partner in sale affiliate must be agent
 
-* In sale order agent is calculated from affiliate request
+* In sale order:
+
+  * agent is calculated from affiliate request
+
+  * commission related fields are shown only in debug mode
 
 * In company model added field "Commission settlement company" and logic with this field
 
