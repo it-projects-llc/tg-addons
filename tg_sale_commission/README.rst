@@ -12,7 +12,7 @@
 
   * agent is calculated from affiliate request
 
-  * commission related fields are shown only in debug mode
+  * commission related fields are only record's company does not override commission settlement company
 
 * In company model added field "Commission settlement company" and logic with this field
 

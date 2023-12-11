@@ -1,4 +1,16 @@
-from odoo import api, models
+from odoo import api, fields, models
+
+
+class SaleOrder(models.Model):
+    _inherit = "sale.order"
+
+    ui_hide_commission_fields = fields.Boolean(compute="_compute_ui", store=False)
+
+    def _compute_ui(self):
+        for record in self:
+            record.ui_hide_commission_fields = bool(
+                record.company_id.commission_settlement_company
+            )
 
 
 class SaleOrderLine(models.Model):
