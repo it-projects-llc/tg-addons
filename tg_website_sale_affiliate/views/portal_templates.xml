@@ -46,4 +46,15 @@
             </t>
         </t>
     </template>
+
+    <template
+        id="portal_my_orders"
+        inherit_id="sale.portal_my_orders"
+        primary="True"
+        priority="100"
+    >
+        <xpath expr="//a[@t-att-href='order.get_portal_url()']" position="replace">
+            <t t-esc="order.name" />
+        </xpath>
+    </template>
 </odoo>

@@ -69,4 +69,4 @@ class CustomerPortal(CustomerPortal):
             }
         )
 
-        return request.render("sale.portal_my_orders", values)
+        return request.render("tg_website_sale_affiliate.portal_my_orders", values)
