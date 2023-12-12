@@ -21,6 +21,7 @@ class SaleOrderLine(models.Model):
         self.agent_ids = False
         affiliated_order_lines = self.filtered(
             lambda x: x.order_id.affiliate_request_id
+            and (x.event_ok or x.is_reward_line)
         )
         for line in affiliated_order_lines:
             agent = line.order_id.affiliate_request_id.affiliate_id.partner_id

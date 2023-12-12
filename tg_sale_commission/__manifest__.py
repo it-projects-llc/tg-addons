@@ -8,8 +8,10 @@
     "depends": [
         "sale_commission",
         "tg_website_sale_affiliate",
+        "event_sale",
     ],
     "data": [
+        "views/portal_templates.xml",
         "views/sale_order_view.xml",
         "views/menus.xml",
         "views/res_company_views.xml",

@@ -10,7 +10,9 @@
 
 * In sale order:
 
-  * agent is calculated from affiliate request
+  * commission agent is calculated from affiliate request
+
+  * commission agent is applied only for event tickets and discounts
 
   * commission related fields are only record's company does not override commission settlement company
 
