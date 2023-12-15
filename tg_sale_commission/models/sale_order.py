@@ -4,12 +4,22 @@ from odoo import api, fields, models
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
+    amount_total_with_agents = fields.Monetary(
+        string="Total with agents", compute="_compute_total_with_agents"
+    )
     ui_hide_commission_fields = fields.Boolean(compute="_compute_ui", store=False)
 
     def _compute_ui(self):
         for record in self:
             record.ui_hide_commission_fields = bool(
                 record.company_id.commission_settlement_company
+            )
+
+    def _compute_total_with_agents(self):
+        for record in self:
+            order_line = record.order_line
+            record.amount_total_with_agents = sum(
+                order_line.filtered("agent_ids").mapped("price_total")
             )
 
 

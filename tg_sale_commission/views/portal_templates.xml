@@ -9,11 +9,8 @@
         <xpath expr="//a[@t-att-href='order.get_portal_url()']" position="replace">
             <t t-esc="order.name" />
         </xpath>
-        <xpath expr="//thead//th[hasclass('text-right')][last()]" position="replace">
-            <th class="text-right">Commission total</th>
-        </xpath>
         <xpath expr="//span[@t-field='order.amount_total']" position="attributes">
-            <attribute name="t-field">order.commission_total</attribute>
+            <attribute name="t-field">order.amount_total_with_agents</attribute>
         </xpath>
     </template>
 </odoo>
