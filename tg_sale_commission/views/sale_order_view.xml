@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="sale_commission.view_order_agent_form_inherit" />
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="before">
-                <field name="ui_hide_commission_fields" />
+                <field name="ui_hide_commission_fields" invisible="1" />
             </xpath>
             <xpath expr="//button[@name='button_edit_agents']" position="attributes">
                 <attribute
