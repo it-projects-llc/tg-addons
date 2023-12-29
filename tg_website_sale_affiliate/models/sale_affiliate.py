@@ -1,16 +1,25 @@
+from random import choice as random_choise
+from string import ascii_lowercase, digits
 from urllib.parse import urljoin
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class SaleAffiliate(models.Model):
     _inherit = ["sale.affiliate", "mail.thread"]
     _name = "sale.affiliate"
 
+    @api.model
+    def _default_promo_code(self):
+        return "".join([random_choise(ascii_lowercase + digits) for i in range(5)])
+
     active = fields.Boolean(default=True)
 
     valid_hours = fields.Integer(default=-1)
     valid_sales = fields.Integer(default=-1)
+    promo_code = fields.Char(
+        "Affiliate Promo Code", default=lambda self: self._default_promo_code()
+    )
 
     partner_id = fields.Many2one("res.partner")
     code_promo_program_id = fields.Many2one(
@@ -32,6 +41,11 @@ class SaleAffiliate(models.Model):
             "Partner must be unique",
         ),
         ("name_unique", "unique(name)", "Affiliate name must be unique"),
+        (
+            "promo_code_unique",
+            "unique(promo_code)",
+            "Affiliate promo code must be unique",
+        ),
     ]
 
     def _get_order_dict(self):
