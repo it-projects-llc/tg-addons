@@ -25,12 +25,14 @@
                 <thead>
                     <tr class="active">
                         <th>Name</th>
+                        <th>Promo Code</th>
                         <th />
                     </tr>
                 </thead>
                 <t t-foreach="affiliates" t-as="affiliate">
                     <tr>
                         <td><t t-esc="affiliate.name" /></td>
+                        <td><t t-esc="affiliate.promo_code" /></td>
                         <td class="text-right">
                             <a
                                 class="btn btn-primary"
