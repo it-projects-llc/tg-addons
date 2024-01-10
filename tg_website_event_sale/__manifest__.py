@@ -9,7 +9,9 @@
         "website_event_sale",
         "website_sale_affiliate",
     ],
-    "data": [],
+    "data": [
+        "views/res_config_settings_views.xml",
+    ],
     "demo": [],
     "qweb": [],
 }
