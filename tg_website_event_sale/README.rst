@@ -6,6 +6,14 @@
 
 * Makes event pages urls compatible for ``website_sale_affiliate`` features
 
+* Adds "Affiliation Tag" in Event -> Configuration -> Settings
+
+* When visitor visits affiliated event list link
+
+  * Event list is filtered with Affiliation Tag
+
+  * If resulted event list has only one event -> redirection to that event register link
+
 Credits
 =======
 
