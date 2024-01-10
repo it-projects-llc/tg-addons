@@ -18,8 +18,25 @@ class WebsiteEventSaleExtendController(WebsiteEventSaleController):
 
     @route()
     def events(self, *args, **kw):
+        override_event_list = False
+        if kw.get("aff_ref"):
+            get_param = request.env.user.sudo().env["ir.config_parameter"].get_param
+            tag_id = int(get_param("tg_website_event_sale.affilation_tag", default=0))
+            if tag_id:
+                override_event_list = True
+                kw["tags"] = f"[{tag_id}]"
+
         res = super(WebsiteEventSaleExtendController, self).events(*args, **kw)
         self._store_affiliate_info(**kw)
+
+        if override_event_list:
+            res.qcontext["searches"]["tags"] = ""
+            res.qcontext["search_tags"] = request.env["event.tag"]
+            if len(res.qcontext["event_ids"]) == 1:
+                event = res.qcontext["event_ids"]
+                target_url = "/event/%s/register" % str(event.id)
+                return request.redirect(target_url)
+
         return res
 
     @route()
