@@ -12,6 +12,9 @@ class website_account_passport(CustomerPortal):
 
     @route()
     def account(self, redirect=None, **post):
+        if post.get("nationality_id"):
+            post["nationality_id"] = int(post["nationality_id"])
+
         res = super(website_account_passport, self).account(redirect, **post)
         res.qcontext["show_passport_checkbox"] = "event_guest" in request.env.user._fields
         return res
