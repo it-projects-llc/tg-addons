@@ -23,6 +23,7 @@
     ],
     "external_dependencies": {"python": [], "bin": []},
     "data": [
+        "views/assets.xml",
         "views/website_portal_templates.xml",
     ],
     "qweb": [
