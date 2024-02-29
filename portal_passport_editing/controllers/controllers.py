@@ -8,7 +8,7 @@ from odoo.http import route, request
 
 class website_account_passport(CustomerPortal):
 
-    OPTIONAL_BILLING_FIELDS = CustomerPortal.OPTIONAL_BILLING_FIELDS + ["passport", "is_passport_not_ready", "birthdate_date", "nationality_id"]
+    OPTIONAL_BILLING_FIELDS = CustomerPortal.OPTIONAL_BILLING_FIELDS + ["passport", "is_passport_not_ready", "birthdate_date", "nationality_id", "cedula", "has_cedula"]
 
     @route()
     def account(self, redirect=None, **post):
@@ -20,16 +20,26 @@ class website_account_passport(CustomerPortal):
         return res
 
     def details_form_validate(self, data):
-        is_passport_not_ready = data.get("is_passport_not_ready", False)
         res = super(website_account_passport, self).details_form_validate(data)
+        for fname in ("is_passport_not_ready", "has_cedula"):
+            data[fname] = data.get(fname, False)
+
+        for fname in ("passport", "cedula"):
+            data[fname] = data[fname].strip()
 
         if "event_guest" not in request.env.user._fields:
             return res
 
         is_something_extra_missing = False
         error, error_message = res
-        if not is_passport_not_ready and not data["passport"].strip():
+        ignore_passport = bool(data["cedula"]) or request.env.user.has_group("base.group_user")
+
+        if not ignore_passport and not data["is_passport_not_ready"] and not data["passport"].strip():
             error["passport"] = "missing"
+            is_something_extra_missing = True
+
+        if not data["cedula"] and data.get("has_cedula"):
+            error["cedula"] = "missing"
             is_something_extra_missing = True
 
         if not data["birthdate_date"]:
@@ -38,6 +48,10 @@ class website_account_passport(CustomerPortal):
 
         if not data["nationality_id"]:
             error["nationality_id"] = "missing"
+            is_something_extra_missing = True
+
+        if not data["cedula"] and data["has_cedula"]:
+            error["cedula"] = "missing"
             is_something_extra_missing = True
 
         if is_something_extra_missing:
