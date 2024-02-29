@@ -18,6 +18,16 @@
                     <label class="form-check-label" for="is_passport_not_ready">Passport is not ready</label>
                 </div>
             </div>
+            <div t-attf-class="form-group form-check #{error.get('cedula') and 'o_has_error' or ''} col-lg-6">
+                <t t-set="has_cedula" t-value="has_cedula or partner.has_cedula" />
+
+                <label t-attf-class="control-label #{'' if has_cedula else 'd-none'}" for="cedula">Cedula</label>
+                <input type="text" name="cedula" t-attf-class="form-control #{error.get('cedula') and 'is-invalid' or ''}  #{'' if has_cedula else 'd-none'}" t-att-value="cedula or partner.cedula" />
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="has_cedula" name="has_cedula" t-att-checked="has_cedula"/>
+                    <label class="form-check-label" for="has_cedula">I have Cedula</label>
+                </div>
+            </div>
             <div t-attf-class="form-group #{error.get('birthdate_date') and 'o_has_error' or ''} col-lg-6">
                 <label class="control-label" for="birthdate_date">Date of Birth</label>
                 <input type="date" name="birthdate_date" t-attf-class="form-control #{error.get('birthdate_date') and 'is-invalid' or ''}" t-att-value="birthdate_date or partner.birthdate_date" />
