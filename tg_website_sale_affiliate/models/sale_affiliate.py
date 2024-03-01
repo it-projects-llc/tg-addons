@@ -35,11 +35,6 @@ class SaleAffiliate(models.Model):
     portal_link = fields.Char(compute="_compute_referal_link")
 
     _sql_constraints = [
-        (
-            "partner_id_unique",
-            "unique(partner_id, company_id)",
-            "Partner must be unique",
-        ),
         ("name_unique", "unique(name)", "Affiliate name must be unique"),
         (
             "promo_code_unique",
