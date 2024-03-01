@@ -11,11 +11,11 @@ odoo.define('portal_passport_editing.portal', function (require) {
 
         _onHasCedulaChange: function(ev) {
             if (ev.target.checked) {
-                this.$el.find("label[for=cedula]").removeClass("d-none");
-                this.$el.find("input[name=cedula]").removeClass("d-none");
+                this.$el.find("label[for=cedula]").removeClass("invisible");
+                this.$el.find("input[name=cedula]").removeClass("invisible");
             } else {
-                this.$el.find("label[for=cedula]").addClass("d-none");
-                this.$el.find("input[name=cedula]").addClass("d-none");
+                this.$el.find("label[for=cedula]").addClass("invisible");
+                this.$el.find("input[name=cedula]").addClass("invisible");
             }
         },
     });
