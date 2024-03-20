@@ -6,6 +6,8 @@
 
 * Added user group "Point of Sale - Show customer button"
 
+* Added user group "Point of Sale - Show +/- in payment screen"
+
 Credits
 =======
 

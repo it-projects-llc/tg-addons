@@ -17,6 +17,8 @@
     ],
     "qweb": [
         "static/src/xml/Screens/PaymentScreen/PaymentScreen.xml",
+        "static/src/xml/Screens/PaymentScreen/PaymentScreenNumpad.xml",
+        "static/src/xml/Screens/PaymentScreen/PSNumpadInputButton.xml",
         "static/src/xml/Screens/ProductScreen/ActionpadWidget.xml",
     ],
 
