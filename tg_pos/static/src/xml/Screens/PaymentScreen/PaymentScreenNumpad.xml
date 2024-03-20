@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="PaymentScreenNumpad" t-inherit="point_of_sale.PaymentScreenNumpad" t-inherit-mode="extension" owl="1">
+        <xpath expr="//PSNumpadInputButton[contains(@value, '-')]" position="attributes">
+            <attribute name="disabled">!hasMinusControlRights ? 'disabled' : ''</attribute>
+            <attribute
+                name="t-att-class"
+            >{'disabled-mode': !hasMinusControlRights}</attribute>
+        </xpath>
+    </t>
+</templates>
