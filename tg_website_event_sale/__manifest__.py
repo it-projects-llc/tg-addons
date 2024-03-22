@@ -4,10 +4,11 @@
     "author": "IT-Projects LLC, Eugene Molotov",
     "support": "it@it-projects.info",
     "website": "https://github.com/it-projects-llc/tg-addons",
-    "license": "LGPL-3",
+    "license": "AGPL-3",
     "depends": [
         "website_event_sale",
-        "website_sale_affiliate",
+        "tg_website_sale_affiliate",
+        "tg_sale_commission",
     ],
     "data": [
         "views/res_config_settings_views.xml",
