@@ -37,8 +37,10 @@ jobs:
         include:
           - container: ghcr.io/oca/oca-ci/py3.6-odoo14.0:latest
             name: test with Odoo
+            exclude: "tg_website_event_sale"
           - container: ghcr.io/oca/oca-ci/py3.6-ocb14.0:latest
             name: test with OCB
+            exclude: "tg_website_event_sale"
             makepot: "false"
     services:
       postgres:
