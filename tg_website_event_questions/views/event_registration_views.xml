@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="event_registration_view_form" model="ir.ui.view">
+        <field name="name">event.registration.question.form.tg</field>
+        <field name="model">event.registration</field>
+        <field
+            name="inherit_id"
+            ref="website_event_questions.event_registration_view_form_inherit_question"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='question_id']" position="after">
+                <field name="is_marketing_question" column_invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='value_answer_id']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': ['|', '&amp;', ('is_marketing_question', '=', False), ('question_type', '!=', 'simple_choice'), '&amp;', ('is_marketing_question', '=', True), ('value_answer_id', '=', False)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='value_text_box']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': ['|', '&amp;', ('is_marketing_question', '=', False), ('question_type', '!=', 'text_box'), '&amp;', ('is_marketing_question', '=', True), ('value_answer_id', '!=', False)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

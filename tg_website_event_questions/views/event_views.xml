@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="event_view_form" model="ir.ui.view">
+        <field name="name">event.event.form.tg.website.event.questions</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="website_event_questions.event_event_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='once_per_order']" position="before">
+                <field name="is_marketing" />
+            </xpath>
+            <xpath
+                expr="//field[@name='question_ids']/form//sheet/group"
+                position="after"
+            >
+                <group class="mb-0">
+                    <div colspan="2">
+                        <field name="is_marketing" />
+                        <label for="is_marketing" />
+                    </div>
+                </group>
+            </xpath>
+            <xpath
+                expr="//field[@name='question_ids']/form//field[@name='answer_ids']"
+                position="attributes"
+            >
+                <attribute name="domain">[('is_custom', '=', False)]</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='question_ids']/form//field[@name='answer_ids']/tree"
+                position="inside"
+            >
+                <field name="is_custom" invisible="1" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="registration_attendee_details_questions"
+        inherit_id="website_event_questions.registration_attendee_details_questions"
+    >
+        <xpath
+            expr="//div[@t-foreach='event.specific_question_ids']"
+            position="attributes"
+        >
+            <attribute
+                name="t-foreach"
+            >event.specific_question_ids.filtered(lambda x: not x.is_marketing or (x.is_marketing and not x._was_answered_by(env.user.partner_id)))</attribute>
+        </xpath>
+
+        <xpath
+            expr="//div[@t-foreach='event.general_question_ids']"
+            position="attributes"
+        >
+            <attribute
+                name="t-foreach"
+            >event.general_question_ids.filtered(lambda x: not x.is_marketing or (x.is_marketing and not x._was_answered_by(env.user.partner_id)))</attribute>
+        </xpath>
+    </template>
+
+    <template
+        id="registration_event_question"
+        inherit_id="website_event_questions.registration_event_question"
+    >
+        <xpath expr="//select" position="attributes">
+            <attribute name="t-if">not question.is_marketing</attribute>
+        </xpath>
+        <xpath expr="//select" position="after">
+            <select
+                t-if="question.is_marketing"
+                t-attf-name="question_answer-#{registration_index}-#{question.id}"
+                class="custom-select marketing-question-select"
+                required="true"
+            >
+                <t
+                    t-foreach="question.answer_ids.filtered(lambda x: not x.is_custom)"
+                    t-as="answer"
+                >
+                    <option t-esc="answer.name" t-att-value="answer.id" />
+                </t>
+                <option data-custom="1">Custom</option>
+            </select>
+            <input
+                type="text"
+                t-attf-data-name="question_answer-#{registration_index}-#{question.id}"
+                style="display: none"
+                class="col-lg-12 form-control"
+            />
+        </xpath>
+        <xpath expr="//textarea/.." position="after">
+            <script type="text/javascript">
+                $(".marketing-question-select").on("change", function() {
+                    var $t = $(this);
+                    if ($t.find("option[data-custom]:selected").length) {
+                        var fieldName = $t.attr("name");
+                        $t.remove();
+                        $("input[data-name=" + fieldName + "]").attr("name", fieldName).show();
+                    }
+                });
+            </script>
+        </xpath>
+    </template>
+</odoo>

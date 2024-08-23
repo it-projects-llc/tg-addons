@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="event_question_view_form" model="ir.ui.view">
+        <field name="name">event.question.form.tg</field>
+        <field name="model">event.question</field>
+        <field
+            name="inherit_id"
+            ref="website_event_questions.event_question_view_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//h1" position="after">
+                <field name="is_marketing" />
+            </xpath>
+            <xpath expr="//field[@name='answer_ids']" position="attributes">
+                <attribute name="domain">[('is_custom', '=', False)]</attribute>
+            </xpath>
+            <xpath expr="//field[@name='answer_ids']/tree" position="inside">
+                <field name="is_custom" invisible="1" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

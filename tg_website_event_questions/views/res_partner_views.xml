@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="partner_view_form" model="ir.ui.view">
+        <field name="name">res.partner.form.tc.website.questions</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page
+                    string="Marketing answers"
+                    attrs="{'invisible': [('marketing_answers', '=', [])]}"
+                >
+                    <field name="marketing_answers" />
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
