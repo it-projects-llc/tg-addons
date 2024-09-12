@@ -4,9 +4,6 @@
 # pylint: disable=missing-module-docstring
 
 
-# WARNING
-# This script is for 10.0 only
-
 import os
 import logging
 import google.auth
@@ -61,9 +58,9 @@ def get_directory_id(record):
 def upload_attachments(attachments, directory_id):
     for attachment in attachments:
         if len(attachments) == 1:
-            remote_attachment_name = attachment.datas_fname
+            remote_attachment_name = attachment.name
         else:
-            remote_attachment_name = str(attachment.id) + "_" + attachment.datas_fname
+            remote_attachment_name = str(attachment.id) + "_" + attachment.name
 
         _logger.info("uploading %s to %s..." % (attachment, directory_id))
         _, input_path = attachment._get_path(None, attachment.checksum)
@@ -83,32 +80,32 @@ def upload_attachments(attachments, directory_id):
     attachments._file_gc()
 
 
-def move_attachments(env, company_id):
+def init_hacks():
+    from odoo.addons.base.models.ir_attachment import IrAttachment
+
+    def _same_content_hacked(self, *args, **kw):
+        return True
+
+    # this will make _get_path to accept None
+    IrAttachment._same_content = _same_content_hacked
+
+
+def move_attachments(env, company_id, last_date):
+    init_hacks()
+
     env.cr.execute("""
 SELECT array_agg(json_build_object('res_id', t.res_id, 'res_model', t.res_model, 'attachment_ids', t.attachment_ids))
 FROM (
-(
     SELECT a.res_id, a.res_model, array_agg(a.id) AS attachment_ids
     FROM ir_attachment a
-    LEFT JOIN account_voucher v ON v.id = a.res_id
-    LEFT JOIN account_journal j ON j.id = v.journal_id
-    WHERE a.res_model = 'account.voucher'
+    LEFT JOIN account_move j ON j.id = a.res_id
+    WHERE a.res_model = 'account.move'
     AND a.res_field IS NULL
     AND j.company_id = %s
+    AND j.invoice_date <= %s
     GROUP BY a.res_id, a.res_model
-)
-   UNION
-(
-    SELECT a.res_id, a.res_model, array_agg(a.id) AS attachment_ids
-    FROM ir_attachment a
-    LEFT JOIN account_invoice j ON j.id = a.res_id
-    WHERE a.res_model = 'account.invoice'
-    AND a.res_field IS NULL
-    AND j.company_id = %s
-    GROUP BY a.res_id, a.res_model
-)
 ) t
-    """, [company_id, company_id])
+    """, [company_id, last_date])
     objs = env.cr.fetchone()[0] or []
 
     for obj in objs:
