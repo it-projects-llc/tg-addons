@@ -10,7 +10,7 @@ class WebsiteEventSaleExtendController(WebsiteEventSaleController):
     @route()
     def registration_confirm(self, *args, **post):
         order = request.website.sale_get_order(force_create=False)
-        if order:
+        if order and order.state in ("draft", "cancel"):
             order.sudo().unlink()
         return super(WebsiteEventSaleExtendController, self).registration_confirm(
             *args, **post
