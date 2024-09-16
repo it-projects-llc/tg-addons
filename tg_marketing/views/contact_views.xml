@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="marketing_answer_view_tree" model="ir.ui.view">
+        <field name="name">res.partner.marketing.answer.tree</field>
+        <field name="model">res.partner.marketing.answer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" />
+                <field name="field" />
+                <field name="answer" />
+                <field name="is_canned" />
+            </tree>
+        </field>
+    </record>
+
+   <record id="marketing_answer_view_search" model="ir.ui.view">
+       <field name="name">res.partner.marketing.answer.search</field>
+       <field name="model">res.partner.marketing.answer</field>
+       <field name="arch" type="xml">
+           <search>
+               <field name="answer" />
+               <filter
+                    string="Canned answers"
+                    name="canned"
+                    domain="[('is_canned', '=', True)]"
+                />
+           </search>
+       </field>
+   </record>
+
+   <record id="action_show_marketing_answers" model="ir.actions.act_window">
+       <field name="name">Marketing answers</field>
+       <field name="type">ir.actions.act_window</field>
+       <field name="res_model">res.partner.marketing.answer</field>
+       <field name="view_mode">tree</field>
+       <field name="search_view_id" ref="marketing_answer_view_search" />
+   </record>
+
+   <menuitem
+        id="menu_marketing_answers"
+        action="action_show_marketing_answers"
+        name="Marketing answers"
+        parent="contacts.res_partner_menu_config"
+    />
+</odoo>
