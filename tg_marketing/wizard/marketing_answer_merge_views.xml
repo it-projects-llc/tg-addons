@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="marketing_answer_merge_view_form" model="ir.ui.view">
+        <field name="name">marketing.answer.merge.form</field>
+        <field name="model">marketing.answer.merge</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="question" />
+                    <field
+                        name="dst_answer"
+                        domain="[('id', 'in', answers or False)]"
+                    />
+                    <field name="answers" domain="[('field', '=', question)]">
+                        <tree>
+                            <field name="answer" />
+                            <field name="is_canned" />
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button
+                        string="Merge"
+                        class="btn btn-primary"
+                        type="object"
+                        name="action_merge"
+                    />
+                    <button string="Cancel" class="btn btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
