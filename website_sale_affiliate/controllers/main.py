@@ -21,12 +21,12 @@ class WebsiteSale(Base):
 
     @route()
     def shop(self, *args, **post):
-        res = super(WebsiteSale, self).shop(*args, **post)
+        res = super().shop(*args, **post)
         self._store_affiliate_info(**post)
         return res
 
     @route()
     def product(self, *args, **kwargs):
-        res = super(WebsiteSale, self).product(*args, **kwargs)
+        res = super().product(*args, **kwargs)
         self._store_affiliate_info(**kwargs)
         return res

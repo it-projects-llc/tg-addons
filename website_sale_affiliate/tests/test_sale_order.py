@@ -9,7 +9,7 @@ from .common import SaleCase
 
 class SaleOrderCase(SaleCase):
     def setUp(self):
-        super(SaleOrderCase, self).setUp()
+        super().setUp()
         self.partner = self.env.ref("base.res_partner_1")
         self.sale_order_vals = {
             "partner_id": self.partner.id,
@@ -28,7 +28,8 @@ class SaleOrderCase(SaleCase):
                     },
                 )
             ],
-            "pricelist_id": self.env.ref("product.list0").id,
+            "pricelist_id": self.env.ref("website_sale.list_europe").id,
+            # product.list0 does not exist, so I replaced it with list_europe
         }
 
     @patch.object(AffiliateRequest, "current_qualified")

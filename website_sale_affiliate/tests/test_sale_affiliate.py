@@ -1,7 +1,8 @@
 # Copyright 2017 LasLabs Inc.
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl)
 
-from unittest.mock import patch
+
+from odoo.addons.website.tools import MockRequest
 
 from .common import SaleCase
 
@@ -9,9 +10,17 @@ MODULE_PATH = "odoo.addons.website_sale_affiliate"
 AFFILIATE_REQUEST_PATH = MODULE_PATH + ".models.sale_affiliate_request"
 
 
+def patch_request(func):
+    def _decorator(self, *args, **kwargs):
+        with MockRequest(self.env) as req:
+            return func(self, req)
+
+    return _decorator
+
+
 class AffiliateCase(SaleCase):
     def setUp(self):
-        super(AffiliateCase, self).setUp()
+        super().setUp()
         self.Affiliate = self.env["sale.affiliate"]
 
     def test_compute_conversion_rate_with_requests(self):
@@ -103,7 +112,7 @@ class AffiliateCase(SaleCase):
             "Affiliate request not linked to correct affiliate",
         )
 
-    @patch("%s.request" % AFFILIATE_REQUEST_PATH)
+    @patch_request
     def test_get_request_aff_key_present_request_missing(self, request_mock):
         """Creates and returns affiliate request record matching aff_key
         from kwargs when match does not exist"""
@@ -122,7 +131,7 @@ class AffiliateCase(SaleCase):
             "Affiliate request not linked to correct affiliate",
         )
 
-    @patch("%s.request" % AFFILIATE_REQUEST_PATH)
+    @patch_request
     def test_get_request_aff_key_missing(self, request_mock):
         """Creates and returns affiliate request record with sequential name
         when match does not exist"""

@@ -7,7 +7,7 @@ from odoo.tests.common import TransactionCase
 
 class SaleCase(TransactionCase):
     def setUp(self):
-        super(SaleCase, self).setUp()
+        super().setUp()
         self.demo_affiliate = self.env.ref(
             "website_sale_affiliate.sale_affiliate_myaffiliate"
         )
