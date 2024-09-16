@@ -5,7 +5,7 @@
     "name": "Affiliate Program",
     "summary": "Create an e-commerce affiliate program for the tracking of "
     "referrals and conversions.",
-    "version": "14.0.1.0.0",
+    "version": "17.0.1.0.0",
     "category": "E-Commerce",
     "website": "https://github.com/it-projects-llc/tg-addons",
     "author": "LasLabs, Odoo Community Association (OCA), IT-Projects LLC",

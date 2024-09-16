@@ -15,7 +15,7 @@ class SaleOrder(models.Model):
 
     @api.model
     def create(self, vals):
-        res = super(SaleOrder, self).create(vals)
+        res = super().create(vals)
         AffiliateRequest = self.env["sale.affiliate.request"]
         res.affiliate_request_id = AffiliateRequest.current_qualified()
         return res
