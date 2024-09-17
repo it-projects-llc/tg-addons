@@ -12,6 +12,7 @@
                     <field name="event_ticket" />
                     <field name="code" />
                     <field name="guest_of" />
+                    <field name="invite_url" widget="url" />
                 </group>
                 <group>
                     <field name="invited_by" />
