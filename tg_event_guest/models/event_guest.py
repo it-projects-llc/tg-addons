@@ -1,5 +1,6 @@
 from random import choice as random_choice
 from string import ascii_lowercase, digits
+from urllib.parse import urljoin
 
 from odoo import api, fields, models
 
@@ -27,6 +28,7 @@ class EventGuest(models.Model):
         index=True, required=True, default=lambda self: self._default_code()
     )
 
+    invite_url = fields.Char("Invite URL", compute="_compute_invite_url", store=False)
     invited_by = fields.Many2one("res.partner", readonly=True)
     guest_of = fields.Many2one("res.partner")
 
@@ -53,3 +55,14 @@ class EventGuest(models.Model):
             ],
             limit=1,
         )
+
+    @api.depends("code", "event")
+    def _compute_invite_url(self):
+        for guest in self:
+            if guest.event:
+                guest.invite_url = urljoin(
+                    guest.event.get_base_url(),
+                    f"/web/signup?guest_register_code={guest.code}&redirect=%2Fmy%2Faccount",
+                )
+            else:
+                guest.invite_url = False
