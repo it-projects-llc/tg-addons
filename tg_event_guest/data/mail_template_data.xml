@@ -12,9 +12,7 @@
             <br />
             <p>
                 Please complete your registration to ${object.event.display_name} using the
-                <a
-                    href="/web/signup?guest_register_code=${object.code}&amp;redirect=%2Fmy%2Faccount"
-                >link</a>
+                <a href="${object.invite_url}">link</a>
             </p>
             <p>Thank you!</p>
             <br />
