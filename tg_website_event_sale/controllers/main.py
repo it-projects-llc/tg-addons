@@ -20,8 +20,7 @@ class WebsiteEventSaleExtendController(WebsiteEventSaleController):
     def events(self, *args, **kw):
         override_event_list = False
         if kw.get("aff_ref"):
-            get_param = request.env.user.sudo().env["ir.config_parameter"].get_param
-            tag_id = int(get_param("tg_website_event_sale.affilation_tag", default=0))
+            tag_id = request.env.company.affilation_tag.id
             if tag_id:
                 override_event_list = True
                 kw["tags"] = f"[{tag_id}]"
