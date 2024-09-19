@@ -28,8 +28,19 @@ class EventRegistration(models.Model):
             [("sale_order_ids", "in", self.mapped("sale_order_id").ids)]
         )
         for r in self:
-            so_txs = txs.filtered(lambda x: r.sale_order_id in x.sale_order_ids)
+            current_sale_order = r.sale_order_id
+
+            so_txs = txs.filtered(
+                lambda x, so=current_sale_order: so in x.sale_order_ids
+            )
             r.x_payment_reference = so_txs
-            r.x_payment_reference_done = so_txs.filtered(lambda x: x.state == "done")
-            paid_amount = sum(r.x_payment_reference_done.mapped("amount") + [0])
-            r.x_payment_is_done = paid_amount >= r.sale_order_id.amount_total
+
+            done_txs = so_txs.filtered(lambda x: x.state == "done")
+            r.x_payment_reference_done = done_txs
+
+            paid_amount = sum(done_txs.mapped("amount") or [0])
+            r.x_payment_is_done = (
+                paid_amount >= r.sale_order_id.amount_total
+                if r.sale_order_id
+                else False
+            )
