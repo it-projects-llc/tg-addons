@@ -4,9 +4,9 @@
         <field name="name">res.partner.marketing.answer.tree</field>
         <field name="model">res.partner.marketing.answer</field>
         <field name="arch" type="xml">
-            <tree>
-                <field name="sequence" />
-                <field name="field" />
+            <tree editable="bottom">
+                <field name="sequence" widget="handle" />
+                <field name="field" options="{'no_create': 1}" />
                 <field name="answer" />
                 <field name="is_canned" />
             </tree>

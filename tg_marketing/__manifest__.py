@@ -11,6 +11,7 @@
         "website_event",
     ],
     "data": [
+        "views/event_templates.xml",
         "security/ir.model.access.csv",
         "views/res_partner_views.xml",
         "views/contact_views.xml",
