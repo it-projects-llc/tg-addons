@@ -8,5 +8,8 @@
     "depends": [
         "event_sale",
     ],
+    "data": [
+        "views/event_registration_views.xml",
+    ],
     "installable": True,
 }
