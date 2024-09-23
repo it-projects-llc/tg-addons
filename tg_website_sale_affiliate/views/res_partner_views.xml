@@ -10,10 +10,10 @@
                     class="oe_stat_button"
                     type="object"
                     name="action_show_affiliates"
-                    icon="fa-handshake-o"
+                    icon="fa-handshake-o fa-pull-left"
                 >
                     <field
-                        string="Affliaites"
+                        string="Affiliates"
                         name="affiliate_count"
                         widget="statinfo"
                     />

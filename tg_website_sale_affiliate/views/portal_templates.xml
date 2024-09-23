@@ -9,10 +9,28 @@
     >
         <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
             <t t-call="portal.portal_docs_entry">
+                <t
+                    t-set="icon"
+                    t-value="'/portal/static/src/img/portal-connection.svg'"
+                />
                 <t t-set="title">Affiliates</t>
                 <t t-set="url" t-value="'/my/affiliates'" />
+                <t t-set="text">View your affiliations</t>
                 <t t-set="placeholder_count" t-value="'affiliate_count'" />
             </t>
+        </xpath>
+    </template>
+
+    <template
+        id="portal_my_home_menu_affiliate"
+        name="Affiliate layout : affiliate menu entries"
+        inherit_id="portal.portal_breadcrumbs"
+        priority="20"
+    >
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'affiliate'" class="breadcrumb-item active">
+                <t>Affiliates</t>
+            </li>
         </xpath>
     </template>
 
@@ -33,7 +51,7 @@
                     <tr>
                         <td><t t-esc="affiliate.name" /></td>
                         <td><t t-esc="affiliate.promo_code" /></td>
-                        <td class="text-right">
+                        <td class="text-end">
                             <a
                                 class="btn btn-primary"
                                 t-attf-href="/my/affiliates/{{ affiliate.id }}/orders?{{ keep_query() }}"
