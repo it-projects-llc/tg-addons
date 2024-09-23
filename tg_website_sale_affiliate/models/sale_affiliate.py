@@ -22,11 +22,22 @@ class SaleAffiliate(models.Model):
     )
 
     partner_id = fields.Many2one("res.partner")
+    company_id = fields.Many2one("res.company", default=lambda self: self.env.company)
     code_promo_program_id = fields.Many2one(
-        "coupon.program",
+        "loyalty.card",
         string="Promo Program",
-        context="{'form_view_ref': 'coupon.coupon_program_view_promo_program_form', 'lock_promo_code_usage': 1, 'default_program_type': 'promotion_program', 'default_promo_code_usage': 'code_needed', 'default_company_id': company_id}",  # noqa: E950
-        domain="[('program_type', '=', 'promotion_program'), ('promo_code_usage', '=', 'code_needed'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",  # noqa: E950
+        context={
+            "form_view_ref": "loyalty.loyalty_program_view_form",
+            "lock_promo_code_usage": 1,
+            "default_program_type": "promotion",
+            "default_company_id": lambda self: self.company_id.id,
+        },
+        domain=[
+            ("program_type", "=", "promotion"),
+            "|",
+            ("company_id", "=", False),
+            ("company_id", "=", company_id),
+        ],
         copy=False,
     )
     order_count = fields.Integer(compute="_compute_order_count")
@@ -46,12 +57,12 @@ class SaleAffiliate(models.Model):
     def _get_order_dict(self):
         self.env.cr.execute(
             """
-SELECT sar.affiliate_id, array_agg(DISTINCT so.id)
-FROM sale_affiliate_request sar
-LEFT JOIN sale_order so ON so.affiliate_request_id = sar.id
-WHERE so.id IS NOT NULL AND sar.affiliate_id IN %s
-GROUP BY sar.affiliate_id
-        """,
+            SELECT sar.affiliate_id, array_agg(DISTINCT so.id)
+            FROM sale_affiliate_request sar
+            LEFT JOIN sale_order so ON so.affiliate_request_id = sar.id
+            WHERE so.id IS NOT NULL AND sar.affiliate_id IN %s
+            GROUP BY sar.affiliate_id
+            """,
             [tuple(self.ids)],
         )
 
@@ -60,15 +71,15 @@ GROUP BY sar.affiliate_id
     def _get_invoice_dict(self):
         self.env.cr.execute(
             """
-SELECT sar.affiliate_id, array_agg(DISTINCT aml.move_id)
-FROM sale_affiliate_request sar
-LEFT JOIN sale_order so ON so.affiliate_request_id = sar.id
-LEFT JOIN sale_order_line sol ON sol.order_id = so.id
-LEFT JOIN sale_order_line_invoice_rel solir ON solir.order_line_id = sol.id
-LEFT JOIN account_move_line aml ON aml.id = solir.invoice_line_id
-WHERE aml.move_id IS NOT NULL AND sar.affiliate_id IN %s
-GROUP BY sar.affiliate_id
-        """,
+            SELECT sar.affiliate_id, array_agg(DISTINCT aml.move_id)
+            FROM sale_affiliate_request sar
+            LEFT JOIN sale_order so ON so.affiliate_request_id = sar.id
+            LEFT JOIN sale_order_line sol ON sol.order_id = so.id
+            LEFT JOIN sale_order_line_invoice_rel solir ON solir.order_line_id = sol.id
+            LEFT JOIN account_move_line aml ON aml.id = solir.invoice_line_id
+            WHERE aml.move_id IS NOT NULL AND sar.affiliate_id IN %s
+            GROUP BY sar.affiliate_id
+            """,
             [tuple(self.ids)],
         )
 
@@ -125,7 +136,7 @@ GROUP BY sar.affiliate_id
             template._render_lang(self.ids)[self.id]
         ctx = {
             "default_model": self._name,
-            "default_res_id": self.ids[0],
+            "default_res_ids": self.ids,
             "default_use_template": True,
             "default_template_id": template.id,
             "default_composition_mode": "comment",

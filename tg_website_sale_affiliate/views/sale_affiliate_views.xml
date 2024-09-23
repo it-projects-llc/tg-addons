@@ -30,7 +30,7 @@
                     name="web_ribbon"
                     title="Archived"
                     bg_color="bg-danger"
-                    attrs="{'invisible': [('active', '=', True)]}"
+                    invisible="active == True"
                 />
                 <field name="active" invisible="1" />
             </xpath>
@@ -67,7 +67,7 @@
         <field name="code">action = records._send_invitation()</field>
     </record>
 
-    <record id="sale_affilaite_view_search" model="ir.ui.view">
+    <record id="sale_affiliate_view_search" model="ir.ui.view">
         <field name="name">sale.affiliate.search.tg</field>
         <field name="model">sale.affiliate</field>
         <field

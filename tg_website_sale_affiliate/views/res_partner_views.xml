@@ -13,7 +13,7 @@
                     icon="fa-handshake-o"
                 >
                     <field
-                        string="Affliaites"
+                        string="Affiliates"
                         name="affiliate_count"
                         widget="statinfo"
                     />

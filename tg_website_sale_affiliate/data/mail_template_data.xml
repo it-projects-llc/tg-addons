@@ -6,16 +6,18 @@
         <field name="subject">Affiliate Invitation</field>
         <field
             name="email_from"
-        >"${object.company_id.name | safe}" &lt;${(object.company_id.email or user.email) | safe}&gt;</field>
-        <field name="email_to">${object.partner_id.email_formatted | safe}</field>
-        <field name="lang">${object.partner_id.lang}</field>
+        >"{{ object.company_id.name}}" &lt;{{ (object.company_id.email or user.email)}}&gt;</field>
+        <field name="email_to">{{ object.partner_id.email_formatted }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="body_html" type="html">
-            <p>Hello, ${object.name}!</p>
+            <p>Hello, <t
+                    t-out="object.partner_id.name or ''"
+                >user</t>!</p> <!-- Replaced object.name with partner name -->
             <p />
-            <p>Your affiliate link: <a
-                    href="${object.referal_link}"
-                >${object.referal_link}</a></p>
-            <p>Your promo code: ${object.promo_code}</p>
+            <p>Your affiliate link: <a t-attf-href='{{object.referal_link}}'><t
+                        t-out="object.referal_link or ''"
+                    >referal_link</t></a></p>
+            <p>Your promo code: <t t-out="object.promo_code or ''">promo_code</t></p>
         </field>
     </record>
 </odoo>
