@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="loyalty_program_view_form" model="ir.ui.view">
+        <field name="name">loyalty.program.view.form.tg</field>
+        <field name="model">loyalty.program</field>
+        <field name="inherit_id" ref="loyalty.loyalty_program_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='program_type']" position="attributes">
+                <attribute
+                    name="invisible"
+                >context.get('lock_promo_code_usage')</attribute>
+            </xpath>
+            <xpath expr="//field[@name='program_type']/.." position="after">
+                <field
+                    name="program_type"
+                    readonly="1"
+                    invisible="not context.get('lock_promo_code_usage')"
+                />
+                <field
+                    name="only_affiliate_usage"
+                    force_save="1"
+                    readonly="1"
+                    invisible="program_type != 'promotion'"
+                />
+                <field
+                    name="affiliates"
+                    invisible="program_type != 'promotion' or not only_affiliate_usage"
+                    readonly="1"
+                >
+                    <tree>
+                        <field name="name" />
+                    </tree>
+                </field>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

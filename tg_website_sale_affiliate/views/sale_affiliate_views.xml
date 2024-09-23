@@ -30,7 +30,7 @@
                     name="web_ribbon"
                     title="Archived"
                     bg_color="bg-danger"
-                    attrs="{'invisible': [('active', '=', True)]}"
+                    invisible="active == True"
                 />
                 <field name="active" invisible="1" />
             </xpath>
@@ -41,7 +41,11 @@
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="referal_link" widget="url" />
                 <field name="promo_code" />
-                <field name="code_promo_program_id" />
+                <field
+                    name="code_promo_program_id"
+                    domain="[('program_type', '=', 'promotion'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]"
+                    context="{'form_view_ref': 'loyalty.loyalty_program_view_form','lock_promo_code_usage': 1,'default_program_type': 'promotion', 'default_only_affiliate_usage': 1, 'default_company_id': company_id, 'default_trigger': 'auto'}"
+                />
             </xpath>
             <xpath expr="//sheet" position="after">
                 <div class="oe_chatter">
@@ -67,7 +71,7 @@
         <field name="code">action = records._send_invitation()</field>
     </record>
 
-    <record id="sale_affilaite_view_search" model="ir.ui.view">
+    <record id="sale_affiliate_view_search" model="ir.ui.view">
         <field name="name">sale.affiliate.search.tg</field>
         <field name="model">sale.affiliate</field>
         <field

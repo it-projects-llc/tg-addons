@@ -23,10 +23,8 @@ class SaleAffiliate(models.Model):
 
     partner_id = fields.Many2one("res.partner")
     code_promo_program_id = fields.Many2one(
-        "coupon.program",
+        "loyalty.program",
         string="Promo Program",
-        context="{'form_view_ref': 'coupon.coupon_program_view_promo_program_form', 'lock_promo_code_usage': 1, 'default_program_type': 'promotion_program', 'default_promo_code_usage': 'code_needed', 'default_company_id': company_id}",  # noqa: E950
-        domain="[('program_type', '=', 'promotion_program'), ('promo_code_usage', '=', 'code_needed'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",  # noqa: E950
         copy=False,
     )
     order_count = fields.Integer(compute="_compute_order_count")
@@ -125,7 +123,7 @@ GROUP BY sar.affiliate_id
             template._render_lang(self.ids)[self.id]
         ctx = {
             "default_model": self._name,
-            "default_res_id": self.ids[0],
+            "default_res_ids": self.ids,
             "default_use_template": True,
             "default_template_id": template.id,
             "default_composition_mode": "comment",

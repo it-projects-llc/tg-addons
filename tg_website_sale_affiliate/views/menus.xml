@@ -24,30 +24,23 @@
         action="website_sale_affiliate.sale_affiliate_request_action"
     />
 
-    <record id="coupon_program_action_promo_program" model="ir.actions.act_window">
+    <record id="loyalty_program_action_promo_program" model="ir.actions.act_window">
         <field name="name">Promotion Programs</field>
-        <field name="res_model">coupon.program</field>
+        <field name="res_model">loyalty.program</field>
         <field name="view_mode">tree,kanban,form</field>
         <field
             name="view_ids"
             eval="[
             (5, 0, 0),
             (0, 0, {'view_mode': 'tree'}),
-            (0, 0, {'view_mode': 'form', 'view_id': ref('coupon.coupon_program_view_promo_program_form')})]"
+            (0, 0, {'view_mode': 'form', 'view_id': ref('loyalty.loyalty_program_view_form')})]"
         />
-        <field
-            name="search_view_id"
-            ref="coupon.coupon_program_view_promo_program_search"
-        />
-        <field
-            name="domain"
-        >[('program_type', '=', 'promotion_program'), ('promo_code_usage', '=', 'code_needed')]</field>
+        <field name="search_view_id" ref="loyalty.loyalty_program_view_search" />
+        <field name="domain">[('program_type', '=', 'promotion')]</field>
         <field name="context">{
-            'default_program_type': 'promotion_program',
-            'default_promo_code_usage': 'code_needed',
-            'default_validity_duration': 0,
+            'default_program_type': 'promotion',
+            'default_only_affiliate_usage': True,
             'lock_promo_code_usage': 1,
-            'search_default_opened': 1
             }</field>
     </record>
 
@@ -56,7 +49,7 @@
         name="Promotion programs"
         sequence="30"
         parent="affiliate_menu_root"
-        action="coupon_program_action_promo_program"
+        action="loyalty_program_action_promo_program"
     />
 
 </odoo>
