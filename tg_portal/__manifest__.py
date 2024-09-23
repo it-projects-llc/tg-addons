@@ -4,11 +4,20 @@
     "author": "IT-Projects LLC, Eugene Molotov",
     "support": "it@it-projects.info",
     "website": "https://github.com/it-projects-llc/tg-addons",
-    "license": "LGPL-3",
+    "license": "AGPL-3",
     "depends": [
         "portal",
+        "partner_contact_nationality",
+        "partner_identification",
+        "partner_contact_birthdate",
     ],
-    "data": [],
+    "data": [
+        "views/portal_templates.xml",
+    ],
     "demo": [],
-    "qweb": [],
+    "assets": {
+        "web.assets_frontend": [
+            "tg_portal/static/src/js/portal.js",
+        ],
+    },
 }
