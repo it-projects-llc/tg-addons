@@ -57,12 +57,12 @@ class SaleAffiliate(models.Model):
     def _get_order_dict(self):
         self.env.cr.execute(
             """
-            SELECT sar.affiliate_id, array_agg(DISTINCT so.id)
-            FROM sale_affiliate_request sar
-            LEFT JOIN sale_order so ON so.affiliate_request_id = sar.id
-            WHERE so.id IS NOT NULL AND sar.affiliate_id IN %s
-            GROUP BY sar.affiliate_id
-            """,
+SELECT sar.affiliate_id, array_agg(DISTINCT so.id)
+FROM sale_affiliate_request sar
+LEFT JOIN sale_order so ON so.affiliate_request_id = sar.id
+WHERE so.id IS NOT NULL AND sar.affiliate_id IN %s
+GROUP BY sar.affiliate_id
+        """,
             [tuple(self.ids)],
         )
 
@@ -71,15 +71,15 @@ class SaleAffiliate(models.Model):
     def _get_invoice_dict(self):
         self.env.cr.execute(
             """
-            SELECT sar.affiliate_id, array_agg(DISTINCT aml.move_id)
-            FROM sale_affiliate_request sar
-            LEFT JOIN sale_order so ON so.affiliate_request_id = sar.id
-            LEFT JOIN sale_order_line sol ON sol.order_id = so.id
-            LEFT JOIN sale_order_line_invoice_rel solir ON solir.order_line_id = sol.id
-            LEFT JOIN account_move_line aml ON aml.id = solir.invoice_line_id
-            WHERE aml.move_id IS NOT NULL AND sar.affiliate_id IN %s
-            GROUP BY sar.affiliate_id
-            """,
+SELECT sar.affiliate_id, array_agg(DISTINCT aml.move_id)
+FROM sale_affiliate_request sar
+LEFT JOIN sale_order so ON so.affiliate_request_id = sar.id
+LEFT JOIN sale_order_line sol ON sol.order_id = so.id
+LEFT JOIN sale_order_line_invoice_rel solir ON solir.order_line_id = sol.id
+LEFT JOIN account_move_line aml ON aml.id = solir.invoice_line_id
+WHERE aml.move_id IS NOT NULL AND sar.affiliate_id IN %s
+GROUP BY sar.affiliate_id
+        """,
             [tuple(self.ids)],
         )
 

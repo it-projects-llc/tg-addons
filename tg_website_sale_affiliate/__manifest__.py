@@ -9,7 +9,6 @@
     "data": [
         "security/ir.model.access.csv",
         "data/mail_template_data.xml",
-        # "views/coupon_program_views.xml",
         "views/portal_templates.xml",
         "views/res_partner_views.xml",
         "views/sale_affiliate_views.xml",
