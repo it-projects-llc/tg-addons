@@ -10,9 +10,6 @@
     "license": "AGPL-3",
     "depends": [
         "portal",
-        "partner_contact_nationality",
-        "partner_identification",
-        "partner_contact_birthdate",
     ],
     "data": [
         "views/assets.xml",
