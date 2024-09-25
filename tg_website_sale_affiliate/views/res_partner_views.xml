@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <div name="button_box" position="inside">
                 <button
-                    class="oe_stat_button"
+                    class="oe_stat_button custom_affiliate_button"
                     type="object"
                     name="action_show_affiliates"
                     icon="fa-handshake-o"

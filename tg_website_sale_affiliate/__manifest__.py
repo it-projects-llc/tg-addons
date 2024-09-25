@@ -14,6 +14,11 @@
         "views/sale_affiliate_views.xml",
         "views/menus.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "tg_website_sale_affiliate/static/src/css/style.css",
+        ],
+    },
     "demo": [],
     "qweb": [],
 }
