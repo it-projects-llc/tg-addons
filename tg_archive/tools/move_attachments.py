@@ -77,7 +77,7 @@ def upload_attachments(attachments, directory_id):
         _logger.warning("Problems when unlinking %s: %s" % (attachments, str(e)))
 
     attachments.env.cr.commit()
-    attachments._file_gc()
+    attachments._gc_file_store()
 
 
 def init_hacks():
@@ -101,6 +101,7 @@ FROM (
     LEFT JOIN account_move j ON j.id = a.res_id
     WHERE a.res_model = 'account.move'
     AND a.res_field IS NULL
+    AND a.checksum IS NOT NULL
     AND j.company_id = %s
     AND j.invoice_date <= %s
     GROUP BY a.res_id, a.res_model
