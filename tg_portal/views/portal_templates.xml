@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <template id="details_passport" inherit_id="portal.portal_my_details">
+    <template id="details_passport" inherit_id="portal.portal_my_details_fields">
         <xpath expr="//select[@name='state_id']/.." position="after">
             <br />
             <div t-attf-class="form-group col-lg-12">

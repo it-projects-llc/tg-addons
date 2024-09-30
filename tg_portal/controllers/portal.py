@@ -25,9 +25,8 @@ class TGCustomerPortal(CustomerPortal):
         partner_fields = request.env["res.partner"]._fields
         for fname in TG_BASE_AGPL_FIELDS:
             if fname not in partner_fields:
-                _logger.warning(
-                    "Missing field %s. Probably tg_base_agpl is not installed"
-                    % (fname,)
+                raise Exception(
+                    f"Missing field {fname}. Probably tg_base_agpl is not installed"
                 )
         return res
 
