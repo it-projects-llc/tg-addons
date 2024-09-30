@@ -59,7 +59,10 @@ class EventGuest(models.Model):
     @api.depends("code", "event")
     def _compute_invite_url(self):
         for guest in self:
-            guest.invite_url = urljoin(
-                guest.event.get_base_url(),
-                f"/web/signup?guest_register_code={guest.code}&redirect=%2Fmy%2Faccount",
-            )
+            if guest.event:
+                guest.invite_url = urljoin(
+                    guest.event.get_base_url(),
+                    f"/web/signup?guest_register_code={guest.code}&redirect=%2Fmy%2Faccount",
+                )
+            else:
+                guest.invite_url = False
