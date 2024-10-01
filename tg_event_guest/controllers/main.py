@@ -1,3 +1,4 @@
+from odoo import _
 from odoo.http import request
 
 from odoo.addons.auth_signup.controllers.main import (
@@ -21,6 +22,8 @@ class AuthSignupHome(BaseAuthSignupHome):
                     qcontext["name"] = guest.name or ""
                 if not qcontext.get("login"):
                     qcontext["login"] = guest.email or ""
+                if request.session.uid:
+                    qcontext["error"] = _("You need to logout to register guest")
 
         return qcontext
 
