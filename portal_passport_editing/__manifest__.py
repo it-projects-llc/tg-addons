@@ -13,7 +13,6 @@
     ],
     "data": [
         "views/assets.xml",
-        "views/website_portal_templates.xml",
     ],
     "demo": [],
 }

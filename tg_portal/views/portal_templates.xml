@@ -9,16 +9,16 @@
             </div>
             <br />
             <div
-                t-attf-class="form-group form-check #{error.get('passport') and 'o_has_error' or ''} col-lg-6"
+                t-attf-class="mb-3 #{error.get('passport') and 'o_has_error' or ''} col-xl-6"
             >
-                <label class="control-label" for="passport">Passport</label>
+                <label class="col-form-label" for="passport">Passport</label>
                 <input
                     type="text"
                     name="passport"
                     t-attf-class="form-control #{error.get('passport') and 'is-invalid' or ''}"
                     t-att-value="passport or partner.passport"
                 />
-                <div class="form-check" t-if="show_passport_checkbox">
+                <div class="mb-3" t-if="show_passport_checkbox">
                     <input
                         class="form-check-input"
                         type="checkbox"
@@ -26,6 +26,8 @@
                         name="is_passport_not_ready"
                         t-att-checked="is_passport_not_ready or partner.is_passport_not_ready"
                     />
+                    <!-- TODO: form-check-label? -->
+                    <!-- TODO: form-check-input? -->
                     <label
                         class="form-check-label"
                         for="is_passport_not_ready"
@@ -33,7 +35,7 @@
                 </div>
             </div>
             <div
-                t-attf-class="form-group form-check #{error.get('cedula') and 'o_has_error' or ''} col-lg-6"
+                t-attf-class="mb-3 #{error.get('cedula') and 'o_has_error' or ''} col-xl-6"
             >
                 <t t-set="has_cedula" t-value="has_cedula or partner.has_cedula" />
 
@@ -62,9 +64,9 @@
                 </div>
             </div>
             <div
-                t-attf-class="form-group #{error.get('birthdate_date') and 'o_has_error' or ''} col-lg-6"
+                t-attf-class="mb-3 #{error.get('birthdate_date') and 'o_has_error' or ''} col-xl-6"
             >
-                <label class="control-label" for="birthdate_date">Date of Birth</label>
+                <label class="col-form-label" for="birthdate_date">Date of Birth</label>
                 <input
                     type="date"
                     name="birthdate_date"
@@ -73,10 +75,10 @@
                 />
             </div>
             <div
-                t-attf-class="form-group #{error.get('nationality_id') and 'o_has_error' or ''} col-lg-6"
+                t-attf-class="mb-3 #{error.get('nationality_id') and 'o_has_error' or ''} col-xl-6"
             >
                 <label
-                    class="control-label"
+                    class="col-form-label"
                     for="nationality_id"
                 >Country of Citizenship</label>
                 <select
