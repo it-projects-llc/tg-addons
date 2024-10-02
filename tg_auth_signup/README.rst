@@ -4,6 +4,8 @@
 
 * Increases font of "Reset password" and "Signup buttons" under "Login" button
 
+* Signup URL depends on current website
+
 Credits
 =======
 
