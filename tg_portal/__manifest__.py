@@ -8,7 +8,9 @@
     "depends": [
         "portal",
     ],
-    "data": [],
+    "data": [
+        "views/portal_templates.xml",
+    ],
     "demo": [],
     "qweb": [],
 }
