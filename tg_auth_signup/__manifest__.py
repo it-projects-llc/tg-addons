@@ -7,6 +7,7 @@
     "license": "LGPL-3",
     "depends": [
         "auth_signup",
+        "website",  # required at least for running tests
     ],
     "external_dependencies": {"python": [], "bin": []},
     "data": [
