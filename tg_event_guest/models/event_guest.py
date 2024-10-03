@@ -19,6 +19,10 @@ class EventGuest(models.Model):
     event = fields.Many2one(
         "event.event", required=True, domain="[('stage_id.pipe_end', '=', False)]"
     )
+    guest_partner = fields.Many2one(
+        "res.partner", compute="_compute_guest_partner", store=True
+    )
+
     event_ticket = fields.Many2one(
         "event.event.ticket",
         required=True,
@@ -56,13 +60,32 @@ class EventGuest(models.Model):
             limit=1,
         )
 
-    @api.depends("code", "event")
+    @api.depends("email")
+    def _compute_guest_partner(self):
+        with_email = self.filtered("email")
+        for record in self:
+            record.guest_partner = self.env["res.partner"].search(
+                [
+                    ("email", "=", record.email),
+                ],
+                limit=1,
+            )
+
+        (self - with_email).write(
+            {
+                "guest_partner": False,
+            }
+        )
+
+    @api.depends("code", "event", "guest_partner")
     def _compute_invite_url(self):
         for guest in self:
             if guest.event:
-                guest.invite_url = urljoin(
-                    guest.event.get_base_url(),
-                    f"/web/signup?guest_register_code={guest.code}&redirect=%2Fmy%2Faccount",
-                )
+                if guest.guest_partner:
+                    path = f"/my/account?guest_register_code={guest.code}"
+                else:
+                    path = f"/web/signup?guest_register_code={guest.code}&redirect=%2Fmy%2Faccount"  # noqa: B950
+
+                guest.invite_url = urljoin(guest.event.get_base_url(), path)
             else:
                 guest.invite_url = False
