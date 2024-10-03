@@ -1,6 +1,6 @@
 import werkzeug.urls
 
-from odoo import api, fields, models
+from odoo import api, models
 
 
 class Partner(models.Model):
