@@ -8,6 +8,7 @@
                 <group>
                     <field name="name" />
                     <field name="email" />
+                    <field name="guest_partner" />
                     <field name="event" />
                     <field name="event_ticket" />
                     <field name="code" />
