@@ -6,6 +6,14 @@ from odoo.addons.portal.controllers.portal import CustomerPortal as BaseCustomer
 class CustomerPortal(BaseCustomerPortal):
     @route()
     def account(self, redirect=None, **post):
+        if not request.httprequest.method == "POST":
+            if post.get("guest_register_code"):
+                guest = request.env["event.guest"]._get_by_code(
+                    post["guest_register_code"]
+                )
+                if guest.guest_partner == request.env.user.partner_id:
+                    guest.result_partner = request.env.user.partner_id
+
         res = super(CustomerPortal, self).account(redirect, **post)
 
         if not request.httprequest.method == "POST":
