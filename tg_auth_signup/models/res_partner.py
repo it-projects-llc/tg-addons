@@ -15,11 +15,15 @@ class Partner(models.Model):
         if not self.env.context.get("relative_url"):
             website = self.env["website"].get_current_website()
             if website:
-                base_url = website._get_http_domain()
+                base_url = website.domain
 
                 if base_url:
                     for k in res.keys():
-                        relative_url = website._get_relative_url(res[k])
+                        relative_url = self._get_relative_url(res[k])
                         res[k] = werkzeug.urls.url_join(base_url, relative_url)
 
         return res
+
+    def _get_relative_url(self, url):
+        """Remove scheme and domain from the given URL, returning a relative URL."""
+        return werkzeug.urls.url_parse(url).replace(scheme="", netloc="").to_url()
