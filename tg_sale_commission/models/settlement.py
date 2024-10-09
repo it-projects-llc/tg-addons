@@ -8,11 +8,11 @@ class Settlement(models.Model):
     def name_get(self):
         res = []
         for record in self:
-            name = _("Settlement for %s (%s - %s)") % (
-                record.agent_id.name,
-                record.date_from,
-                record.date_to,
-            )
+            name = _("Settlement for %(agent_name)s (%(date_from)s - %(date_to)s)") % {
+                "agent_name": record.agent_id.name,
+                "date_from": record.date_from,
+                "date_to": record.date_to,
+            }
             res.append((record.id, name))
         return res
 
