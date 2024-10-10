@@ -11,7 +11,7 @@
     <menuitem
         id="menu_agents"
         parent="menu_sale_commissions_management"
-        action="sale_commission.action_agent_form"
+        action="commission.action_agent_form"
         sequence="10"
     />
 
@@ -19,7 +19,7 @@
         name="Commission types"
         id="menu_sale_commissions_types"
         parent="menu_sale_commissions_management"
-        action="sale_commission.action_commission"
+        action="commission.action_commission"
         sequence="20"
     />
 
@@ -27,14 +27,14 @@
         name="Settlements"
         id="menu_settlements"
         parent="menu_sale_commissions_management"
-        action="sale_commission.action_settle_commission"
+        action="commission.action_commission_settlement"
         sequence="40"
     />
 
     <menuitem
         id="menu_agents_settlement"
         parent="menu_sale_commissions_management"
-        action="sale_commission.action_agents_settlement"
+        action="commission.action_agents_settlement"
         sequence="50"
     />
 
@@ -42,6 +42,6 @@
         id="menu_commission_make_invoices"
         parent="menu_sale_commissions_management"
         sequence="60"
-        action="sale_commission.action_commission_make_invoices"
+        action="account_commission.action_commission_make_invoices"
     />
 </odoo>

@@ -9,27 +9,27 @@
                 <field name="ui_hide_commission_fields" invisible="1" />
             </xpath>
             <xpath expr="//button[@name='button_edit_agents']" position="attributes">
-                <attribute
-                    name="attrs"
-                >{'invisible': ['|', '|', ('commission_free', '=', True), ('invoice_lines', '!=', []), ('parent.ui_hide_commission_fields', '=', True)]}</attribute>
+                <attribute name="invisible">
+                commission_free == True or invoice_lines != [] or parent.ui_hide_commission_fields == True
+                </attribute>
             </xpath>
             <xpath expr="//field[@name='commission_status']" position="attributes">
-                <attribute
-                    name="attrs"
-                >{'column_invisible': [('parent.ui_hide_commission_fields', '=', True)]}</attribute>
+                <attribute name="column_invisible">
+                parent.ui_hide_commission_fields == True
+                </attribute>
             </xpath>
             <xpath expr="//field[@name='commission_total']" position="attributes">
-                <attribute
-                    name="attrs"
-                >{'invisible': [('ui_hide_commission_fields', '=', True)]}</attribute>
+                <attribute name="invisible">
+                ui_hide_commission_fields == True
+                </attribute>
             </xpath>
             <xpath
                 expr="//group[@name='group_recompute_commission']"
                 position="attributes"
             >
-                <attribute
-                    name="attrs"
-                >{'invisible': [('ui_hide_commission_fields', '=', True)]}</attribute>
+                <attribute name="invisible">
+                ui_hide_commission_fields == True
+                </attribute>
             </xpath>
         </field>
     </record>
