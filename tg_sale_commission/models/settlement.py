@@ -3,7 +3,7 @@ from odoo.exceptions import UserError
 
 
 class Settlement(models.Model):
-    _inherit = "sale.commission.settlement"
+    _inherit = "commission.settlement"
 
     def name_get(self):
         res = []
@@ -18,12 +18,12 @@ class Settlement(models.Model):
 
 
 class SettlementLine(models.Model):
-    _inherit = "sale.commission.settlement.line"
+    _inherit = "commission.settlement.line"
 
-    @api.constrains("settlement_id", "agent_line")
+    @api.constrains("settlement_id", "invoice_agent_line_id")
     def _check_company(self):
         for record in self:
-            for line in record.agent_line:
+            for line in record.invoice_agent_line_id:
                 if (
                     line.company_id != record.company_id
                     and line.company_id.commission_settlement_company

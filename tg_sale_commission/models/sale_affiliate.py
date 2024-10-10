@@ -7,13 +7,16 @@ class SaleAffiliate(models.Model):
     partner_id = fields.Many2one("res.partner", domain="[('agent', '=', True)]")
     bill_count = fields.Integer(compute="_compute_bill_count")
     commission_id = fields.Many2one(
-        "sale.commission",
+        "commission",
         related="partner_id.commission_id",
         store=False,
         readonly=False,
     )
 
     def _get_bill_dict(self):
+        partner_ids = self.mapped("partner_id").ids
+        if not partner_ids:
+            return {}
         self.env.cr.execute(
             """
 SELECT partner_id, array_agg(id)
@@ -23,13 +26,13 @@ WHERE id IN (
     FROM account_move_line
     WHERE settlement_id IN (
         SELECT id
-        FROM sale_commission_settlement
+        FROM commission_settlement
         WHERE agent_id IN %s
     )
 )
 GROUP BY partner_id
         """,
-            [tuple(self.mapped("partner_id").ids)],
+            [tuple(partner_ids)],
         )
 
         return {row[0]: row[1] for row in self.env.cr.fetchall()}
