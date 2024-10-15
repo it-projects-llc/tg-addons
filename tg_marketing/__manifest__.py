@@ -18,6 +18,6 @@
         "views/contact_views.xml",
         "wizard/marketing_answer_merge_views.xml",
     ],
-    "demo": [],
+    "demo": ["data/event_question_demo.xml"],
     "qweb": [],
 }
