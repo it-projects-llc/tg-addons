@@ -5,11 +5,7 @@
     "support": "it@it-projects.info",
     "website": "https://github.com/it-projects-llc/tg-addons",
     "license": "LGPL-3",
-    "depends": [
-        "auth_signup",
-        "event_sale",
-        "portal",
-    ],
+    "depends": ["auth_signup", "event_sale", "portal", "mail"],
     "data": [
         "security/ir.model.access.csv",
         "data/mail_template_data.xml",
