@@ -7,7 +7,9 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="Marketing answers">
-                    <field name="marketing_1" />
+                    <group>
+                        <field name="marketing_1" />
+                    </group>
                 </page>
             </xpath>
         </field>
