@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="portal_my_details" inherit_id="portal.portal_my_details">
-        <xpath expr="//input[@name='csrf_token']" position="after">
+        <xpath expr="//div[@class='row o_portal_details']" position="before">
             <input
                 type="hidden"
                 name="guest_register_code"

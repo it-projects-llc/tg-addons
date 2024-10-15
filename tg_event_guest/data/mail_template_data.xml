@@ -3,21 +3,25 @@
     <record id="email_template_partner" model="mail.template">
         <field name="name">Guest Mass Mail</field>
         <field name="model_id" ref="model_event_guest" />
-        <field name="email_to">${object.email|safe}</field>
-        <field name="subject">Invitation to ${object.event.name}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="subject">Invitation to {{ object.event.name }}</field>
         <field name="auto_delete" eval="True" />
-        <field name="lang">${object.lang}</field>
         <field name="body_html" type="html">
-            <p>Hello, ${object.name}!</p>
+            <p>Hello, <t t-out="object.name or ''">object name</t>!</p>
             <br />
             <p>
-                Please complete your registration to ${object.event.display_name} using the
-                <a href="${object.invite_url}">link</a>
+                Please complete your registration to <t
+                    t-out="object.event.display_name or ''"
+                >event display_name</t> using the
+                <a href="{{ object.invite_url }}">link</a>
             </p>
             <p>Thank you!</p>
             <br />
-            <p
-            >You are receiving this email because ${object.invited_by.name} has invited you to ${object.event.display_name}. Please, let us know if you believe this email has been sent to you by mistake.</p>
+            <p>You are receiving this email because <t
+                    t-out="object.invited_by.name or ''"
+                >invited_by name</t> has invited you to <t
+                    t-out="object.event.display_name or ''"
+                >event display_name</t>. Please, let us know if you believe this email has been sent to you by mistake.</p>
             <br />
             <p>Tribal Gathering Crew</p>
         </field>
