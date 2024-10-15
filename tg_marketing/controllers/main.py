@@ -6,7 +6,7 @@ from odoo.addons.website_event.controllers.main import WebsiteEventController
 class WebsiteEventMarketing(WebsiteEventController):
     @route()
     def registration_confirm(self, event, **post):
-        res = super(WebsiteEventMarketing, self).registration_confirm(event, **post)
+        res = super().registration_confirm(event, **post)
 
         MarketingAnswers = request.env["res.partner.marketing.answer"].sudo()
         partner_marketing_vals = {}
