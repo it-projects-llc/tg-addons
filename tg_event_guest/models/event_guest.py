@@ -84,7 +84,7 @@ class EventGuest(models.Model):
                 if guest.guest_partner:
                     path = f"/my/account?guest_register_code={guest.code}"
                 else:
-                    path = f"/web/signup?guest_register_code={guest.code}&redirect=%2Fmy%2Faccount"  # noqa: B950
+                    path = f"/web/signup?guest_register_code={guest.code}&redirect=%2Fmy%2Faccount"  # noqa: B950 E501
 
                 guest.invite_url = urljoin(guest.event.get_base_url(), path)
             else:

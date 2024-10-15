@@ -8,7 +8,7 @@ from odoo.addons.auth_signup.controllers.main import (
 
 class AuthSignupHome(BaseAuthSignupHome):
     def get_auth_signup_qcontext(self):
-        qcontext = super(AuthSignupHome, self).get_auth_signup_qcontext()
+        qcontext = super().get_auth_signup_qcontext()
         if not qcontext.get("guest_register_code") and request.params.get(
             "guest_register_code"
         ):
@@ -41,7 +41,7 @@ class AuthSignupHome(BaseAuthSignupHome):
             if not guest or guest.result_partner:
                 guest = None
 
-        res = super(AuthSignupHome, self)._signup_with_values(token, values)
+        res = super()._signup_with_values(token, values)
 
         if guest:
             guest.result_partner = (
