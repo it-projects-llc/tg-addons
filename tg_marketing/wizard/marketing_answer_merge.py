@@ -8,7 +8,7 @@ class MarketingAnswerMerge(models.TransientModel):
 
     @api.model
     def default_get(self, fields):
-        res = super(MarketingAnswerMerge, self).default_get(fields)
+        res = super().default_get(fields)
         active_ids = self.env.context.get("active_ids")
         if not active_ids:
             return res
