@@ -14,7 +14,7 @@
 
             <t t-if="marketing_questions">
                 <div
-                    class="modal-body bg-light border-bottom o_wevent_registration_question_global"
+                    class="modal-body bg-white border-bottom o_wevent_registration_question_global"
                 >
                     <div t-foreach="marketing_questions" t-as="question" class="row">
                         <div class="col-lg-6 mt-2">
@@ -49,7 +49,7 @@
         <select
             t-attf-name="marketing_answer-#{registration_index}-#{question.field_name}"
             t-attf-data-name="marketing_answer-#{registration_index}-#{question.field_name}"
-            class="custom-select marketing-question-select"
+            class="form-select marketing-question-select"
             required="true"
         >
             <t t-foreach="question.canned_answers" t-as="answer">
