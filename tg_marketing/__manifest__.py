@@ -1,6 +1,6 @@
 {
     "name": """Marketing fields in Contact""",
-    "version": "14.0.0.2.2",
+    "version": "17.0.0.2.2",
     "author": "IT-Projects LLC",
     "support": "it@it-projects.info",
     "website": "https://github.com/it-projects-llc/tg-addons",
