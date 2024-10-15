@@ -6,8 +6,8 @@
         <field name="arch" type="xml">
             <tree editable="bottom">
                 <field name="sequence" widget="handle" />
-                <field name="field" required="1" />
-                <field name="answer" required="1" />
+                <field name="field" options="{'no_create': 1}" />
+                <field name="answer" />
                 <field name="is_canned" />
             </tree>
         </field>

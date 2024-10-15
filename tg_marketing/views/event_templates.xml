@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="registration_attendee_marketing_questions"
+        inherit_id="website_event.registration_attendee_details"
+    >
+        <xpath expr="//*[hasclass('modal-footer')]" position="before">
+
+            <t
+                t-if="not website.is_public_user()"
+                t-set="marketing_questions"
+                t-value="env.user.partner_id._get_unanswered_marketing_questions()"
+            />
+
+            <t t-if="marketing_questions">
+                <div
+                    class="modal-body bg-light border-bottom o_wevent_registration_question_global"
+                >
+                    <div t-foreach="marketing_questions" t-as="question" class="row">
+                        <div class="col-lg-6 mt-2">
+                            <t t-call="tg_marketing.registration_event_question">
+                                <t t-set="registration_index" t-value="0" />
+                            </t>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(".marketing-question-select").on("change", function() {
+                        var $t = $(this);
+                        var fieldName = $t.data("name");
+                        if ($t.find("option[data-custom]:selected").length) {
+                            $t.removeAttr("name");
+                            $("input[data-name=" + fieldName + "]").attr("name", fieldName).show();
+                        } else {
+                            $t.attr("name", fieldName);
+                            $("input[data-name=" + fieldName + "]").removeAttr("name").hide();
+                        }
+                    });
+                </script>
+            </t>
+        </xpath>
+    </template>
+
+    <template
+        id="registration_event_question"
+        name="Registration Event Marketing Question"
+    >
+        <label t-esc="question.title" />
+        <select
+            t-attf-name="marketing_answer-#{registration_index}-#{question.field_name}"
+            t-attf-data-name="marketing_answer-#{registration_index}-#{question.field_name}"
+            class="custom-select marketing-question-select"
+            required="true"
+        >
+            <t t-foreach="question.canned_answers" t-as="answer">
+                <option t-esc="answer.answer" t-att-value="answer.id" />
+            </t>
+            <option data-custom="1">Custom</option>
+        </select>
+        <input
+            type="text"
+            t-attf-data-name="marketing_answer-#{registration_index}-#{question.field_name}"
+            style="display: none"
+            class="col-lg-12 form-control"
+        />
+    </template>
+</odoo>
