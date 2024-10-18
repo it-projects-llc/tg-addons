@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="portal_my_details" inherit_id="portal.portal_my_details">
+        <xpath expr="//div[@class='row o_portal_details']" position="before">
+            <input
+                type="hidden"
+                name="guest_register_code"
+                t-if="guest_register_code"
+                t-att-value="guest_register_code"
+            />
+        </xpath>
+    </template>
+
+    <template id="signup" inherit_id="auth_signup.signup">
+        <xpath expr="//input[@name='csrf_token']" position="after">
+            <input
+                type="hidden"
+                name="guest_register_code"
+                t-if="guest_register_code"
+                t-att-value="guest_register_code"
+            />
+        </xpath>
+    </template>
+</odoo>
