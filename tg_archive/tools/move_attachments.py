@@ -2,10 +2,12 @@
 # pylint: disable=logging-not-lazy
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-module-docstring
+# pylint: disable=missing-manifest-dependency
 
 
-import os
 import logging
+import os
+
 import google.auth
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
@@ -14,29 +16,30 @@ PATH = "/tmp/move_attachments"
 
 _logger = logging.getLogger(__file__)
 creds, _ = google.auth.default()
-service = build('drive', 'v3', credentials=creds)
+service = build("drive", "v3", credentials=creds)
 company_folder_id = os.environ["COMPANY_FOLDER_ID"]
 
 
 def _create_folder(name, parent_id):
     file_metadata = {
-        'name': name,
-        'mimeType': 'application/vnd.google-apps.folder',
-        'parents': [parent_id]
+        "name": name,
+        "mimeType": "application/vnd.google-apps.folder",
+        "parents": [parent_id],
     }
 
-    obj = service.files().create(body=file_metadata, fields='id').execute()
+    obj = service.files().create(body=file_metadata, fields="id").execute()
     return obj["id"]
 
 
 def _create_file(name, input_path, mimetype, parent_id):
-    file_metadata = {
-        'name': name,
-        'parents': [parent_id]
-    }
+    file_metadata = {"name": name, "parents": [parent_id]}
 
     media = MediaFileUpload(input_path, mimetype=mimetype)
-    obj = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+    obj = (
+        service.files()
+        .create(body=file_metadata, media_body=media, fields="id")
+        .execute()
+    )
     return obj.get("id")
 
 
@@ -65,9 +68,20 @@ def upload_attachments(attachments, directory_id):
         _logger.info("uploading %s to %s..." % (attachment, directory_id))
         _, input_path = attachment._get_path(None, attachment.checksum)
         if not os.path.isfile(input_path):
-            _logger.warning("Skipping %s. %s is not a file" % (attachment, input_path,))
+            _logger.warning(
+                "Skipping %s. %s is not a file"
+                % (
+                    attachment,
+                    input_path,
+                )
+            )
             continue
-        fid = _create_file(remote_attachment_name, input_path, attachment.mimetype or None, directory_id)
+        fid = _create_file(
+            remote_attachment_name,
+            input_path,
+            attachment.mimetype or None,
+            directory_id,
+        )
         if not fid:
             raise Exception("Something happened, when upload file")
 
@@ -93,7 +107,8 @@ def init_hacks():
 def move_attachments(env, company_id, last_date):
     init_hacks()
 
-    env.cr.execute("""
+    env.cr.execute(
+        """
 SELECT array_agg(json_build_object('res_id', t.res_id, 'res_model', t.res_model, 'attachment_ids', t.attachment_ids))
 FROM (
     SELECT a.res_id, a.res_model, array_agg(a.id) AS attachment_ids
@@ -106,7 +121,9 @@ FROM (
     AND j.invoice_date <= %s
     GROUP BY a.res_id, a.res_model
 ) t
-    """, [company_id, last_date])
+    """,  # noqa: B950
+        [company_id, last_date],
+    )
     objs = env.cr.fetchone()[0] or []
 
     for obj in objs:
