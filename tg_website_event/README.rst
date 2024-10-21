@@ -15,7 +15,7 @@ Contributors
 Sponsors
 --------
 
-* `Tribal Gathering <https://www.tribalgathering.com/`__
+* `Tribal Gathering <https://www.tribalgathering.com/>`__
 
 Maintainers
 -----------
