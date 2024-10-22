@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="guest_view_form" model="ir.ui.view">
+        <field name="name">event.guest.form</field>
+        <field name="model">event.guest</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" />
+                    <field name="email" />
+                    <field name="guest_partner" />
+                    <field name="event" />
+                    <field name="event_ticket" />
+                    <field name="code" />
+                    <field name="guest_of" />
+                    <field name="invite_url" widget="url" />
+                </group>
+                <group>
+                    <field name="invited_by" />
+                    <field name="result_partner" />
+                    <field name="result_attendee" />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="guest_view_tree" model="ir.ui.view">
+        <field name="name">event.guest.tree</field>
+        <field name="model">event.guest</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="email" />
+                <field name="event" />
+                <field name="code" />
+                <field name="guest_of" />
+                <field name="invited_by" />
+                <field name="result_partner" />
+                <field name="result_attendee" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="guest_view_search" model="ir.ui.view">
+        <field name="name">event.guest.search</field>
+        <field name="model">event.guest</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="email" />
+                <field name="event" />
+                <filter
+                    name="no_result_attendee"
+                    string="No attendee"
+                    domain="[('result_attendee', '=', False)]"
+                />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_show_guests" model="ir.actions.act_window">
+        <field name="name">Guests</field>
+        <field name="res_model">event.guest</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{
+        'search_default_no_result_attendee': 1
+        }</field>
+    </record>
+
+    <menuitem
+        name="Guests"
+        id="menu_guests"
+        sequence="40"
+        action="action_show_guests"
+        parent="event.event_main_menu"
+        groups="base.group_user"
+    />
+
+    <record id="action_guest_mass_mail" model="ir.actions.act_window">
+        <field name="name">Send email</field>
+        <field name="res_model">mail.compose.message</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field
+            name="context"
+            eval="{
+                  'default_composition_mode': 'mass_mail',
+                  'default_partner_to': '${object.id or \'\'}',
+                  'default_use_template': True,
+                  'default_template_id': ref('email_template_partner'),
+                  }"
+        />
+        <field name="binding_model_id" ref="model_event_guest" />
+        <field name="binding_view_types">list,form</field>
+    </record>
+
+</odoo>
