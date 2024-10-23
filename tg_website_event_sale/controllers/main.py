@@ -12,9 +12,7 @@ class WebsiteEventSaleExtendController(WebsiteEventSaleController):
         order = request.website.sale_get_order(force_create=False)
         if order and order.state in ("draft", "cancel"):
             order.sudo().unlink()
-        return super(WebsiteEventSaleExtendController, self).registration_confirm(
-            *args, **post
-        )
+        return super().registration_confirm(*args, **post)
 
     @route()
     def events(self, *args, **kw):
@@ -25,7 +23,7 @@ class WebsiteEventSaleExtendController(WebsiteEventSaleController):
                 override_event_list = True
                 kw["tags"] = f"[{tag_id}]"
 
-        res = super(WebsiteEventSaleExtendController, self).events(*args, **kw)
+        res = super().events(*args, **kw)
         self._store_affiliate_info(**kw)
 
         if override_event_list:
@@ -40,18 +38,18 @@ class WebsiteEventSaleExtendController(WebsiteEventSaleController):
 
     @route()
     def event_page(self, *args, **kw):
-        res = super(WebsiteEventSaleExtendController, self).event_page(*args, **kw)
+        res = super().event_page(*args, **kw)
         self._store_affiliate_info(**kw)
         return res
 
     @route()
     def event(self, *args, **kw):
-        res = super(WebsiteEventSaleExtendController, self).event(*args, **kw)
+        res = super().event(*args, **kw)
         self._store_affiliate_info(**kw)
         return res
 
     @route()
     def event_register(self, *args, **kw):
-        res = super(WebsiteEventSaleExtendController, self).event_register(*args, **kw)
+        res = super().event_register(*args, **kw)
         self._store_affiliate_info(**kw)
         return res
