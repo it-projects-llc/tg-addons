@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<odoo>
-    <template id="login" inherit_id="auth_signup.login">
-        <xpath expr="//a[@t-if='signup_enabled']/.." position="attributes">
-            <!-- removed small class -->
-            <attribute name="class">justify-content-between mt-2 d-flex</attribute>
-        </xpath>
-    </template>
-</odoo>

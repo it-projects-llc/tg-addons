@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_sale_affiliate_sale_portal,Sales Affiliate Portal User,website_sale_affiliate.model_sale_affiliate,base.group_portal,1,0,0,0
