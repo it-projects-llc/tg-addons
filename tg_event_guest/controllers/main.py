@@ -26,26 +26,3 @@ class AuthSignupHome(BaseAuthSignupHome):
                     qcontext["error"] = _("You need to logout to register guest")
 
         return qcontext
-
-    def _signup_with_values(self, token, values):
-        qcontext = self.get_auth_signup_qcontext()
-        guest = None
-        if (
-            bool(request)
-            and not (request.session.uid)
-            and qcontext.get("guest_register_code")
-        ):
-            guest = request.env["event.guest"]._get_by_code(
-                qcontext["guest_register_code"]
-            )
-            if not guest or guest.result_partner:
-                guest = None
-
-        res = super(AuthSignupHome, self)._signup_with_values(token, values)
-
-        if guest:
-            guest.result_partner = (
-                request.env["res.users"].browse(request.session.uid).partner_id
-            )
-
-        return res
