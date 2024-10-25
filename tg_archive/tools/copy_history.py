@@ -23,14 +23,15 @@ def method1(env, old_cr):
         if len(rows) == 1:
             old_res_id = rows[0][0]
             env.cr.execute(
-                "UPDATE mail_message SET (res_id,model) = (%s,%s) WHERE (res_id, model) = (%s, 'account.voucher')",  # noqa: B950
+                "UPDATE mail_message SET (res_id,model) = (%s,%s) "
+                "WHERE (res_id, model) = (%s, 'account.voucher')",  # noqa: B950
                 [record.id, record._name, old_res_id],
             )
             env.cr.commit()
         else:
             _logger.info(
-                "%s, %s skipped method 1: rows count %s"
-                % (record.invoice_date, record, len(rows))
+                f"{record.invoice_date}, {record} "
+                f"skipped method 1: rows count {len(rows)}"
             )
 
 
@@ -45,19 +46,22 @@ def method2(env, old_cr):
 
     _logger.info("Using method 2")
     for record in records:
-        old_cr.execute("select id from account_voucher where name = %s", [record.name])
+        old_cr.execute(
+            "select id from account_voucher " "where name = %s", [record.name]
+        )
         rows = old_cr.fetchall()
         if len(rows) == 1:
             old_res_id = rows[0][0]
             env.cr.execute(
-                "UPDATE mail_message SET (res_id,model) = (%s,%s) WHERE (res_id, model) = (%s, 'account.voucher')",  # noqa: B950
+                "UPDATE mail_message SET (res_id,model) = (%s,%s) "
+                "WHERE (res_id, model) = (%s, 'account.voucher')",  # noqa: B950
                 [record.id, record._name, old_res_id],
             )
             env.cr.commit()
         else:
             _logger.info(
-                "%s, %s skipped method 2: rows count %s"
-                % (record.invoice_date, record, len(rows))
+                f"{record.invoice_date}, {record} "
+                f"skipped method 2: rows count {len(rows)}"
             )
 
 
@@ -74,18 +78,19 @@ def method3(env, old_cr):
     _logger.info("Using method 3")
     for record in records:
         old_cr.execute(
-            "select id from account_voucher where reference = %s", [record.ref]
+            "select id from account_voucher " "where reference = %s", [record.ref]
         )
         rows = old_cr.fetchall()
         if len(rows) == 1:
             old_res_id = rows[0][0]
             env.cr.execute(
-                "UPDATE mail_message SET (res_id,model) = (%s,%s) WHERE (res_id, model) = (%s, 'account.voucher')",  # noqa: B950
+                "UPDATE mail_message SET (res_id,model) = (%s,%s) "
+                "WHERE (res_id, model) = (%s, 'account.voucher')",  # noqa: B950
                 [record.id, record._name, old_res_id],
             )
             env.cr.commit()
         else:
             _logger.info(
-                "%s, %s skipped method 3: rows count %s"
-                % (record.invoice_date, record, len(rows))
+                f"{record.invoice_date}, {record} "
+                f"skipped method 3: rows count {len(rows)}"
             )

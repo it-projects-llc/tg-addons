@@ -65,16 +65,10 @@ def upload_attachments(attachments, directory_id):
         else:
             remote_attachment_name = str(attachment.id) + "_" + attachment.name
 
-        _logger.info("uploading %s to %s..." % (attachment, directory_id))
+        _logger.info(f"uploading {attachment} to {directory_id}...")
         _, input_path = attachment._get_path(None, attachment.checksum)
         if not os.path.isfile(input_path):
-            _logger.warning(
-                "Skipping %s. %s is not a file"
-                % (
-                    attachment,
-                    input_path,
-                )
-            )
+            _logger.warning(f"Skipping {attachment}. {input_path} is not a file")
             continue
         fid = _create_file(
             remote_attachment_name,
@@ -87,8 +81,8 @@ def upload_attachments(attachments, directory_id):
 
     try:
         attachments.unlink()
-    except IOError as e:
-        _logger.warning("Problems when unlinking %s: %s" % (attachments, str(e)))
+    except OSError as e:
+        _logger.warning(f"Problems when unlinking {attachments}: {str(e)}")
 
     attachments.env.cr.commit()
     attachments._gc_file_store()
@@ -109,7 +103,8 @@ def move_attachments(env, company_id, last_date):
 
     env.cr.execute(
         """
-SELECT array_agg(json_build_object('res_id', t.res_id, 'res_model', t.res_model, 'attachment_ids', t.attachment_ids))
+SELECT array_agg(json_build_object('res_id', t.res_id,
+'res_model', t.res_model, 'attachment_ids', t.attachment_ids))
 FROM (
     SELECT a.res_id, a.res_model, array_agg(a.id) AS attachment_ids
     FROM ir_attachment a
@@ -130,8 +125,8 @@ FROM (
         record = env[obj["res_model"]].browse(obj["res_id"])
         attachments = env["ir.attachment"].browse(obj["attachment_ids"])
 
-        _logger.info("record %s, attachments %s" % (record, attachments))
+        _logger.info(f"record {record}, attachments {attachments}")
         record_directory_id = get_directory_id(record)
 
-        _logger.info("uploading %s attachments..." % len(attachments))
+        _logger.info(f"uploading {len(attachments)} attachments...")
         upload_attachments(attachments, record_directory_id)

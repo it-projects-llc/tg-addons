@@ -17,7 +17,8 @@ def method1(env, old_cr, company_id):
     _logger.info("Using method 1")
     for receipt in records:
         old_cr.execute(
-            "select id, reference, google_folder_id from account_voucher where date = %s and partner_id = %s and round(amount, 2) = %s",  # noqa: B950
+            "select id, reference, google_folder_id from account_voucher "
+            "where date = %s and partner_id = %s and round(amount, 2) = %s",  # noqa: B950
             [
                 receipt.invoice_date,
                 receipt.partner_id.id,
@@ -27,13 +28,7 @@ def method1(env, old_cr, company_id):
         rows = old_cr.fetchall()
         if len(rows) == 1:
             row = rows[0]
-            _logger.info(
-                "%s, %s copied using method 1"
-                % (
-                    receipt.invoice_date,
-                    receipt,
-                )
-            )
+            _logger.info(f"{receipt.invoice_date}, {receipt} copied using method 1")
             receipt.write(
                 {
                     "ref": row[1],
@@ -43,8 +38,8 @@ def method1(env, old_cr, company_id):
             env.cr.commit()
         else:
             _logger.info(
-                "%s, %s skipped method 1: rows count %s, %s"
-                % (receipt.invoice_date, receipt, len(rows), receipt.partner_id.name)
+                f"{receipt.invoice_date}, {receipt} "
+                f"skipped method 1: rows count {len(rows)}, receipt.partner_id.name"
             )
 
 
@@ -68,20 +63,16 @@ def method2(env, old_cr, company_id):
             round(receipt.amount_total, 2),
         )
         old_cr.execute(
-            "select id, reference, google_folder_id from account_voucher where date = %s and partner_id = %s and round(amount, 2) = %s ORDER BY id DESC OFFSET %s LIMIT 1",  # noqa: B950
+            "select id, reference, google_folder_id from account_voucher "
+            "where date = %s and partner_id = %s and round(amount, 2) = %s "
+            "ORDER BY id DESC OFFSET %s LIMIT 1",  # noqa: B950
             list(key) + [counters[key]],
         )
         counters[key] += 1
         rows = old_cr.fetchall()
         if len(rows) == 1:
             row = rows[0]
-            _logger.info(
-                "%s, %s copied using method 2"
-                % (
-                    receipt.invoice_date,
-                    receipt,
-                )
-            )
+            _logger.info(f"{receipt.invoice_date}, {receipt} copied using method 2")
             receipt.write(
                 {
                     "ref": row[1],
@@ -91,8 +82,8 @@ def method2(env, old_cr, company_id):
             env.cr.commit()
         else:
             _logger.info(
-                "%s, %s skipped method 2: rows count %s"
-                % (receipt.invoice_date, receipt, len(rows))
+                f"{receipt.invoice_date}, {receipt} "
+                f"skipped method 2: rows count {len(rows)}"
             )
 
 
@@ -109,19 +100,15 @@ def method3(env, old_cr, company_id):
     _logger.info("Using method 3")
     for receipt in records:
         old_cr.execute(
-            "select id, google_folder_id from account_voucher where date = %s and partner_id = %s and reference = %s and google_folder_id IS NOT NULL",  # noqa: B950
+            "select id, google_folder_id from account_voucher "
+            "where date = %s and partner_id = %s and reference = %s "
+            "and google_folder_id IS NOT NULL",  # noqa: B950
             [receipt.invoice_date, receipt.partner_id.id, receipt.ref],
         )
         rows = old_cr.fetchall()
         if len(rows) == 1:
             row = rows[0]
-            _logger.info(
-                "%s, %s copied using method 3"
-                % (
-                    receipt.invoice_date,
-                    receipt,
-                )
-            )
+            _logger.info(f"{receipt.invoice_date}, {receipt} copied using method 3")
             receipt.write(
                 {
                     "google_folder_id": row[1],
@@ -130,8 +117,8 @@ def method3(env, old_cr, company_id):
             env.cr.commit()
         else:
             _logger.info(
-                "%s, %s skipped method 3: rows count %s"
-                % (receipt.invoice_date, receipt, len(rows))
+                f"{receipt.invoice_date}, {receipt} "
+                f"skipped method 3: rows count {len(rows)}"
             )
 
 
@@ -149,27 +136,24 @@ def method4(env, old_cr, company_id):
     _logger.info("Using method 4")
     for receipt in records:
         old_cr.execute(
-            "select id, google_folder_id from account_voucher where number = %s and google_folder_id IS NOT NULL",  # noqa: B950
+            "select id, google_folder_id from account_voucher "
+            "where number = %s and google_folder_id IS NOT NULL",  # noqa: B950
             [receipt.name],
         )
         rows = old_cr.fetchall()
         if len(rows) == 1:
             row = rows[0]
-            _logger.info(
-                "%s, %s copied using method 4"
-                % (
-                    receipt.invoice_date,
-                    receipt,
-                )
-            )
+            _logger.info(f"{receipt.invoice_date}, {receipt} copied using method 4")
             receipt.write(
                 {
                     "google_folder_id": row[1],
                 }
             )
             env.cr.commit()
-        else:
             _logger.info(
-                "%s, %s skipped method 4: rows count %s"
+                f"{receipt.invoice_date}, {receipt} "
+                f"skipped method 4: rows count {len(rows)}"
                 % (receipt.invoice_date, receipt, len(rows))
             )
+        else:
+            pass
