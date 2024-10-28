@@ -6,13 +6,14 @@ class PosConfig(models.Model):
 
     group_show_customer_button_id = fields.Many2one(
         comodel_name="res.groups",
-        compute="_compute_groups_tg",  # make sure you don't conflict with pos_access_right
+        compute="_compute_groups_tg",
     )
     group_show_pm_in_payment_screen_id = fields.Many2one(
         comodel_name="res.groups",
         compute="_compute_groups_tg",
     )
 
+    # make sure you don't conflict with pos_access_right
     def _compute_groups_tg(self):
         self.update(
             {
