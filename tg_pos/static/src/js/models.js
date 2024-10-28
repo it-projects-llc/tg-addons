@@ -1,4 +1,4 @@
-odoo.define('tg_pos.models', function (require) {
+odoo.define("tg_pos.models", function (require) {
     "use strict";
 
     var models = require("point_of_sale.models");
@@ -12,10 +12,14 @@ odoo.define('tg_pos.models', function (require) {
             );
             pos_cashier.hasGroupShowCustomerButton =
                 cashier &&
-                cashier.groups_id.includes(this.env.pos.config.group_show_customer_button_id[0]);
+                cashier.groups_id.includes(
+                    this.env.pos.config.group_show_customer_button_id[0]
+                );
             pos_cashier.hasGroupShowPMInPaymentScreen =
                 cashier &&
-                cashier.groups_id.includes(this.env.pos.config.group_show_pm_in_payment_screen_id[0]);
+                cashier.groups_id.includes(
+                    this.env.pos.config.group_show_pm_in_payment_screen_id[0]
+                );
             return pos_cashier;
         },
     });
