@@ -3,30 +3,27 @@
     "version": "14.0.0.1.0",
     "author": "IT-Projects LLC, Eugene Molotov",
     "support": "it@it-projects.info",
-    "website": "https://www.it-projects.info",
+    "website": "https://github.com/it-projects-llc/tg-addons",
     "license": "LGPL-3",
     "depends": [
-        'point_of_sale',
+        "point_of_sale",
     ],
     "external_dependencies": {"python": [], "bin": []},
     "data": [
         "security/point_of_sale_security.xml",
-        'views/assets.xml',
+        "views/assets.xml",
     ],
-    "demo": [
-    ],
+    "demo": [],
     "qweb": [
         "static/src/xml/Screens/PaymentScreen/PaymentScreen.xml",
         "static/src/xml/Screens/PaymentScreen/PaymentScreenNumpad.xml",
         "static/src/xml/Screens/PaymentScreen/PSNumpadInputButton.xml",
         "static/src/xml/Screens/ProductScreen/ActionpadWidget.xml",
     ],
-
     "post_load": None,
     "pre_init_hook": None,
     "post_init_hook": None,
     "uninstall_hook": None,
-
     "auto_install": False,
     "installable": True,
 }
