@@ -11,15 +11,13 @@
     "external_dependencies": {"python": [], "bin": []},
     "data": [
         "security/point_of_sale_security.xml",
-        "views/assets.xml",
     ],
     "demo": [],
-    "qweb": [
-        "static/src/xml/Screens/PaymentScreen/PaymentScreen.xml",
-        "static/src/xml/Screens/PaymentScreen/PaymentScreenNumpad.xml",
-        "static/src/xml/Screens/PaymentScreen/PSNumpadInputButton.xml",
-        "static/src/xml/Screens/ProductScreen/ActionpadWidget.xml",
-    ],
+    "assets": {
+        "point_of_sale._assets_pos": [
+            "tg_pos/static/src/**/*",
+        ],
+    },
     "post_load": None,
     "pre_init_hook": None,
     "post_init_hook": None,
