@@ -6,5 +6,5 @@ class SaleOrderLine(models.Model):
 
     def _is_affiliated_order_line(self):
         return (
-            self.event_ok or self.is_reward_line
+            self.event_id or self.event_ticket_id or self.is_reward_line
         ) and super()._is_affiliated_order_line()
