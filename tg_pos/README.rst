@@ -8,6 +8,8 @@
 
 * Added user group "Point of Sale - Show +/- in payment screen"
 
+* Contact's barcode does not depend on company (as it was in odoo 10.0)
+
 Credits
 =======
 
