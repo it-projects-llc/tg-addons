@@ -47,5 +47,4 @@ class WebsiteEventMarketing(WebsiteEventController):
         if partner_marketing_vals:
             request.env.user.partner_id.sudo().write(partner_marketing_vals)
 
-
         return registrations
