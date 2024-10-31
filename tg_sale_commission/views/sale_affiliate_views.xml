@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="sale_affiliate_view_form" model="ir.ui.view">
+        <field name="name">sale.affiliate.form.tg.commission</field>
+        <field name="model">sale.affiliate</field>
+        <field
+            name="inherit_id"
+            ref="tg_website_sale_affiliate.sale_affiliate_view_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    name="action_show_bills"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-pencil-square-o"
+                >
+                    <field string="Bills" name="bill_count" widget="statinfo" />
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="commission_id" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
