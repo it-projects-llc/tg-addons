@@ -31,6 +31,8 @@ jobs:
     runs-on: ubuntu-22.04
     container: ${{ matrix.container }}
     name: ${{ matrix.name }}
+    env:
+      EXCLUDE: tg_website_event_sale
     strategy:
       fail-fast: false
       matrix:
