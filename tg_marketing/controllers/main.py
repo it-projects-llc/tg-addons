@@ -6,14 +6,23 @@ from odoo.addons.website_event.controllers.main import WebsiteEventController
 class WebsiteEventMarketing(WebsiteEventController):
     @route()
     def registration_confirm(self, event, **post):
-        filtered_post = {k: v for k, v in post.items() if "marketing_answer" not in k}
-        res = super().registration_confirm(event, **filtered_post)
+        res = super().registration_confirm(event, **post)
+
+        return res
+
+    def _process_attendees_form(self, event, form_details):
+        marketing_fields = {
+            key: form_details.pop(key)
+            for key in list(form_details)
+            if "marketing_answer" in key
+        }
 
         MarketingAnswers = request.env["res.partner.marketing.answer"].sudo()
         partner_marketing_vals = {}
-        for key, value in post.items():
-            if "marketing_answer" in key and value:
-                dummy, registration_index, field_name = key.split("-")
+
+        for key, value in marketing_fields.items():
+            if value:
+                _, registration_index, field_name = key.split("-")
                 try:
                     value_answer_id = int(value)
                     value_answer = MarketingAnswers.browse(value_answer_id).exists()
@@ -33,4 +42,4 @@ class WebsiteEventMarketing(WebsiteEventController):
         if partner_marketing_vals:
             request.env.user.partner_id.sudo().write(partner_marketing_vals)
 
-        return res
+        return super()._process_attendees_form(event, form_details)
