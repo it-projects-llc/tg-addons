@@ -5,7 +5,10 @@
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form" />
         <field name="arch" type="xml">
-            <xpath expr="//label[@for='invoice_date']/.." position="before">
+            <xpath
+                expr="//group[@id='header_right_group']//label[@for='invoice_date']"
+                position="before"
+            >
                 <field name="attachment_archive_url" widget="url" />
             </xpath>
         </field>
