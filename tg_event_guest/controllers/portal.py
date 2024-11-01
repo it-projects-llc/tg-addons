@@ -5,6 +5,13 @@ from odoo.addons.portal.controllers.portal import CustomerPortal as BaseCustomer
 
 class CustomerPortal(BaseCustomerPortal):
     @route()
+    def home(self, **kw):
+        guest = request.env.user.event_guest
+        if guest and not guest.result_attendee:
+            return request.redirect("/my/account")
+        return super(CustomerPortal, self).home(**kw)
+
+    @route()
     def account(self, redirect=None, **post):
         if not request.httprequest.method == "POST":
             if post.get("guest_register_code"):
