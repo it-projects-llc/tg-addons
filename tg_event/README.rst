@@ -2,7 +2,7 @@
  Events Organization modifications for Tribal Gathering
 ========================================================
 
-* In event form added field to set partners for subscribing in registrations records
+* In event form the field "Subscribe In Registrations" is added to set the partners for subscribing in event registration records
 
 Credits
 =======
@@ -11,6 +11,7 @@ Contributors
 ------------
 
 * `Eugene Molotov <https://github.com/em230418>`__
+* `Ilmir Karamov <https://github.com/ilmir-k>`__
 
 Sponsors
 --------
