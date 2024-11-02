@@ -1,0 +1,4 @@
+- Open "Point of Sale" app
+- Open "Configutration" -> "Settings"
+- Choose POS
+- Enable "HEX Barcode" option
