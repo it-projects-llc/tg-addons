@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <!-- These values are copied from point_of_sale's demo -->
+    <!-- we remove one zero in middle of barcode values in order for test data to work -->
+
+    <record id='base.res_partner_1' model='res.partner'>
+        <field name='barcode'>042010000005</field>
+    </record>
+
+    <record id='base.res_partner_2' model='res.partner'>
+        <field name='barcode'>042020000004</field>
+    </record>
+
+    <record id='base.res_partner_3' model='res.partner'>
+        <field name='barcode'>042030000003</field>
+    </record>
+
+    <record id='base.res_partner_4' model='res.partner'>
+        <field name='barcode'>042070000009</field>
+    </record>
+
+    <record id='base.res_partner_10' model='res.partner'>
+        <field name='barcode'>042100000003</field>
+    </record>
+
+    <record id='base.res_partner_12' model='res.partner'>
+        <field name='barcode'>042080000008</field>
+    </record>
+
+    <record id='base.res_partner_18' model='res.partner'>
+        <field name='barcode'>042180000005</field>
+    </record>
+
+    <record id="base.user_root" model="res.users">
+        <field name="barcode">041010000006</field>
+    </record>
+</odoo>
