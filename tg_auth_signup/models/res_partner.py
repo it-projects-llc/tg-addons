@@ -19,8 +19,9 @@ class Partner(models.Model):
 
                 if base_url:
                     for k in res.keys():
-                        relative_url = self._get_relative_url(res[k])
-                        res[k] = werkzeug.urls.url_join(base_url, relative_url)
+                        if isinstance(res[k], str):
+                            relative_url = self._get_relative_url(res[k])
+                            res[k] = werkzeug.urls.url_join(base_url, relative_url)
 
         return res
 
