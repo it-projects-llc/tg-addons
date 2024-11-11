@@ -19,7 +19,7 @@ class ResUsers(models.Model):
     @api.model
     def signup(self, values, token=None):
         guest_register_code = values.pop("guest_register_code", False)
-        res = super(ResUsers, self).signup(values, token)
+        res = super().signup(values, token)
         if guest_register_code:
             guest = self.env["event.guest"]._get_by_code(guest_register_code)
             if guest and not guest.result_partner:

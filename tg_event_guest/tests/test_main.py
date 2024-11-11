@@ -62,7 +62,7 @@ class TestMain(TransactionCase):
         guest.invalidate_cache(fnames=["result_partner"])
         self.assertEqual(guest.result_partner, guest_user.partner_id)
 
-        # for example, some reason other test user registered with already used guest code
+        # for example, some reason other test user registered with already used guest code # noqa: E501
 
         guest_user_tuple = Users.signup(
             {
