@@ -2,7 +2,7 @@
     "name": """Panamanian VAT""",
     "summary": """Customizes VAT check according to Panama rules""",
     "category": "Accounting",
-    "version": "14.0.1.2.1",
+    "version": "17.0.1.2.1",
     "author": "IT-Projects LLC",
     "support": "apps@it-projects.info",
     "website": "https://github.com/it-projects-llc/tg-addons",
