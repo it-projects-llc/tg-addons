@@ -1,7 +1,7 @@
 {
     "name": """Event guests""",
     "version": "14.0.0.2.0",
-    "author": "IT-Projects LLC, Eugene Molotov",
+    "author": "IT-Projects LLC",
     "support": "it@it-projects.info",
     "website": "https://github.com/it-projects-llc/tg-addons",
     "license": "LGPL-3",
