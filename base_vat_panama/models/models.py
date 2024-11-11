@@ -15,7 +15,7 @@ class ResPartner(models.Model):
         # Panamanian VaT numbers start with 'RUC'
         if vat_country == "ruc":
             return "pacustom", vat
-        return super(ResPartner, self)._split_vat(vat)
+        return super()._split_vat(vat)
 
     def check_vat_pacustom(self, vat):
         return True
