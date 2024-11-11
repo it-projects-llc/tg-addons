@@ -10,11 +10,11 @@ class MailComposeMessage(models.TransientModel):
             self.env[wizard.model].browse(
                 active_ids
             ).invited_by = self.env.user.partner_id
-        return super(MailComposeMessage, self).send_mail(*args, **kw)
+        return super().send_mail(*args, **kw)
 
     @api.model
     def default_get(self, fields):
-        res = super(MailComposeMessage, self).default_get(fields)
+        res = super().default_get(fields)
         if res.get("model") == "event.guest" and res.get("email_from"):
             res["reply_to"] = res["email_from"]
         return res
