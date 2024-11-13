@@ -4,7 +4,7 @@
 
 * "Grant portal access" wizard:
 
-  * User's "allowed companies" fields is copied from default user
+  * User's "allowed companies" fields is copied from portal user template
 
 Credits
 =======
