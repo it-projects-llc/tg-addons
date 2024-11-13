@@ -22,7 +22,10 @@ class CustomerPortal(CustomerPortal):
 
         SaleOrder = request.env["sale.order"]
         order_ids = affiliate._get_order_dict().get(affiliate.id, [])
-        domain = [("id", "in", order_ids)]
+        domain = [
+            ("id", "in", order_ids),
+            ("invoice_ids.payment_state", "in", ["paid", "in_payment"]),
+        ]
 
         orders = SaleOrder.sudo().search(domain)
         values.update(
