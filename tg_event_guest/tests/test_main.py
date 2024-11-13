@@ -59,7 +59,7 @@ class TestMain(TransactionCase):
         )
         guest_user = Users.search([("login", "=", guest_user_tuple[1])])
 
-        guest.invalidate_cache(fnames=["result_partner"])
+        guest = self.env["event.guest"].browse(guest.id)
         self.assertEqual(guest.result_partner, guest_user.partner_id)
 
         # for example, some reason other test user registered with already used guest code # noqa: E501
@@ -74,6 +74,6 @@ class TestMain(TransactionCase):
         )
         accident_guest_user = Users.search([("login", "=", guest_user_tuple[1])])
 
-        guest.invalidate_cache(fnames=["result_partner"])
+        guest = self.env["event.guest"].browse(guest.id)
         self.assertNotEqual(guest.result_partner, accident_guest_user.partner_id)
         self.assertEqual(guest.result_partner, guest_user.partner_id)
