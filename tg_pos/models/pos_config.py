@@ -4,6 +4,8 @@ from odoo import fields, models
 class PosConfig(models.Model):
     _inherit = "pos.config"
 
+    shop_ref_id = fields.Many2one("pos.shop", string="Shop")
+
     group_show_customer_button_id = fields.Many2one(
         comodel_name="res.groups",
         compute="_compute_groups_tg",

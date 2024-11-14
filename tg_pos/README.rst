@@ -10,6 +10,29 @@
 
 * Contact's barcode does not depend on company (as it was in odoo 10.0)
 
+* Option to display specific products in POS (using POS Shop feature)
+
+POS Shop usage
+--------------
+
+* Open Main menu -> Point of Sale -> Configuration -> POS Shops
+
+* Create record, set name and add some products
+
+* Open Main menu -> Point of Sale -> Configuration -> Settings
+
+* Choose "POS"
+
+* Set "Shop" value to recently created shop record
+
+* Save
+
+* Open Main menu -> Point of Sale
+
+* Open POS, where shop setting was recently set
+
+* RESULT: only products from shop are shown
+
 Credits
 =======
 

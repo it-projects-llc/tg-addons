@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="pos_shop_form_view" model="ir.ui.view">
+        <field name="name">pos.shop.form</field>
+        <field name="model">pos.shop</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" />
+                    <field name="product_ids">
+                        <tree editable="bottom">
+                            <field name="name" />
+                        </tree>
+                    </field>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_shop_tree_view" model="ir.ui.view">
+        <field name="name">pos.shop.tree</field>
+        <field name="model">pos.shop</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_view_shops" model="ir.actions.act_window">
+        <field name="name">POS Shops</field>
+        <field name="res_model">pos.shop</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="pos_shop_menu"
+        name="POS Shops"
+        parent="point_of_sale.menu_point_config_product"
+        action="action_view_shops"
+    />
+</odoo>
