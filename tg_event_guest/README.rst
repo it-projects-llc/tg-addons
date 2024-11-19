@@ -41,7 +41,7 @@ Preparing guest
    -  Name
    -  Email
    -  Event
-   -  Event ticket
+   -  Event ticket (you can only input zero price tickets)
 
 -  Save
 -  Run Actions -> Send mail
