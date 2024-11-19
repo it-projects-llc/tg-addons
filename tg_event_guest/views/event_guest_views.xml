@@ -10,7 +10,7 @@
                     <field name="email" />
                     <field name="guest_partner" />
                     <field name="event" />
-                    <field name="event_ticket" />
+                    <field name="event_ticket" options="{'no_create': 1}" />
                     <field name="code" />
                     <field name="guest_of" />
                     <field name="invite_url" widget="url" />
