@@ -6,7 +6,7 @@ Preparing guest
   * Name
   * Email
   * Event
-  * Event ticket
+  * Event ticket (you can only input zero price tickets)
 - Save
 - Run Actions -> Send mail
 - In "Send mail" wizard leave everything default
