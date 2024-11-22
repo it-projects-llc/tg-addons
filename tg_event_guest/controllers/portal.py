@@ -14,12 +14,12 @@ class CustomerPortal(BaseCustomerPortal):
     @route()
     def account(self, redirect=None, **post):
         if not request.httprequest.method == "POST":
-            if post.get("guest_register_code"):
-                guest = request.env["event.guest"]._get_by_code(
-                    post["guest_register_code"]
-                )
-                if guest.guest_partner == request.env.user.partner_id:
-                    guest.result_partner = request.env.user.partner_id
+            guest = request.env.user.event_guest
+            if (
+                guest.guest_partner == request.env.user.partner_id
+                and not guest.result_partner
+            ):
+                guest.result_partner = request.env.user.partner_id
 
         res = super().account(redirect, **post)
 
