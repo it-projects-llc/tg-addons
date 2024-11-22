@@ -82,7 +82,7 @@ class EventGuest(models.Model):
         for guest in self:
             if guest.event:
                 if guest.guest_partner:
-                    path = f"/my/account?guest_register_code={guest.code}"
+                    path = "/my/account"
                 else:
                     path = f"/web/signup?guest_register_code={guest.code}&redirect=%2Fmy%2Faccount"  # noqa: B950
 
