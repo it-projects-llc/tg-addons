@@ -1,5 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="website_event.event_7_question_1" model="event.question">
         <field name="event_id" eval="False" />
     </record>
+
+    <function model="event.event" name="write">
+        <value
+            model="event.event"
+            eval="obj().search([('create_partner', '=', False)]).ids"
+        />
+        <value
+            eval="{
+        'create_partner': True,
+        'question_ids': [(0, 0, {
+             'title': 'Country',
+             'question_type': 'partner_field',
+             'partner_field': ref('base.field_res_partner__country_id'),
+        }), (0, 0, {
+             'title': 'Function',
+             'question_type': 'partner_field',
+             'partner_field': ref('base.field_res_partner__function'),
+        })],
+        }"
+        />
+    </function>
+
 </odoo>
