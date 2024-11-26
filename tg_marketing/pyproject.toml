@@ -1,3 +1,6 @@
 [build-system]
 requires = ["whool"]
 build-backend = "whool.buildapi"
+dependencies = [
+    "website_event_attendee_fields @ git+https://github.com/it-projects-llc/website-addons"
+]

@@ -1,18 +1,19 @@
 {
     "name": """Marketing fields in Contact""",
-    "version": "17.0.0.3.0",
+    "version": "17.0.0.4.0",
     "author": "IT-Projects LLC",
     "support": "it@it-projects.info",
     "website": "https://github.com/it-projects-llc/tg-addons",
-    "license": "LGPL-3",
+    "license": "AGPL-3",
     "depends": [
         "contacts",
         "auth_signup",
         "sales_team",
-        "website_event",
+        "website_event_attendee_fields",
     ],
     "data": [
-        "views/event_templates.xml",
+        "data/ir_model_data.xml",
+        "views/event_templates_page_registration.xml",
         "security/ir.model.access.csv",
         "views/res_partner_views.xml",
         "views/contact_views.xml",

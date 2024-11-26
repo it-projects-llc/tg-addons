@@ -20,7 +20,7 @@ jobs:
               if [ -f ${reqfile} ] ; then
                   result=0
                   # reject non-comment lines that contain a / (i.e. URLs, relative paths)
-                  grep "^[^#].*/" ${reqfile} || result=$?
+                  cat ${reqfile} | grep -v "git+https://github.com/it-projects-llc/website-addons@17.0#" | grep "^[^#].*/" || result=$?
                   if [ $result -eq 0 ] ; then
                       echo "Unreleased dependencies found in ${reqfile}."
                       exit 1

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="registration_attendee_details"
+        inherit_id="website_event.registration_attendee_details"
+        priority="100"
+    >
+        <xpath
+            expr="//t[@t-foreach='event.specific_question_ids']/div"
+            position="attributes"
+        >
+            <attribute name="t-if">question._should_be_shown()</attribute>
+        </xpath>
+        <xpath
+            expr="//t[@t-foreach='event.general_question_ids']/div"
+            position="attributes"
+        >
+            <attribute name="t-if">question._should_be_shown()</attribute>
+        </xpath>
+        <!-- replacing attributes -->
+        <xpath
+            expr="//div[@t-if='availability_check and event.general_question_ids']"
+            position="attributes"
+        >
+            <attribute
+                name="t-if"
+            >availability_check and event.general_question_ids.filtered(lambda x: x._should_be_shown())</attribute>
+        </xpath>
+    </template>
+
+    <template
+        id="registration_event_question"
+        inherit_id="website_event_attendee_fields.registration_event_question"
+    >
+        <xpath
+            expr="//select[@t-att-data='question.partner_field_name']/.."
+            position="before"
+        >
+            <t t-elif="question.is_marketing">
+                <t t-set="select_options" t-value="question.get_select_options()" />
+                <t t-if="select_options">
+                    <select
+                        t-attf-name="#{registration_index}-#{question.partner_field_name}-#{question.id}"
+                        t-attf-data-name="#{registration_index}-#{question.partner_field_name}-#{question.id}"
+                        class="form-select marketing-question-select"
+                        t-att-required="question.is_mandatory_answer"
+                    >
+                        <option value="" />
+                        <t t-foreach="select_options" t-as="s">
+                            <option
+                                t-att-value="s['id']"
+                                t-att-selected="field_value == s['id'] and '1'"
+                            >
+                                <t t-esc="s['name']" />
+                            </option>
+                        </t>
+                        <option data-custom="1">Custom</option>
+                    </select>
+                    <input
+                        class="form-control"
+                        type="text"
+                        t-attf-data-name="#{registration_index}-#{question.partner_field_name}-#{question.id}"
+                        t-att-required="question.is_mandatory_answer"
+                        style="display: none"
+                    />
+                    <script type="text/javascript">
+                        $(".marketing-question-select").on("change", function() {
+                            var $t = $(this);
+                            var fieldName = $t.data("name");
+                            if ($t.find("option[data-custom]:selected").length) {
+                                $t.removeAttr("name");
+                                $("input[data-name=" + fieldName + "]").attr("name", fieldName).show();
+                            } else {
+                                $t.attr("name", fieldName);
+                                $("input[data-name=" + fieldName + "]").removeAttr("name").hide();
+                            }
+                        });
+                    </script>
+                </t>
+                <t t-else="">
+                    <input
+                        class="form-control"
+                        type="text"
+                        t-attf-name="#{registration_index}-#{question.partner_field_name}-#{question.id}"
+                        t-att-required="question.is_mandatory_answer"
+                    />
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>

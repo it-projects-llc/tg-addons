@@ -20,9 +20,16 @@ class PartnerMarketingAnswer(models.Model):
     is_canned = fields.Boolean()
 
     @api.model
-    def _create_custom_answer(self, field_name, answer):
-        assert field_name.startswith("marketing_")
-        field = self.field.search(
-            [("name", "=", field_name), ("model", "=", "res.partner")]
-        )
+    def _create_custom_answer(self, field, answer):
+        if isinstance(field, str):
+            field_name = field
+            assert field_name.startswith("marketing_")
+            field = self.field.search(
+                [("name", "=", field_name), ("model", "=", "res.partner")]
+            )
+        elif isinstance(field, models.BaseModel):
+            assert field.name.startswith("marketing_")
+        else:
+            raise NotImplementedError()
+
         return self.create({"field": field.id, "answer": answer, "is_canned": False})
