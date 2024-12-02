@@ -24,7 +24,7 @@ Marketing fields in Contact
 
 Adds following marketing fields to contact form (tab Marketing fields):
 
--  How did you find about us?
+- How did you find about us?
 
 They are shown in frontend ticket form, when user is logged in.
 
@@ -38,26 +38,26 @@ Usage
 
 Admin:
 
--  Open ``[ Contacts ] -> Configuration -> Marketing answers``
--  Add answers with "Is canned" = True in order to appear those answers
-   in ticket form
+- Open ``[ Contacts ] -> Configuration -> Marketing answers``
+- Add answers with "Is canned" = True in order to appear those answers
+  in ticket form
 
 Any logged in user:
 
--  Visit ``/events``
+- Visit ``/events``
 
--  Choose any event
+- Choose any event
 
--  Register any amount of tickets
+- Register any amount of tickets
 
--  Input value of marketing fields:
+- Input value of marketing fields:
 
-   -  How did you find about us?
+  - How did you find about us?
 
--  Register
+- Register
 
--  RESULT: in partner form of this logged in user values of marketing
-   fields above will be saved
+- RESULT: in partner form of this logged in user values of marketing
+  fields above will be saved
 
 Bug Tracker
 ===========
@@ -80,7 +80,7 @@ Authors
 Contributors
 ------------
 
--  Eugene Molotov (https://github.com/em230418)
+- Eugene Molotov (https://github.com/em230418)
 
 Maintainers
 -----------

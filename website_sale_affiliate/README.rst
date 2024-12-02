@@ -40,8 +40,8 @@ Once an affiliate has been created, append one of the following to a
 compatible shop or product url (see below) to track the affiliate's
 conversions:
 
--  ?aff_ref=\ *affiliate_id*
--  ?aff_ref=\ *affiliate_id*\ &aff_key=\ *custom_key*
+- ?aff_ref=\ *affiliate_id*
+- ?aff_ref=\ *affiliate_id*\ &aff_key=\ *custom_key*
 
 The "affiliate_id" is the ID displayed on the affiliate's record, e.g.
 "1".
@@ -55,16 +55,16 @@ affiliate requests will be named after this key, if provided.
 Compatible URLs
 ---------------
 
--  /shop
--  /shop/category/{category}
--  /shop/category/{category}/page/{page}
--  /shop/page/{page}
--  /shop/product/{product}
+- /shop
+- /shop/category/{category}
+- /shop/category/{category}/page/{page}
+- /shop/page/{page}
+- /shop/product/{product}
 
 Known issues / Roadmap
 ======================
 
--  Evaluate usefulness of IP as a fallback affiliate request identifier
+- Evaluate usefulness of IP as a fallback affiliate request identifier
 
 Bug Tracker
 ===========
@@ -88,9 +88,9 @@ Authors
 Contributors
 ------------
 
--  Brent Hughes <brent.hughes@laslabs.com>
--  Dave Lasley <dave@laslabs.com>
--  Eugene Molotov <molotov@it-projects.info>
+- Brent Hughes <brent.hughes@laslabs.com>
+- Dave Lasley <dave@laslabs.com>
+- Eugene Molotov <molotov@it-projects.info>
 
 Maintainers
 -----------
