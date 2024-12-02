@@ -45,18 +45,18 @@ E.g. ``9cc29d808 >> 042080000008``
 Configuration
 =============
 
--  Open "Point of Sale" app
--  Open "Configutration" -> "Settings"
--  Choose POS
--  Enable "HEX Barcode" option
+- Open "Point of Sale" app
+- Open "Configutration" -> "Settings"
+- Choose POS
+- Enable "HEX Barcode" option
 
 Usage
 =====
 
--  Open POS
--  Scan RFID
--  RESULT: POS reacts in the same way as if RFID was scanned via normal
-   RFID reader
+- Open POS
+- Scan RFID
+- RESULT: POS reacts in the same way as if RFID was scanned via normal
+  RFID reader
 
 Bug Tracker
 ===========
@@ -79,10 +79,10 @@ Authors
 Contributors
 ------------
 
--  Ivan Yelizariev (https://github.com/yelizariev)
--  Alexandr Kolusov (https://github.com/KolushovAlexandr)
--  Artem Rafailov (https://github.com/Ommo73)
--  Eugene Molotov (https://github.com/em230418)
+- Ivan Yelizariev (https://github.com/yelizariev)
+- Alexandr Kolusov (https://github.com/KolushovAlexandr)
+- Artem Rafailov (https://github.com/Ommo73)
+- Eugene Molotov (https://github.com/em230418)
 
 Maintainers
 -----------
