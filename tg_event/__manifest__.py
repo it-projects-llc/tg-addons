@@ -8,11 +8,7 @@
     "depends": [
         "event",
     ],
-    "data": [
-        "views/event_views.xml",
-        "reports/event_registration_badge_report.xml",
-        "reports/event_registration_template_tg_lab.xml",
-    ],
+    "data": ["views/event_views.xml"],
     "demo": [],
     "qweb": [],
 }
