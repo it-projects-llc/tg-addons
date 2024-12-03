@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="event_description_full"
+        inherit_id="website_event.event_description_full"
+        priority="15"
+    >
+        <xpath expr="//t[@t-snippet-call='website.s_share']/.." position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+    </template>
+</odoo>
