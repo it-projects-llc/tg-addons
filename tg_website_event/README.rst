@@ -4,6 +4,8 @@
 
 * Forces "Website" to be set in event
 
+* Removes social links from registration page
+
 Credits
 =======
 
