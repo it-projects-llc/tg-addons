@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+
+    <template
+        id="event_registration_report_template_badge_tg_lab"
+        inherit_id="event.event_registration_report_template_badge"
+        priority="100"
+        primary="True"
+    >
+        <xpath expr="//div[@class='row']" position="replace">
+            <!-- Front -->
+            <div class="row">
+                <div
+                    class="col-12 text-center"
+                    style="background: url('web/image/141948-827d68c1/Ticket_Tribal-Gathering-2024.jpg') no-repeat top; background-size: 100% 100%; margin-top: 30mm; padding-left:0mm; height: 110mm; padding-top: 0mm"
+                >
+                    <div
+                        class="col-12 text-center"
+                        id="o_right"
+                        style="height: 50mm; bottom: -60%"
+                    >
+
+                            <div class="col-7 text-center" id="o_event_name" style="">
+                            <!-- The Ticket name is inserted here -->
+                            </div>
+
+                            <div class="col-7 text-left" id="o_event_barcode" style="">
+                            <!-- Barcode -->
+                            </div>
+                    </div>
+                   <div
+                        class="col-4 text-left"
+                        id="o_right"
+                        style="float:right; margin-top: 40px; margin-right:20px; padding-top:1mm; padding-bottom:1mm; padding-right:2mm;  font-size: 11px; color: white; background-color: rgba(187, 80, 187, 0.8);"
+                    >
+                       <div style="margin-top: 6mm;">
+                           <p>Name: <span
+                                    t-field="o.attendee_partner_id.firstname"
+                                /> <span t-field="o.attendee_partner_id.lastname" /></p>
+                           <p>Birthday: <span
+                                    t-field="o.attendee_partner_id.birthdate_date"
+                                /></p>
+                           <p>Nationality: <span
+                                    t-field="o.attendee_partner_id.nationality_id.display_name"
+                                /></p>
+                           <p>Passport/Cedula: <span
+                                    t-field="o.attendee_partner_id.passport"
+                                /></p>
+                       </div>
+                   </div>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@id='o_event_name']" position="inside">
+            <div
+                t-if="o.event_ticket_id"
+                class="col-12 text-center"
+                style="font-size: 17px; padding-top:2px padding-bottom:2px;
+                                                            background-color: rgba(255, 255, 255, 0.8);"
+            >
+                <!--<div class="mt18 text-center">-->
+                    <span t-field="o.event_ticket_id" />
+                <!--</div>-->
+            </div>
+        </xpath>
+        <xpath expr="//div[@id='o_event_name']" position="after">
+            <div class="col-7">
+                <div class="text-center">
+                    <br />
+                    <img
+                        class="barcode"
+                        t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('Code128', o.barcode, 400, 67)"
+                        alt="Barcode"
+                    />&amp;nbsp;
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

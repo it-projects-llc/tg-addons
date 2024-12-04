@@ -5,7 +5,7 @@
         <field name="model">event.event</field>
         <field name="inherit_id" ref="event.view_event_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='badge_image']" position="after">
+            <xpath expr="//field[@name='auto_confirm']" position="after">
                 <field name="subscribe_in_registrations" widget="many2many_tags" />
             </xpath>
         </field>
