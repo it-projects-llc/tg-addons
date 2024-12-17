@@ -10,7 +10,7 @@
             </xpath>
             <xpath expr="//button[@name='button_edit_agents']" position="attributes">
                 <attribute name="invisible">
-                commission_free == True or invoice_lines != [] or parent.ui_hide_commission_fields == True
+                commission_free == True or invoice_lines or parent.ui_hide_commission_fields == True
                 </attribute>
             </xpath>
             <xpath expr="//field[@name='commission_status']" position="attributes">
