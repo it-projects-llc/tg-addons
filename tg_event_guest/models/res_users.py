@@ -25,7 +25,7 @@ class ResUsers(models.Model):
             if guest and not guest.result_partner:
                 user = self.search(
                     [
-                        ("login", "=", res[1]),
+                        ("login", "=", res[0]),
                     ],
                     limit=1,
                 )

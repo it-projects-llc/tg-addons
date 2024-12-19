@@ -26,3 +26,9 @@ class AuthSignupHome(BaseAuthSignupHome):
                     qcontext["error"] = _("You need to logout to register guest")
 
         return qcontext
+
+    def _prepare_signup_values(self, qcontext):
+        values = super()._prepare_signup_values(qcontext)
+        if qcontext.get("guest_register_code"):
+            values["guest_register_code"] = qcontext["guest_register_code"]
+        return values

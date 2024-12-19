@@ -57,7 +57,7 @@ class CustomerPortal(BaseCustomerPortal):
             compose = (
                 attendee.env["mail.compose.message"].with_context(**ctx).create({})
             )
-            compose.send_mail()
+            compose.action_send_mail()
             guest.result_attendee = attendee
 
         return res
