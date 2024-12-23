@@ -7,6 +7,7 @@ from odoo import api, fields, models
 
 class EventGuest(models.Model):
     _name = "event.guest"
+    _inherit = "mail.thread"
     _description = "Event Guest"
     _order = "id DESC"
 
