@@ -2,7 +2,8 @@
  Online Event Ticketing customizations for Tribal Gathering
 ============================================================
 
-* Resets cart, when user registers in event in frontend
+* Resets cart, when user registers in event in frontend.
+  Does not reset cart, if there are lines with negative price units (like refund line from portal_event_ticket)
 
 * Makes event pages urls compatible for ``website_sale_affiliate`` features
 
