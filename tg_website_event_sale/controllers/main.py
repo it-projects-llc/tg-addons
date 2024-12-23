@@ -10,8 +10,20 @@ class WebsiteEventSaleExtendController(WebsiteEventSaleController):
     @route()
     def registration_confirm(self, *args, **post):
         order = request.website.sale_get_order(force_create=False)
-        if order and order.state in ("draft", "cancel"):
-            order.sudo().unlink()
+        if order:
+            if order.state == "draft":
+                SaleOrderLine = request.env["sale.order.line"].sudo()
+                discount_lines = SaleOrderLine.search(
+                    [
+                        ("order_id", "=", order.id),
+                        ("price_unit", "<", 0),
+                        ("display_type", "=", False),
+                    ]
+                )
+                if not discount_lines:
+                    order.sudo().unlink()
+            elif order.state == "cancel":
+                order.sudo().unlink()
         return super().registration_confirm(*args, **post)
 
     @route()
