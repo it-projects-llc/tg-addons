@@ -5,21 +5,27 @@
         <field name="model">event.guest</field>
         <field name="arch" type="xml">
             <form>
-                <group>
-                    <field name="name" />
-                    <field name="email" />
-                    <field name="guest_partner" />
-                    <field name="event" />
-                    <field name="event_ticket" options="{'no_create': 1}" />
-                    <field name="code" />
-                    <field name="guest_of" />
-                    <field name="invite_url" widget="url" />
-                </group>
-                <group>
-                    <field name="invited_by" />
-                    <field name="result_partner" />
-                    <field name="result_attendee" />
-                </group>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="email" />
+                        <field name="guest_partner" />
+                        <field name="event" />
+                        <field name="event_ticket" />
+                        <field name="code" />
+                        <field name="guest_of" />
+                        <field name="invite_url" widget="url" />
+                    </group>
+                    <group>
+                        <field name="invited_by" />
+                        <field name="result_partner" />
+                        <field name="result_attendee" />
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>
