@@ -11,8 +11,8 @@ class EventRegistration(models.Model):
             record.message_subscribe(record.event_id.subscribe_in_registrations.ids)
         return records
 
-    # Set email template taken from the related Event as default upon manual email sending to attendee
-    # in event registration form
+    # Set email template taken from the related Event as default upon manual email
+    # sending to attendee in event registration form
     def action_send_badge_email(self):
         res = super(EventRegistration, self).action_send_badge_email()
         default_tmpl = self.event_id.default_email_template_id
