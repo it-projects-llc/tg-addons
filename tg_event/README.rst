@@ -3,6 +3,7 @@
 ========================================================
 
 * In event form the field "Subscribe In Registrations" is added to set the partners for subscribing in event registration records
+* Set email template taken from the related Event as default upon manual email sending to attendee in event registration form
 
 Credits
 =======
