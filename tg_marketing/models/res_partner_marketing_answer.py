@@ -17,7 +17,7 @@ class PartnerMarketingAnswer(models.Model):
     answer = fields.Char(
         required=True,
     )
-    is_canned = fields.Boolean()
+    is_canned = fields.Boolean("Is canned answer?")
 
     @api.model
     def _create_custom_answer(self, field, answer):
