@@ -1,7 +1,7 @@
 Admin:
 
 * Open `[ Contacts ] -> Configuration -> Marketing answers`
-* Add answers with "Is canned" = True in order to appear those answers in ticket form
+* Add answers with "Is canned answer?" = True in order to appear those answers in ticket form
 * Open `[ Events ]`
 * Open existing event or create a new one
 * In "Questions" tab add new question:
