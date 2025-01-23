@@ -31,6 +31,9 @@ class SaleOrder(models.Model):
 
         if affiliate:
             self.affiliate_request_id = affiliate.get_request()
-            return {}
+            promo = affiliate.code_promo_program_id
+            if promo:
+                # apply code from first rule
+                code = promo.rule_ids.filtered(lambda x: x.code)[:1].code
 
         return super()._try_apply_code(code)
