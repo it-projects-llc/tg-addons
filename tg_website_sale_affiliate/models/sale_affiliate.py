@@ -1,6 +1,5 @@
 from random import choice as random_choise
 from string import ascii_lowercase, digits
-from urllib.parse import urljoin
 
 from odoo import api, fields, models
 
@@ -29,8 +28,6 @@ class SaleAffiliate(models.Model):
     )
     order_count = fields.Integer(compute="_compute_order_count")
     invoice_count = fields.Integer(compute="_compute_invoice_count")
-    referal_link = fields.Char(compute="_compute_referal_link")
-    portal_link = fields.Char(compute="_compute_referal_link")
 
     _sql_constraints = [
         ("name_unique", "unique(name)", "Affiliate name must be unique"),
@@ -83,15 +80,6 @@ GROUP BY sar.affiliate_id
 
         for record in self:
             record.invoice_count = len(r.get(record.id, []))
-
-    def _compute_referal_link(self):
-        for record in self:
-            if record.company_id.website:
-                base_url = record.company_id.website
-            else:
-                base_url = record.get_base_url()
-            record.referal_link = urljoin(base_url, f"/events?aff_ref={record.id}")
-            record.portal_link = urljoin(record.get_base_url(), "/my/affiliates")
 
     def action_show_orders(self):
         order_dict = self._get_order_dict()

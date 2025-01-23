@@ -1,6 +1,6 @@
 {
     "name": """Online Event Ticketing customizations for Tribal Gathering""",
-    "version": "17.0.0.2.0",
+    "version": "17.0.0.2.1",
     "author": "IT-Projects LLC, Eugene Molotov",
     "support": "it@it-projects.info",
     "website": "https://github.com/it-projects-llc/tg-addons",
@@ -12,6 +12,7 @@
     ],
     "data": [
         "views/res_config_settings_views.xml",
+        "views/sale_affiliate_views.xml",
     ],
     "demo": [],
     "qweb": [],
