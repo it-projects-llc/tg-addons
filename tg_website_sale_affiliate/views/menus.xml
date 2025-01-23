@@ -25,7 +25,7 @@
     />
 
     <record id="loyalty_program_action_promo_program" model="ir.actions.act_window">
-        <field name="name">Promotion Programs</field>
+        <field name="name">Loyalty Programs</field>
         <field name="res_model">loyalty.program</field>
         <field name="view_mode">tree,kanban,form</field>
         <field
@@ -36,9 +36,9 @@
             (0, 0, {'view_mode': 'form', 'view_id': ref('loyalty.loyalty_program_view_form')})]"
         />
         <field name="search_view_id" ref="loyalty.loyalty_program_view_search" />
-        <field name="domain">[('program_type', '=', 'promotion')]</field>
+        <field name="domain">[('program_type', '=', 'promo_code')]</field>
         <field name="context">{
-            'default_program_type': 'promotion',
+            'default_program_type': 'promo_code',
             'default_only_affiliate_usage': True,
             'lock_promo_code_usage': 1,
             }</field>
@@ -46,7 +46,7 @@
 
     <menuitem
         id="menu_coupons"
-        name="Promotion programs"
+        name="Loyalty Programs"
         sequence="30"
         parent="affiliate_menu_root"
         action="loyalty_program_action_promo_program"
