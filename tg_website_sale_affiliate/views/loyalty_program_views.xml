@@ -17,14 +17,8 @@
                     invisible="not context.get('lock_promo_code_usage')"
                 />
                 <field
-                    name="only_affiliate_usage"
-                    force_save="1"
-                    readonly="1"
-                    invisible="program_type != 'promo_code'"
-                />
-                <field
                     name="affiliates"
-                    invisible="program_type != 'promo_code' or not only_affiliate_usage"
+                    invisible="program_type != 'promo_code' or not affiliates"
                     readonly="1"
                 >
                     <tree>
