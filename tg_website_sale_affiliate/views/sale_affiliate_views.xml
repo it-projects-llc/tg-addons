@@ -43,7 +43,7 @@
                 <field
                     name="code_promo_program_id"
                     domain="[('program_type', '=', 'promo_code'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]"
-                    context="{'form_view_ref': 'loyalty.loyalty_program_view_form','lock_promo_code_usage': 1,'default_program_type': 'promo_code', 'default_only_affiliate_usage': 1, 'default_company_id': company_id, 'default_trigger': 'with_code'}"
+                    context="{'form_view_ref': 'loyalty.loyalty_program_view_form','lock_promo_code_usage': 1,'default_program_type': 'promo_code', 'default_company_id': company_id, 'default_trigger': 'with_code'}"
                 />
             </xpath>
             <xpath expr="//sheet" position="after">

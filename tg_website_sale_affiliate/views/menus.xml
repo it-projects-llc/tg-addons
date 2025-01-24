@@ -39,7 +39,6 @@
         <field name="domain">[('program_type', '=', 'promo_code')]</field>
         <field name="context">{
             'default_program_type': 'promo_code',
-            'default_only_affiliate_usage': True,
             'lock_promo_code_usage': 1,
             }</field>
     </record>
