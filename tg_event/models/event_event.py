@@ -7,3 +7,7 @@ class EventEvent(models.Model):
     subscribe_in_registrations = fields.Many2many(
         "res.partner", "event_reg_sub_partner"
     )
+    default_email_template_id = fields.Many2one(
+        "mail.template", help="Default email template used upon manual sending the emails to attendees using Send "
+                              "By Email button in the event registration form"
+    )
