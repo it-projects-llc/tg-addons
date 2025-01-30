@@ -1,4 +1,4 @@
-from odoo import api, models, _
+from odoo import api, models
 
 
 class EventRegistration(models.Model):
@@ -11,18 +11,19 @@ class EventRegistration(models.Model):
             record.message_subscribe(record.event_id.subscribe_in_registrations.ids)
         return records
 
-    # Set email template taken from the related Event as default upon manual email sending in event registration form
+    # Set email template taken from the related Event as default
+    # upon manual email sending in event registration form
     def action_send_badge_email(self):
-        res = super(EventRegistration, self).action_send_badge_email()
+        res = super().action_send_badge_email()
 
         default_tmpl = self.event_id.default_email_template_id
         template = self.env['mail.template'].search([('id', '=', default_tmpl.id)])
         ctx = dict(
-                default_model='event.registration',
-                default_res_ids=self.ids,
-                default_template_id=template.id if template else False,
-                default_composition_mode='comment',
-                default_email_layout_xmlid="mail.mail_notification_light",
-            )
+            default_model='event.registration',
+            default_res_ids=self.ids,
+            default_template_id=template.id if template else False,
+            default_composition_mode='comment',
+            default_email_layout_xmlid="mail.mail_notification_light",
+        )
         res.update({'context': ctx})
         return res
