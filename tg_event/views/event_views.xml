@@ -8,6 +8,9 @@
             <xpath expr="//field[@name='badge_image']" position="after">
                 <field name="subscribe_in_registrations" widget="many2many_tags" />
             </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="default_email_template_id" />
+            </xpath>
         </field>
     </record>
 </odoo>
