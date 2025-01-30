@@ -10,5 +10,5 @@ class EventEvent(models.Model):
     default_email_template_id = fields.Many2one(
         "mail.template",
         help="Default email template used upon manual sending the emails to attendees"
-        "using Send By Email button in the event registration form"
+        "using Send By Email button in the event registration form",
     )
