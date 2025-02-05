@@ -17,6 +17,9 @@
                 <attribute name="column_invisible">
                 parent.ui_hide_commission_fields == True
                 </attribute>
+                <attribute name="optional">
+                hide
+                </attribute>
             </xpath>
             <xpath expr="//field[@name='commission_total']" position="attributes">
                 <attribute name="invisible">
