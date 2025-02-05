@@ -16,6 +16,8 @@
 
   * commission related fields are only record's company does not override commission settlement company
 
+  * hide Commission column from SO lines tree
+
 * In company model added field "Commission settlement company" and logic with this field
 
 Credits
@@ -25,6 +27,7 @@ Contributors
 ------------
 
 * `Eugene Molotov <https://github.com/em230418>`__
+* `Ilmir Karamov <https://github.com/ilmir-k>`__
 
 Sponsors
 --------
