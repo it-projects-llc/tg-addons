@@ -1,12 +1,10 @@
 from odoo.http import request, route
 
+from odoo.addons.tg_website_sale_affiliate.controllers.main import WebsiteSale
 from odoo.addons.website_event_sale.controllers.main import WebsiteEventSaleController
-from odoo.addons.website_sale_affiliate.controllers.main import WebsiteSale
 
 
 class WebsiteEventSaleExtendController(WebsiteEventSaleController):
-    _store_affiliate_info = WebsiteSale._store_affiliate_info
-
     @route()
     def registration_confirm(self, *args, **post):
         order = request.website.sale_get_order(force_create=False)
@@ -36,7 +34,8 @@ class WebsiteEventSaleExtendController(WebsiteEventSaleController):
                 kw["tags"] = f"[{tag_id}]"
 
         res = super().events(*args, **kw)
-        self._store_affiliate_info(**kw)
+        sale = WebsiteSale()
+        sale._store_affiliate_info(**kw)
 
         if override_event_list:
             res.qcontext["searches"]["tags"] = ""
@@ -51,17 +50,20 @@ class WebsiteEventSaleExtendController(WebsiteEventSaleController):
     @route()
     def event_page(self, *args, **kw):
         res = super().event_page(*args, **kw)
-        self._store_affiliate_info(**kw)
+        sale = WebsiteSale()
+        sale._store_affiliate_info(**kw)
         return res
 
     @route()
     def event(self, *args, **kw):
         res = super().event(*args, **kw)
-        self._store_affiliate_info(**kw)
+        sale = WebsiteSale()
+        sale._store_affiliate_info(**kw)
         return res
 
     @route()
     def event_register(self, *args, **kw):
         res = super().event_register(*args, **kw)
-        self._store_affiliate_info(**kw)
+        sale = WebsiteSale()
+        sale._store_affiliate_info(**kw)
         return res
