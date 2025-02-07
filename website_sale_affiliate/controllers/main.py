@@ -18,6 +18,7 @@ class WebsiteSale(Base):
             return  # pragma: no cover
 
         request.session["affiliate_request"] = affiliate_request.id
+        return affiliate_request
 
     @route()
     def shop(self, *args, **post):
