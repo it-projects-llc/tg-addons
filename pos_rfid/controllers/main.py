@@ -10,6 +10,8 @@ class PosControllerRFID(PosController):
         if not config_id:
             return res
 
-        config = request.env["pos.config"].sudo().browse(int(config_id))
-        res.qcontext["session_info"]["pos_hex_barcode"] = config.hex_barcode
+        if "session_info" in res.qcontext:
+            config = request.env["pos.config"].sudo().browse(int(config_id))
+            res.qcontext["session_info"]["pos_hex_barcode"] = config.hex_barcode
+
         return res
