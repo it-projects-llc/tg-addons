@@ -48,14 +48,16 @@ class AffiliateRequest(models.Model):
         required=True,
         default=lambda self: request.httprequest.headers.environ.get(
             "HTTP_USER_AGENT",
-        ),
+        )
+        or "Anonymous",
         help="Request session user agent",
     )
     accept_language = fields.Char(
         required=True,
         default=lambda self: request.httprequest.headers.environ.get(
             "HTTP_ACCEPT_LANGUAGE",
-        ),
+        )
+        or "*",
         help="Request session accept language",
     )
     sale_ids = fields.One2many(
