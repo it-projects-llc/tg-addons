@@ -8,7 +8,6 @@
     "depends": [
         "website_event_sale",
         "tg_website_sale_affiliate",
-        "tg_sale_commission",
     ],
     "data": [
         "views/res_config_settings_views.xml",
