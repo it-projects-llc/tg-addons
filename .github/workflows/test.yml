@@ -32,7 +32,7 @@ jobs:
     container: ${{ matrix.container }}
     name: ${{ matrix.name }}
     env:
-      EXCLUDE: tg_website_event_sale
+      EXCLUDE: tg_website_event_sale_commission
     strategy:
       fail-fast: false
       matrix:
