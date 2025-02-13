@@ -4,6 +4,11 @@
 
 * Trims coupon code, when attempt to use in sale order
 
+Loyalty Program
+---------------
+
+* Introduces "Is accumulative" field, which falsy values disallow to apply program with other programs applied in order
+
 Credits
 =======
 
