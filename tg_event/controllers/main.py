@@ -1,6 +1,6 @@
 import json
 
-from odoo.http import request, route, content_disposition
+from odoo.http import content_disposition, request, route
 
 from odoo.addons.event.controllers.main import EventController
 
@@ -26,8 +26,8 @@ class EventControllerExtended(EventController):
             request.env["ir.actions.report"]
             .sudo()
             ._render_qweb_pdf(
-            xml_id,
-            event_registrations_sudo.ids,
+                xml_id,
+                event_registrations_sudo.ids,
             )[0]
         )
         pdfhttpheaders = [
@@ -38,6 +38,6 @@ class EventControllerExtended(EventController):
                 content_disposition(
                     f"Tickets-{event_sudo.name} ({event_sudo.date_begin_located}).pdf"
                 ),
-             ),
+            ),
         ]
         return request.make_response(pdf, headers=pdfhttpheaders)
