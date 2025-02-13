@@ -1,5 +1,6 @@
 import json
 
+import wdb
 from odoo.http import content_disposition, request, route
 
 from odoo.addons.event.controllers.main import EventController
@@ -16,12 +17,13 @@ class EventControllerExtended(EventController):
             lambda reg: reg.id in json.loads(registration_ids or "[]")
         )
 
-        xml_id = "event.action_report_event_registration_badge"
+        default_xml_id = "event.action_report_event_registration_badge"
         if event.report_template_for_portal:
             xml_id = event_sudo.report_template_for_portal.get_metadata()[0].get(
                 "xmlid"
             )
-
+        if not xml_id:
+            xml_id = default_xml_id
         pdf = (
             request.env["ir.actions.report"]
             .sudo()
