@@ -6,7 +6,7 @@
     "website": "https://github.com/it-projects-llc/tg-addons",
     "license": "LGPL-3",
     "depends": [
-        "event",
+        "portal_event_tickets",
     ],
     "data": ["views/event_views.xml"],
     "demo": [],
