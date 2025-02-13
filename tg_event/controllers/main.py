@@ -1,6 +1,5 @@
 import json
 
-import wdb
 from odoo.http import content_disposition, request, route
 
 from odoo.addons.event.controllers.main import EventController
@@ -24,6 +23,7 @@ class EventControllerExtended(EventController):
             )
         if not xml_id:
             xml_id = default_xml_id
+
         pdf = (
             request.env["ir.actions.report"]
             .sudo()
