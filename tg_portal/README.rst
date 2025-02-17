@@ -13,6 +13,12 @@
   *  Country of Citizenship
   *  Date of Birth
 
+* Passport and Cedula
+
+  * Last modified ID are treated as current
+
+  * If partner has 2 or more IDs, new one is created
+
 Credits
 =======
 
