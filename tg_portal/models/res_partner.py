@@ -12,7 +12,7 @@ class Partner(models.Model):
             "passport",
             "passport",
         ),
-        inverse=lambda s: s._inverse_identification(
+        inverse=lambda s: s._inverse_identification2(
             "passport",
             "passport",
         ),
@@ -25,7 +25,7 @@ class Partner(models.Model):
             "cedula",
             "cedula",
         ),
-        inverse=lambda s: s._inverse_identification(
+        inverse=lambda s: s._inverse_identification2(
             "cedula",
             "cedula",
         ),
@@ -46,3 +46,39 @@ class Partner(models.Model):
         for partner in self:
             if not partner.has_cedula:
                 partner.cedula = ""
+
+    # based on _inverse_identification from partner_identification
+    # ValidationError was removed for multiple IDs case
+    def _inverse_identification2(self, field_name, category_code):
+        for record in self:
+            id_number = record.id_numbers.filtered(
+                lambda r: r.category_id.code == category_code
+            )
+            record_len = len(id_number)
+
+            if record_len == 1:
+                value = record[field_name]
+                if value:
+                    id_number.name = value
+                else:
+                    id_number.active = False
+            else:
+                name = record[field_name]
+                if not name:
+                    # No value to set
+                    continue
+                category = self.env["res.partner.id_category"].search(
+                    [("code", "=", category_code)]
+                )
+                if not category:
+                    category = self.env["res.partner.id_category"].create(
+                        {"code": category_code, "name": category_code}
+                    )
+                self.env["res.partner.id_number"].create(
+                    {"partner_id": record.id, "category_id": category.id, "name": name}
+                )
+
+
+class PartnerIdNumber(models.Model):
+    _inherit = "res.partner.id_number"
+    _order = "write_date DESC, id DESC"
