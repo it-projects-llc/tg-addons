@@ -55,7 +55,7 @@ class SaleOrder(models.Model):
         if not program.is_accumulative and all_programs_applied:
             return {
                 "error": _(
-                    "Given code cannot be accumulated with already applied programs"
+                    "The given code cannot be accumulated with already applied discount programs"
                 )
             }
 
@@ -63,7 +63,7 @@ class SaleOrder(models.Model):
             lambda x: not x.is_accumulative
         ):
             return {
-                "error": _("There is already applied non-accumulative program applied")
+                "error": _("There is already non-accumulative discount program applied")
             }
 
         return super()._try_apply_code(code)
