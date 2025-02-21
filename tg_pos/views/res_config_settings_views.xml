@@ -10,6 +10,21 @@
                     <field name="pos_shop_ref_id" />
                 </setting>
             </xpath>
+            <xpath expr="//block[@id='pos_accounting_section']" position="inside">
+                <field name="pos_show_auto_duplicate_invoices" invisible="1" />
+                <setting
+                    help="If set, invoices from orders will be duplicated to fiscal company "
+                    invisible="not pos_show_auto_duplicate_invoices"
+                >
+                    <field name="pos_auto_duplicate_invoices" />
+                </setting>
+                <setting
+                    help="If set, error during fiscal company will be shown in POS"
+                    invisible="not pos_show_auto_duplicate_invoices or not pos_auto_duplicate_invoices"
+                >
+                    <field name="pos_debug_auto_duplicate_invoices" />
+                </setting>
+            </xpath>
         </field>
     </record>
 </odoo>
