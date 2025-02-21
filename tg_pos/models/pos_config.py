@@ -1,10 +1,17 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class PosConfig(models.Model):
     _inherit = "pos.config"
 
     shop_ref_id = fields.Many2one("pos.shop", string="Shop")
+    auto_duplicate_invoices = fields.Boolean("Automatic invoice duplication")
+    show_auto_duplicate_invoices = fields.Boolean(
+        compute="_compute_show_auto_duplicate_invoices"
+    )
+    debug_auto_duplicate_invoices = fields.Boolean(
+        "Debug automatic invoice duplication"
+    )
 
     group_show_customer_button_id = fields.Many2one(
         comodel_name="res.groups",
@@ -27,3 +34,8 @@ class PosConfig(models.Model):
                 ).id,
             }
         )
+
+    @api.depends("company_id.fiscal_company")
+    def _compute_show_auto_duplicate_invoices(self):
+        for config in self:
+            config.show_auto_duplicate_invoices = bool(config.company_id.fiscal_company)

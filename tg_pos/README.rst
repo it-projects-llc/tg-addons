@@ -33,6 +33,46 @@ POS Shop usage
 
 * RESULT: only products from shop are shown
 
+Automatic invoice duplication
+-----------------------------
+
+- Make sure, you are able to manually create duplicated invoice.
+  See "Duplicate to fiscal invoice" section from tg_account's readme
+
+- Open Main menu -> Point of Sale -> Configuration -> Settings
+
+- Choose POS
+
+- Make sure, that POS belongs to company, where fiscal company is set
+
+- Save
+
+- Open Main menu -> Point of Sale
+
+- Open POS, what was configured above
+
+- Make order, set "Invoice" flag, validate order
+
+- RESULT: order has been successfully validated
+
+- Open Main menu -> Point of Sale -> Orders
+
+- Open last order, click on "Invoice" smart button
+
+- RESULT: "Duplicated Fiscal Invoice" field it set (see "Other Info" tab)
+
+- Return back to POS
+
+- Make order, set 100% discount, set "Invoice" flag, validate order
+
+- RESULT: order has been successfully validated
+
+- Open Main menu -> Point of Sale -> Orders
+
+- Open last order, click on "Invoice" smart button
+
+- RESULT: "Duplicated Fiscal Invoice" field it NOT set (see "Other Info" tab)
+
 Credits
 =======
 
