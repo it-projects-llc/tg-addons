@@ -4,6 +4,9 @@
 
 * Allows to scan customer in payment screen (feature was implemented in point_of_sale module from 10.0)
 
+* In POS loads all partners at once (feature existed in Odoo 10.0 - 16.0)
+  No need to press "Search More" in partner list screen
+
 * Added user group "Point of Sale - Show customer button"
 
 * Added user group "Point of Sale - Show +/- in payment screen"
