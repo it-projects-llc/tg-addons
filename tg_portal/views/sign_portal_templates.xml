@@ -5,11 +5,11 @@
     <template id="tg_portal_my_home_sign" inherit_id="sign.portal_my_home_sign">
         <div id="portal_alert_category" position="replace">
             <t t-call="portal.portal_docs_entry">
-                <t t-set="bg_color" t-value="'text-bg-light'"/>
+                <t t-set="bg_color" t-value="'text-bg-light'" />
                 <t t-set="title">Document(s) to sign</t>
-                <t t-set="url" t-value="'/my/signatures'"/>
-                <t t-set="placeholder_count" t-value="'to_sign_count'"/>
-                <t t-set="show_count" t-value="True"/>
+                <t t-set="url" t-value="'/my/signatures'" />
+                <t t-set="placeholder_count" t-value="'to_sign_count'" />
+                <t t-set="show_count" t-value="True" />
             </t>
         </div>
     </template>
