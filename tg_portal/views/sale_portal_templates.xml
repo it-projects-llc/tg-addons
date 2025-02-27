@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Override for sale portal template -->
+    <template id="tg_portal_my_home_sale" inherit_id="sale.portal_my_home_sale">
+        <div id="portal_alert_category" position="replace">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="bg_color" t-value="'text-bg-light'"/>
+                <t t-set="placeholder_count" t-value="'quotation_count'"/>
+                <t t-set="title">Quotations to review</t>
+                <t t-set="url" t-value="'/my/quotes'"/>
+                <t t-set="show_count" t-value="True"/>
+            </t>
+        </div>
+    </template>
+
+</odoo>
