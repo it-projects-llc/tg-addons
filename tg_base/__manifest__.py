@@ -14,4 +14,5 @@
     ],
     "demo": [],
     "qweb": [],
+    "post_load": "post_load",
 }
