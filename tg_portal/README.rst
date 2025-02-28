@@ -31,6 +31,8 @@ Contributors
 
 * `Eugene Molotov <https://github.com/em230418>`__
 
+* `Ilmir Karamov <https://github.com/ilmir-k>`__
+
 Sponsors
 --------
 
