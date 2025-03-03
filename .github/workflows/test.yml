@@ -55,6 +55,13 @@ jobs:
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
+      - name: Clone enterprise
+        uses: actions/checkout@v3
+        with:
+          repository: odoo/enterprise
+          path: enterprise
+          ref: "17.0"
+          fetch-depth: 1
       - name: Install addons and dependencies
         run: oca_install_addons
       - name: Check licenses
