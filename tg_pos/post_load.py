@@ -1,5 +1,6 @@
 def post_load():
     from odoo.addons.point_of_sale.models.pos_config import OR, PosConfig
+    from odoo.addons.point_of_sale.models.pos_session import PosSession
 
     def _get_available_product_domain(self):
         domain = [
@@ -18,3 +19,8 @@ def post_load():
         return domain
 
     PosConfig._get_available_product_domain = _get_available_product_domain
+
+    def _get_pos_ui_res_partner(self, params):
+        return self.env["res.partner"].search_read(**params["search_params"])
+
+    PosSession._get_pos_ui_res_partner = _get_pos_ui_res_partner

@@ -4,6 +4,17 @@
 
 * Allows to set country as archived
 
+Partner merge changes
+---------------------
+
+Allows to merge partner with users.
+
+Users from source partners will be:
+
+  - marked as inactive
+
+  - assigned to destination partner
+
 Credits
 =======
 

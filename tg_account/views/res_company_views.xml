@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="company_view_form" model="ir.ui.view">
+        <field name="name">res.company.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="fiscal_company" options="{'no_create': 1}" />
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page
+                    name="fiscal_company_mapping"
+                    string="Fiscal Company Mappings"
+                    groups="account.group_account_user"
+                    invisible="not fiscal_company"
+                >
+                    <label for="fiscal_company_mapping_journal" />
+                    <field name="fiscal_company_mapping_journal">
+                        <tree editable="top">
+                            <field name="company_from" column_invisible="1" />
+                            <field name="company_to" column_invisible="1" />
+                            <field name="journal_from" />
+                            <field name="journal_to" />
+                        </tree>
+                    </field>
+                    <label for="fiscal_company_mapping_account" />
+                    <field name="fiscal_company_mapping_account">
+                        <tree editable="top">
+                            <field name="company_from" column_invisible="1" />
+                            <field name="company_to" column_invisible="1" />
+                            <field name="account_from" />
+                            <field name="account_to" />
+                        </tree>
+                    </field>
+                    <label for="fiscal_company_mapping_tax" />
+                    <field name="fiscal_company_mapping_tax">
+                        <tree editable="top">
+                            <field name="company_from" column_invisible="1" />
+                            <field name="company_to" column_invisible="1" />
+                            <field name="tax_from" />
+                            <field name="tax_to" />
+                        </tree>
+                    </field>
+                    <label for="fiscal_company_mapping_bank_account" />
+                    <field name="fiscal_company_mapping_bank_account">
+                        <tree editable="top">
+                            <field name="company_from" column_invisible="1" />
+                            <field name="company_to" column_invisible="1" />
+                            <field name="bank_account_from" />
+                            <field name="bank_account_to" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -6,6 +6,7 @@
     "website": "https://github.com/it-projects-llc/tg-addons",
     "license": "LGPL-3",
     "depends": [
+        "tg_account",
         "point_of_sale",
     ],
     "external_dependencies": {"python": [], "bin": []},
