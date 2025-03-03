@@ -15,7 +15,7 @@
     ],
     "data": [
         "views/sign_portal_templates.xml",
-        "views/sale_portal_templates.xml",
+       # "views/sale_portal_templates.xml",
         "views/portal_templates.xml",
         "views/res_partner_views.xml",
     ],
