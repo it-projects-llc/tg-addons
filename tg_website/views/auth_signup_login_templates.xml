@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="fields" inherit_id="auth_signup.fields">
+        <xpath expr="//input[@name='name']/.." position="after">
+            <div
+                class="mb-3 field-tnc"
+                t-if="website.tnc_url and website.tnc_title and not only_passwords"
+            >
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="tnc_accepted"
+                    t-att-checked="'checked' if tnc_accepted else None"
+                    id="tnc_accepted"
+                    required="required"
+                />
+                <label class="form-check-label" for="tnc_accepted">
+                    <a t-att-href="website.tnc_url" t-out="website.tnc_title" />
+                </label>
+            </div>
+        </xpath>
+    </template>
+</odoo>
