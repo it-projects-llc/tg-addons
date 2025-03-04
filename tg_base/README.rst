@@ -4,6 +4,8 @@
 
 * Allows to set country as archived
 
+* Shows related logins in contact form
+
 Partner merge changes
 ---------------------
 
