@@ -2,6 +2,8 @@
  Website modifications for Tribal Gathering
 ============================================
 
+* When user register on website, allowed company ids is taken from portal template user
+
 Terms and conditions for website
 --------------------------------
 

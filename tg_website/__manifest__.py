@@ -14,4 +14,5 @@
         "views/website_views.xml",
     ],
     "demo": [],
+    "post_load": "post_load",
 }
