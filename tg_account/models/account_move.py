@@ -63,9 +63,10 @@ class AccountMove(models.Model):
 
         new_move_ids = self._duplicate_invoice_inner()
 
-        new_move = self.env["account.move"].browse(new_move_ids)[0]
-
-        action = new_move.open_action()
+        new_journal = (
+            self.env["account.move"].browse(new_move_ids).mapped("journal_id")[0]
+        )
+        action = new_journal.open_action()
         if len(new_move_ids) > 1:
             action["domain"] = [("id", "in", new_move_ids)]
         elif len(new_move_ids) == 1:
