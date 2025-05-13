@@ -16,15 +16,10 @@ class AccountMove(models.Model):
     )
 
     def _duplicate_invoice_check(self):
-        incorrect_types = []
         no_fiscal_companies = []
         have_duplicated_invoice = []
 
         for move in self:
-            if move.move_type != "out_invoice":
-                incorrect_types.append(move.name)
-                continue
-
             if move.duplicated_fiscal_invoice:
                 have_duplicated_invoice.append(move.name)
                 continue
@@ -35,9 +30,6 @@ class AccountMove(models.Model):
                 continue
 
         error_msgs = []
-        if incorrect_types:
-            error_msgs.append("Not invoices: " + ", ".join(incorrect_types))
-
         if no_fiscal_companies:
             error_msgs.append("No fiscal companies: " + ", ".join(no_fiscal_companies))
 
@@ -71,9 +63,9 @@ class AccountMove(models.Model):
 
         new_move_ids = self._duplicate_invoice_inner()
 
-        action = self.env["ir.actions.actions"]._for_xml_id(
-            "account.action_move_out_invoice_type"
-        )
+        new_move = self.env["account.move"].browse(new_move_ids)[0]
+
+        action = new_move.open_action()
         if len(new_move_ids) > 1:
             action["domain"] = [("id", "in", new_move_ids)]
         elif len(new_move_ids) == 1:
@@ -88,10 +80,6 @@ class AccountMove(models.Model):
         else:
             action = {"type": "ir.actions.act_window_close"}
 
-        context = {
-            "default_move_type": "out_invoice",
-        }
-        action["context"] = context
         return action
 
     def copy_data(self, default=None):
