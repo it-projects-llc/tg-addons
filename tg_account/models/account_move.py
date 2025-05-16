@@ -64,7 +64,7 @@ class AccountMove(models.Model):
         new_move_ids = self._duplicate_invoice_inner()
 
         move_types = list(set(self.mapped("move_type")))
-        if len(move_types) == 1:
+        if len(move_types) == 1 and move_types[0] != "entry":
             action_xmlid = "account.action_move_" + move_types[0] + "_type"
         else:
             action_xmlid = "account.action_move_journal_line"
