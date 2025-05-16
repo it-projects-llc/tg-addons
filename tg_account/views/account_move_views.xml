@@ -24,7 +24,7 @@
                 <field name="duplicated_fiscal_invoice" />
             </xpath>
             <xpath
-                expr="//group[@name='other_tab_entry_group']//field[@name='company_id']"
+                expr="//group[@id='other_tab_entry_group']//field[@name='company_id']"
                 position="after"
             >
                 <field name="must_be_duplicated" />
