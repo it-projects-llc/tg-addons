@@ -63,10 +63,14 @@ class AccountMove(models.Model):
 
         new_move_ids = self._duplicate_invoice_inner()
 
-        new_journal = (
-            self.env["account.move"].browse(new_move_ids).mapped("journal_id")[0]
-        )
-        action = new_journal.open_action()
+        move_types = list(set(self.mapped("move_type")))
+        if len(move_types) == 1:
+            action_xmlid = "account.action_move_" + move_types[0] + "_type"
+        else:
+            action_xmlid = "account.action_move_journal_line"
+
+        action = self.env["ir.actions.actions"]._for_xml_id(action_xmlid)
+
         if len(new_move_ids) > 1:
             action["domain"] = [("id", "in", new_move_ids)]
         elif len(new_move_ids) == 1:
