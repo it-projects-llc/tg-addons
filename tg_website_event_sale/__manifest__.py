@@ -14,5 +14,10 @@
         "views/sale_affiliate_views.xml",
     ],
     "demo": [],
+    "assets": {
+        "web.assets_tests": [
+            "tg_website_event_sale/static/tests/**/*",
+        ],
+    },
     "qweb": [],
 }
