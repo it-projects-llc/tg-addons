@@ -38,7 +38,6 @@ const OTHER_STEPS_UNTIL_CART = [
         extra_trigger: "input[name*='1-name']",
         trigger: "button[type=submit]",
     },
-    wsTourUtils.goToCart({quantity: 1}),
 ];
 
 registry
@@ -46,7 +45,10 @@ registry
     .add("tg_website_event_sale_create_event1_registration", {
         test: true,
         url: "/event",
-        steps: () => [openEventByName("Pycon")].concat(OTHER_STEPS_UNTIL_CART),
+        steps: () =>
+            [openEventByName("Pycon")]
+                .concat(OTHER_STEPS_UNTIL_CART)
+                .concat([wsTourUtils.goToCart({quantity: 1})]),
     });
 
 registry
@@ -55,7 +57,24 @@ registry
         test: true,
         url: "/event",
         steps: () =>
-            [openEventByName("Conference for Architects TEST")].concat(
-                OTHER_STEPS_UNTIL_CART
-            ),
+            [openEventByName("Conference for Architects TEST")]
+                .concat(OTHER_STEPS_UNTIL_CART)
+                .concat([wsTourUtils.goToCart({quantity: 1})]),
     });
+
+registry.category("web_tour.tours").add("tg_website_event_sale_change_ticket", {
+    test: true,
+    steps: () =>
+        [
+            {
+                content: "Click on `Upgrade/change ticket` button",
+                trigger: "a[data-bs-target='#changeTicketModal']",
+            },
+            {
+                content: "Click submit on modal",
+                trigger: "form button[type='submit']",
+            },
+        ]
+            .concat(OTHER_STEPS_UNTIL_CART)
+            .concat([wsTourUtils.goToCart({quantity: 3})]),
+});

@@ -9,18 +9,21 @@ class WebsiteEventSaleExtendController(WebsiteEventSaleController):
     def registration_confirm(self, *args, **post):
         order = request.website.sale_get_order(force_create=False)
         if order:
-            if order.state == "draft":
-                SaleOrderLine = request.env["sale.order.line"].sudo()
-                discount_lines = SaleOrderLine.search(
+            SaleOrderLine = request.env["sale.order.line"].sudo()
+            if (
+                order.state == "draft"
+                and "refund_source_line_id" in SaleOrderLine._fields
+            ):
+                refund_lines = SaleOrderLine.search(
                     [
                         ("order_id", "=", order.id),
-                        ("price_unit", "<", 0),
                         ("display_type", "=", False),
+                        ("refund_source_line_id", "!=", False),
                     ]
                 )
-                if not discount_lines:
+                if not refund_lines:
                     order.sudo().unlink()
-            elif order.state == "cancel":
+            elif order.state in ("draft", "cancel"):
                 order.sudo().unlink()
         return super().registration_confirm(*args, **post)
 
