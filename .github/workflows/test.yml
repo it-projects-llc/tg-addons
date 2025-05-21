@@ -66,6 +66,12 @@ jobs:
         run: oca_init_test_database
       - name: Run tests
         run: oca_run_tests
+      - name: Upload artifacts if tests failed
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots ${{ matrix.name }}
+          path: /tmp/odoo_tests/odoo/screenshots/*
       - uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
