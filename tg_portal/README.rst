@@ -13,6 +13,11 @@
   *  Country of Citizenship
   *  Date of Birth
 
+* Removed fields in `/my/acconut` page
+
+  * Company name
+  * VAT
+
 * Passport and Cedula
 
   * Last modified ID are treated as current
