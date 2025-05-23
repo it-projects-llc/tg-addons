@@ -44,36 +44,30 @@ class WebsiteSaleCase(HttpCase, SaleCase):
     def test_shop(self, mock_get_request):
         """Adds request id to session when aff_ref kwarg present"""
         mock_get_request.return_value = self.demo_request
-        try:
-            self.authenticate(None, None)
-            self.url_open("/shop?aff_ref=" + str(self.demo_affiliate.id))
-            session = http.root.session_store.get(self.session.sid)
-            self.assertEqual(
-                session.get("affiliate_request"),
-                self.demo_request.id,
-            )
-        except Exception as e:
-            _logger.error(f"An error occurred: {e}")
+        self.authenticate(None, None)
+        self.url_open("/shop?aff_ref=" + str(self.demo_affiliate.id))
+        session = http.root.session_store.get(self.session.sid)
+        self.assertEqual(
+            session.get("affiliate_request"),
+            self.demo_request.id,
+        )
 
     @patch(f"{AFFILIATE_MODEL_PATH}.get_request")
     def test_product(self, mock_get_request):
         """Adds request id to session when aff_ref kwarg present"""
         mock_get_request.return_value = self.demo_request
-        try:
-            self.authenticate(None, None)
-            self.url_open(
-                url_join(
-                    self.demo_product.website_url,
-                    "?aff_ref=" + str(self.demo_affiliate.id),
-                )
+        self.authenticate(None, None)
+        self.url_open(
+            url_join(
+                self.demo_product.website_url,
+                "?aff_ref=" + str(self.demo_affiliate.id),
             )
-            session = http.root.session_store.get(self.session.sid)
-            self.assertEqual(
-                session.get("affiliate_request"),
-                self.demo_request.id,
-            )
-        except Exception as e:
-            _logger.error(f"An error occurred: {e}")
+        )
+        session = http.root.session_store.get(self.session.sid)
+        self.assertEqual(
+            session.get("affiliate_request"),
+            self.demo_request.id,
+        )
 
     @patch_request
     @patch(f"{AFFILIATE_MODEL_PATH}.find_from_kwargs")
@@ -83,12 +77,10 @@ class WebsiteSaleCase(HttpCase, SaleCase):
         """Calls affiliate find_from_kwargs method"""
         request_mock.env = self.env
         find_from_kwargs_mock.return_value = None
-        try:
+        if True:
             kwargs = {}
             self.controller._store_affiliate_info(**kwargs)
             find_from_kwargs_mock.assert_called_once_with(**kwargs)
-        except Exception as e:
-            _logger.error(f"An error occurred: {e}")
 
     @patch_request
     @patch(f"{AFFILIATE_MODEL_PATH}.get_request")
@@ -98,15 +90,12 @@ class WebsiteSaleCase(HttpCase, SaleCase):
         """Calls affiliate get_request method with provided kwargs
         when affiliate matching aff_ref is found"""
         request_mock.env = self.env
-        try:
-            kwargs = {
-                "aff_ref": self.demo_affiliate.id,
-                "aff_key": self.demo_request.id,
-            }
-            self.controller._store_affiliate_info(**kwargs)
-            get_request_mock.assert_called_once_with(**kwargs)
-        except Exception as e:
-            _logger.error(f"An error occurred: {e}")
+        kwargs = {
+            "aff_ref": self.demo_affiliate.id,
+            "aff_key": self.demo_request.id,
+        }
+        self.controller._store_affiliate_info(**kwargs)
+        get_request_mock.assert_called_once_with(**kwargs)
 
     @patch_request
     @patch(f"{AFFILIATE_MODEL_PATH}.find_from_kwargs")
@@ -118,12 +107,9 @@ class WebsiteSaleCase(HttpCase, SaleCase):
         request_mock.env = self.env
         find_from_kwargs_mock.return_value = None
         with patch(f"{AFFILIATE_MODEL_PATH}.get_request") as get_request_mock:
-            try:
-                kwargs = {}
-                self.controller._store_affiliate_info(**kwargs)
-                self.assertFalse(get_request_mock.called)
-            except Exception as e:
-                _logger.error(f"An error occurred: {e}")
+            kwargs = {}
+            self.controller._store_affiliate_info(**kwargs)
+            self.assertFalse(get_request_mock.called)
 
     @patch_request
     @patch(f"{AFFILIATE_MODEL_PATH}.get_request")
@@ -134,14 +120,11 @@ class WebsiteSaleCase(HttpCase, SaleCase):
         request_mock.env = self.env
         request_mock.session = {}
         get_request_mock.return_value = self.demo_request
-        try:
-            kwargs = {"aff_ref": self.demo_affiliate.id}
-            self.controller._store_affiliate_info(**kwargs)
-            self.assertEqual(
-                request_mock.session["affiliate_request"], self.demo_request.id
-            )
-        except Exception as e:
-            _logger.error(f"An error occurred: {e}")
+        kwargs = {"aff_ref": self.demo_affiliate.id}
+        self.controller._store_affiliate_info(**kwargs)
+        self.assertEqual(
+            request_mock.session["affiliate_request"], self.demo_request.id
+        )
 
     @patch_request
     @patch(f"{AFFILIATE_MODEL_PATH}.find_from_kwargs")
@@ -153,12 +136,9 @@ class WebsiteSaleCase(HttpCase, SaleCase):
         request_mock.env = self.env
         request_mock.session = {}
         find_from_kwargs_mock.return_value = None
-        try:
-            kwargs = {}
-            self.controller._store_affiliate_info(**kwargs)
-            self.assertIsNone(request_mock.session.get("affiliate_request"))
-        except Exception as e:
-            _logger.error(f"An error occurred: {e}")
+        kwargs = {}
+        self.controller._store_affiliate_info(**kwargs)
+        self.assertIsNone(request_mock.session.get("affiliate_request"))
 
     @patch_request
     @patch(f"{AFFILIATE_MODEL_PATH}.get_request")
@@ -170,14 +150,11 @@ class WebsiteSaleCase(HttpCase, SaleCase):
         request_mock.env = self.env
         request_mock.session = {"affiliate_request": 0}
         get_request_mock.return_value = self.demo_request
-        try:
-            kwargs = {"aff_ref": self.demo_affiliate.id}
-            self.controller._store_affiliate_info(**kwargs)
-            self.assertEqual(
-                request_mock.session["affiliate_request"], self.demo_request.id
-            )
-        except Exception as e:
-            _logger.error(f"An error occurred: {e}")
+        kwargs = {"aff_ref": self.demo_affiliate.id}
+        self.controller._store_affiliate_info(**kwargs)
+        self.assertEqual(
+            request_mock.session["affiliate_request"], self.demo_request.id
+        )
 
     @patch_request
     @patch(f"{AFFILIATE_MODEL_PATH}.find_from_kwargs")
@@ -189,9 +166,6 @@ class WebsiteSaleCase(HttpCase, SaleCase):
         request_mock.env = self.env
         request_mock.session = {"affiliate_request": 0}
         find_from_kwargs_mock.return_value = None
-        try:
-            kwargs = {}
-            self.controller._store_affiliate_info(**kwargs)
-            self.assertEqual(request_mock.session["affiliate_request"], 0)
-        except Exception as e:
-            _logger.error(f"An error occurred: {e}")
+        kwargs = {}
+        self.controller._store_affiliate_info(**kwargs)
+        self.assertEqual(request_mock.session["affiliate_request"], 0)
