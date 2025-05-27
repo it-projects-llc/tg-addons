@@ -6,6 +6,8 @@
 
   * Hides "VAT" and "Company name" fields
 
+  * Hides "email" field for registered user
+
 Credits
 =======
 
