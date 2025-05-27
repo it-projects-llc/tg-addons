@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="address" inherit_id="website_sale.address">
+        <xpath expr="//div[@id='div_email']" position="attributes">
+            <attribute name="t-if">mode[0] == 'new'</attribute>
+        </xpath>
+        <xpath expr="//div[@id='div_phone']" position="attributes">
+            <attribute
+                name="t-attf-class"
+            >#{error.get('phone') and 'o_has_error'} #{mode[0] == 'new' and 'col-lg-6' or 'col-lg-12'} mb-2</attribute>
+        </xpath>
+    </template>
+</odoo>
