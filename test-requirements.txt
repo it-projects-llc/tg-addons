@@ -1,2 +1,4 @@
 git+https://github.com/it-projects-llc/website-addons@17.0#subdirectory=website_event_attendee_fields
 git+https://github.com/it-projects-llc/pos-addons@17.0#subdirectory=pos_partner_deselection
+git+https://github.com/it-projects-llc/website-addons@17.0#subdirectory=portal_event_tickets
+git+https://github.com/it-projects-llc/website-addons@17.0#subdirectory=website_sale_refund
