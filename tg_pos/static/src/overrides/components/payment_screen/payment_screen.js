@@ -52,4 +52,9 @@ patch(PaymentScreen.prototype, {
         });
         return res;
     },
+
+    shouldDownloadInvoice() {
+        if (this.pos.config.auto_duplicate_invoices) return false;
+        return super.shouldDownloadInvoice();
+    },
 });
