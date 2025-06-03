@@ -32,13 +32,17 @@ jobs:
     container: ${{ matrix.container }}
     name: ${{ matrix.name }}
     env:
-      EXCLUDE: tg_website_event_sale_commission
+      EXCLUDE: ${{ matrix.exclude }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - container: ghcr.io/oca/oca-ci/py3.10-odoo17.0:latest
             name: test with Odoo
+            exclude: tg_website_event_sale_commission
+          - container: ghcr.io/oca/oca-ci/py3.10-odoo17.0:latest
+            name: test with Odoo (no compat test)
+            exclude: test_compat_tg_addons,tg_website_event_sale_commission
     services:
       postgres:
         image: postgres:12.0
