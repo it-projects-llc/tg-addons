@@ -27,4 +27,34 @@
             </xpath>
         </field>
     </record>
+
+    <record id="res_config_settings_view_form_partner_deselection" model="ir.ui.view">
+        <field
+            name="name"
+        >res.config.settings.view.form.inherit.tg.pos.partner.deselection</field>
+        <field name="model">res.config.settings</field>
+        <field
+            name="inherit_id"
+            ref="pos_partner_deselection.res_config_settings_view_form_inherit"
+        />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='pos_customer_deselection_interval']/.."
+                position="before"
+            >
+                <field
+                    name="pos_customer_deselection_interval_readonly"
+                    invisible="1"
+                />
+            </xpath>
+            <xpath
+                expr="//field[@name='pos_customer_deselection_interval']"
+                position="attributes"
+            >
+                <attribute
+                    name="readonly"
+                >pos_customer_deselection_interval_readonly</attribute>
+            </xpath>
+        </field>
+    </record>
 </odoo>
