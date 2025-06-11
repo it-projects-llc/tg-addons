@@ -6,6 +6,8 @@
 
 * Signup URL depends on current website
 
+* 'Password reset' email is sent from website's company email
+
 Credits
 =======
 
