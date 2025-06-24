@@ -56,6 +56,7 @@ class TestPartnerIdentificationBase(TransactionCase):
         )
         self.assertTrue(partner.has_cedula)
         partner.has_cedula = False
+<<<<<<< HEAD
         self.assertFalse(partner.cedula)
 
     def test_passport_deactivation(self):
