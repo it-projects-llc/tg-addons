@@ -50,3 +50,48 @@ class TestPartnerIdentificationBase(TransactionCase):
 
     def test_multiple_cedula(self):
         self._test_multiple_idents("cedula")
+
+    # Case: if not partner.has_cedula
+    def test_inverse_has_cedula_clears_field(self):
+        partner = self.env["res.partner"].create(
+            {"name": "Partner with cedula", "cedula": "cedula 1"}
+        )
+        self.assertTrue(partner.has_cedula)
+        partner.has_cedula = False
+        partner._inverse_has_cedula()
+        self.assertFalse(partner.cedula)
+
+    def test_inverse_identification2_behaviors(self):
+        category = self.env["res.partner.id_category"].create(
+            {"code": "passport", "name": "Passport"}
+        )
+        partner = self.env["res.partner"].create({"name": "Partner with one ID"})
+
+        # Case: only 1 ID exists and new value is provided - update name
+        id1 = self.env["res.partner.id_number"].create(
+            {"partner_id": partner.id, "category_id": category.id, "name": "OLD"}
+        )
+        partner.passport = "UPDATED"
+        partner._inverse_identification2("passport", "passport")
+        id1.invalidate_cache()
+        self.assertEqual(id1.name, "UPDATED")
+
+        # Case: only 1 ID exists and value is empty - active = False
+        partner.passport = ""
+        partner._inverse_identification2("passport", "passport")
+        id1.invalidate_cache()
+        self.assertFalse(id1.active)
+
+        # Case: multiple ID numbers and empty name — should skip
+        self.env["res.partner.id_number"].create(
+            {"partner_id": partner.id, "category_id": category.id, "name": "SECOND"}
+        )
+        count_before = len(partner.id_numbers)
+        partner.passport = ""
+        partner._inverse_identification2("passport", "passport")
+        self.assertEqual(len(partner.id_numbers), count_before)
+
+        # Case: partner has multiple id_numbers — new ID is added with the given value
+        partner.passport = "NEW_ENTRY"
+        partner._inverse_identification2("passport", "passport")
+        self.assertIn("NEW_ENTRY", partner.id_numbers.mapped("name"))
