@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="0">
+    <record id="mail_template_invoice_plan" model="mail.template">
+        <field name="name">Sales: Invoice Plan</field>
+        <field name="model_id" ref="sale.model_sale_order" />
+        <field
+            name="subject"
+        >{{ object.company_id.name }} {{ (object.get_portal_last_transaction().state == 'pending') and 'Pending Order' or 'Order' }} (Ref {{ object.name or 'n/a' }}) Payment Plan</field>
+        <field
+            name="email_from"
+        >{{ (object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 12px;">
+        <t t-set="transaction_sudo" t-value="object.get_portal_last_transaction()" />
+        Hello,
+        <t t-if="object.partner_id.parent_id">
+            <t t-out="object.partner_id.name or ''">Brandon Freeman</t> (<t
+                            t-out="object.partner_id.parent_id.name or ''"
+                        >Azure Interior</t>),
+        </t>
+        <t t-else="">
+            <t t-out="object.partner_id.name or ''">Brandon Freeman</t>,
+        </t>
+        <br /><br />
+        Payment Plan for
+        <span style="font-weight:bold;" t-out="object.name or ''">S00049</span>
+        attached.
+        <br />
+        All invoices can be found in <a href="/my/invoices">invoices</a> page.
+        <br />
+        Do not hesitate to contact us if you have any questions.
+        <t t-if="not is_html_empty(object.user_id.signature)">
+            <br /><br />
+            <t t-out="object.user_id.signature or ''">--<br />Mitchell Admin</t>
+        </t>
+        <br /><br />
+    </p>
+</div>
+        </field>
+        <field
+            name="report_template_ids"
+            eval="[(4, ref('tg_website_event_sale_split_payments.action_report_invoice_plan'))]"
+        />
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True" />
+    </record>
+</odoo>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_invoice_plan">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <t
+                        t-set="doc"
+                        t-value="doc.with_context(lang=doc.partner_id.lang)"
+                    />
+                    <t
+                        t-set="invoice_plan_fields"
+                        t-value="env['sale.invoice.plan']._fields"
+                    />
+                    <div class="page">
+                        <div class="oe_structure" />
+
+                        <h2 class="mt-4">
+                            <span
+                                t-if="env.context.get('proforma', False) or is_pro_forma"
+                            >Pro-Forma Invoice # </span>
+                            <span
+                                t-elif="doc.state in ['draft','sent']"
+                            >Quotation # </span>
+                            <span t-else="">Order # </span>
+                            <span t-field="doc.name">SO0000</span>
+                        </h2>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th />
+                                    <th
+                                        t-out="invoice_plan_fields['plan_date']._description_string(env)"
+                                    />
+                                    <th
+                                        t-out="invoice_plan_fields['amount']._description_string(env)"
+                                    />
+                                    <th>Payment URL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.invoice_plan_ids" t-as="plan">
+                                    <td><span t-field="plan.installment" /></td>
+                                    <td><span t-field="plan.plan_date" /></td>
+                                    <td><span t-field="plan.amount" /></td>
+                                    <td>
+                                        <t
+                                            t-foreach="plan.invoice_move_ids"
+                                            t-as="invoice"
+                                        >
+                                            <a
+                                                t-att-href="invoice.get_portal_url()"
+                                                t-out="invoice.name"
+                                            /><br />
+                                        </t>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
