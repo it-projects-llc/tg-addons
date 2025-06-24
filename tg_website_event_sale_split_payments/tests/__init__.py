@@ -1,0 +1,1 @@
+from odoo.addons.tg_sale_invoice_plan.tests import test_sale_invoice_plan

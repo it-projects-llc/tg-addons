@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="layout" inherit_id="website.layout">
+        <xpath expr="//div[@id='wrapwrap']" position="inside">
+            <div
+                t-if="show_split_order"
+                class="modal fade"
+                id="split_payment_modal"
+                tabindex="-1"
+                role="dialog"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <form class="modal-content" action="/shop/cart/make_invoice_plan">
+                        <div class="modal-header">
+                            <div class="h5 modal-title">Split payments</div>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            />
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label
+                                    for="sp_deposit"
+                                    class="form-label"
+                                >Initial payment</label>
+                                <input
+                                    name="deposit"
+                                    type="number"
+                                    t-att-value="str(min_deposit)"
+                                    t-att-min="str(min_deposit)"
+                                    t-att-max="str(max_deposit)"
+                                    step="0.01"
+                                    class="form-control"
+                                    id="sp_deposit"
+                                    aria-describedby="sp_deposit"
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label
+                                    for="sp_payment_count"
+                                    class="form-label"
+                                >How many payments</label>
+                                <input
+                                    name="payment_count"
+                                    type="number"
+                                    class="form-control"
+                                    id="sp_payment_count"
+                                    min="2"
+                                    value="2"
+                                    aria-describedby="sp_payment_count"
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="sp_period" class="form-label">Period</label>
+                                <select name="period" class="form-select">
+                                    <t
+                                        t-foreach="order._get_split_payment_periods()"
+                                        t-as="period"
+                                    >
+                                        <option
+                                            t-att-value="period"
+                                            t-out="period_value['display_name']"
+                                        />
+                                    </t>
+                                </select>
+                            </div>
+                        </div>
+                        <footer class="modal-footer">
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                            >Generate invoice plan</button>
+                            <button
+                                type="button"
+                                class="btn"
+                                data-bs-dismiss="modal"
+                                aria-label="Cancel"
+                            >Cancel</button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="navigation_buttons" inherit_id="website_sale.navigation_buttons">
+        <xpath expr="//div[@name='o_website_sale_free_cart']/.." position="inside">
+            <t t-if="show_split_order and not hide_payment_button">
+                <div
+                    t-attf-class="position-relative #{_form_send_navigation and 'd-flex d-lg-none' or 'd-flex'} w-100 justify-content-center align-items-center my-2 opacity-75"
+                >
+                    <hr class="w-100" />
+                    <span class="px-3">or</span>
+                    <hr class="w-100" />
+                </div>
+
+                <button
+                    name="o_payment_split_payment_button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#split_payment_modal"
+                    class="btn btn-primary w-100 w-md-auto px-5"
+                >
+                    Split payment
+                </button>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="suggested_invoice_plan">
+        <div
+            class="modal fade"
+            id="invoice_plan"
+            tabindex="-1"
+            role="dialog"
+            aria-hidden="true"
+        >
+            <t t-set="invoice_plan_fields" t-value="env['sale.invoice.plan']._fields" />
+            <div class="modal-dialog modal-lg">
+                <form
+                    class="modal-content"
+                    action="/shop/cart/go_to_first_invoice_plan"
+                    method="POST"
+                >
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        t-att-value="request.csrf_token()"
+                    />
+                    <div class="modal-header">
+                        Invoice plan
+                    </div>
+                    <div class="modal-body">
+                        <div class="w-100">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th />
+                                        <th
+                                            t-out="invoice_plan_fields['plan_date']._description_string(env)"
+                                        />
+                                        <th
+                                            t-out="invoice_plan_fields['amount']._description_string(env)"
+                                        />
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="order.invoice_plan_ids" t-as="plan">
+                                        <td><span t-field="plan.installment" /></td>
+                                        <td><span t-field="plan.plan_date" /></td>
+                                        <td><span t-field="plan.amount" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <footer class="modal-footer">
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >Confirm and pay deposit</button>
+                        <button
+                            type="button"
+                            class="btn"
+                            data-bs-dismiss="modal"
+                            aria-label="Cancel"
+                        >Cancel</button>
+                    </footer>
+                </form>
+            </div>
+        </div>
+    </template>
+</odoo>

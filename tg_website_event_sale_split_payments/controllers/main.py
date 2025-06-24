@@ -1,0 +1,71 @@
+from odoo import _
+from odoo.exceptions import UserError
+from odoo.http import request, route
+
+from odoo.addons.website_sale.controllers.main import WebsiteSale
+
+
+class WebsiteSaleSplitPaymentController(WebsiteSale):
+    @route()
+    def shop_payment(self, **post):
+        resp = super().shop_payment(**post)
+        if resp.status_code != 200:
+            return resp
+
+        website_sale_order = resp.qcontext.get("website_sale_order")
+        if not website_sale_order or website_sale_order._is_public_order():
+            return resp
+
+        amount_total = website_sale_order.amount_total
+        min_deposit_percent = (
+            website_sale_order.company_id.invoice_plan_min_deposit_percent
+        )
+        max_deposit_percent = (
+            website_sale_order.company_id.invoice_plan_max_deposit_percent
+        )
+
+        resp.qcontext.update(
+            show_split_order=True,
+            min_deposit=min_deposit_percent * amount_total / 100,
+            max_deposit=max_deposit_percent * amount_total / 100,
+        )
+
+        return resp
+
+    @route(
+        "/shop/cart/make_invoice_plan",
+        type="json",
+        auth="public",
+        methods=["POST"],
+        website=True,
+    )
+    def make_invoice_plan(self, deposit, payment_count, period):
+        order = request.website.sale_get_order().sudo()
+        if not order:
+            raise UserError(_("No cart detected"))
+
+        order._generate_invoice_plan_for_event(deposit, payment_count, period)
+
+        return request.env["ir.ui.view"]._render_template(
+            "tg_website_event_sale_split_payments.suggested_invoice_plan",
+            {
+                "order": order,
+            },
+        )
+
+    @route(
+        "/shop/cart/go_to_first_invoice_plan",
+        auth="public",
+        methods=["POST"],
+        website=True,
+    )
+    def shop_go_to_first_invoice_plan(self):
+        order = request.website.sale_get_order()
+        if not order:
+            return request.redirect("/shop/cart")
+
+        if not order.invoice_plan_ids[:1]:
+            return request.redirect("/shop/payment")
+
+        invoice = order._prepare_first_plan_payment()
+        return request.redirect(invoice.get_portal_url())
