@@ -4,9 +4,7 @@ from odoo.tests.common import TransactionCase
 class TestPartnerIdentificationBase(TransactionCase):
     def _test_multiple_idents(self, ident_code):
         partner = self.env["res.partner"].create(
-            {
-                "name": "Partner with multiple idents",
-            }
+            {"name": "Partner with multiple idents"}
         )
 
         partner[ident_code] = "123"  # this creates ident category record
@@ -58,40 +56,67 @@ class TestPartnerIdentificationBase(TransactionCase):
         )
         self.assertTrue(partner.has_cedula)
         partner.has_cedula = False
-        partner._inverse_has_cedula()
         self.assertFalse(partner.cedula)
 
-    def test_inverse_identification2_behaviors(self):
-        category = self.env["res.partner.id_category"].create(
-            {"code": "passport", "name": "Passport"}
-        )
-        partner = self.env["res.partner"].create({"name": "Partner with one ID"})
+    def test_passport_deactivation(self):
+        partner = self.env["res.partner"].create({"name": "Test Partner"})
 
-        # Case: only 1 ID exists and new value is provided - update name
-        id1 = self.env["res.partner.id_number"].create(
-            {"partner_id": partner.id, "category_id": category.id, "name": "OLD"}
+        partner.passport = "OLD"
+        passport = self.env["res.partner.id_number"].search(
+            [
+                ("partner_id", "=", partner.id),
+                ("category_id.code", "=", "passport"),
+            ]
         )
-        partner.passport = "UPDATED"
-        partner._inverse_identification2("passport", "passport")
-        id1.invalidate_cache()
-        self.assertEqual(id1.name, "UPDATED")
-
-        # Case: only 1 ID exists and value is empty - active = False
+        self.assertTrue(passport)
+        self.assertTrue(passport.active)
         partner.passport = ""
-        partner._inverse_identification2("passport", "passport")
-        id1.invalidate_cache()
-        self.assertFalse(id1.active)
+        self.assertFalse(passport.active)
 
-        # Case: multiple ID numbers and empty name — should skip
+    def test_cedula_update_behavior(self):
+        partner = self.env["res.partner"].create({"name": "Partner Cedula test"})
+
+        # Only one cedula – should update
+        partner.cedula = "CEDULA_OLD"
+        cedulas = partner.id_numbers.filtered(lambda r: r.category_id.code == "cedula")
+        self.assertEqual(len(cedulas), 1)
+        self.assertEqual(cedulas[0].name, "CEDULA_OLD")
+
+        partner.cedula = "CEDULA_UPDATED"
+        cedulas = partner.id_numbers.filtered(lambda r: r.category_id.code == "cedula")
+        self.assertEqual(len(cedulas), 1)
+        self.assertEqual(cedulas[0].name, "CEDULA_UPDATED")
+
+        cedula_category = partner.id_numbers.filtered(
+            lambda r: r.category_id.code == "cedula"
+        ).mapped("category_id")[0]
+
+        # Multiple cedulas – should create new
         self.env["res.partner.id_number"].create(
-            {"partner_id": partner.id, "category_id": category.id, "name": "SECOND"}
+            {
+                "partner_id": partner.id,
+                "category_id": cedula_category.id,
+                "name": "CEDULA_2",
+            }
         )
-        count_before = len(partner.id_numbers)
-        partner.passport = ""
-        partner._inverse_identification2("passport", "passport")
-        self.assertEqual(len(partner.id_numbers), count_before)
+        self.env["res.partner.id_number"].create(
+            {
+                "partner_id": partner.id,
+                "category_id": cedula_category.id,
+                "name": "CEDULA_3",
+            }
+        )
+        self.assertEqual(
+            len(
+                partner.id_numbers.filtered(lambda r: r.category_id == cedula_category)
+            ),
+            3,
+        )
 
-        # Case: partner has multiple id_numbers — new ID is added with the given value
-        partner.passport = "NEW_ENTRY"
-        partner._inverse_identification2("passport", "passport")
-        self.assertIn("NEW_ENTRY", partner.id_numbers.mapped("name"))
+        partner.cedula = "NEW_CEDULA"
+        cedulas = partner.id_numbers.filtered(
+            lambda r: r.category_id == cedula_category
+        )
+        self.assertEqual(len(cedulas), 4)
+        self.assertIn("NEW_CEDULA", cedulas.mapped("name"))
+        self.assertEqual(partner.cedula, "NEW_CEDULA")
