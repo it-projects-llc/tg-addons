@@ -2,7 +2,7 @@
 
 import {registry} from "@web/core/registry";
 
-registry.category("web_tour.tours").add("portal_passport_tour", {
+registry.category("web_tour.tours").add("tg_portal.portal_passport_tour", {
     test: true,
     url: "/my",
     steps: () => [
@@ -28,12 +28,23 @@ registry.category("web_tour.tours").add("portal_passport_tour", {
             run: "text PassportTest",
         },
         {
-            content: "Submit the form",
-            trigger: "button[type=submit]",
+            content: "Enter Birthdate",
+            trigger: 'input[name="birthdate_date"]',
+            run: () => {
+                document.querySelector('input[name="birthdate_date"]').value =
+                    "2000-01-01";
+            },
         },
         {
-            content: "Check that we are back on the portal",
+            content: "Submit the form",
+            trigger: "button[type=submit]",
+            run: "click",
+            extra_trigger: "form[action='/my/account']",
+        },
+        {
+            content: "Ensure we returned to portal home",
             trigger: 'a[href*="/my/account"]:contains("Edit"):first',
+            extra_trigger: "div.o_portal_my_details",
             isCheck: true,
         },
     ],
