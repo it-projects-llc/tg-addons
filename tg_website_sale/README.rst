@@ -4,7 +4,21 @@
 
 * In shop/address page
 
-  * Hides "VAT" and "Company name" fields
+  * Hides following fields:
+
+    * "VAT"
+
+    * "Company name"
+
+    * "Street and Number"
+
+    * "Apartment, suite, etc"
+
+    * "Zip Code"
+
+    * "City"
+
+    * "State"
 
   * Hides "email" field for registered user
 

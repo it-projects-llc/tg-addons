@@ -9,5 +9,26 @@
                 name="t-attf-class"
             >#{error.get('phone') and 'o_has_error'} #{mode[0] == 'new' and 'col-lg-6' or 'col-lg-12'} mb-2</attribute>
         </xpath>
+        <xpath expr="//input[@name='street']/.." position="attributes">
+            <attribute name="t-if">mode[1] == "shipping"</attribute>
+        </xpath>
+        <xpath expr="//input[@name='street2']/.." position="attributes">
+            <attribute name="t-if">mode[1] == "shipping"</attribute>
+        </xpath>
+        <xpath expr="(//input[@name='zip'])[1]/.." position="attributes">
+            <attribute name="t-if">mode[1] == "shipping"</attribute>
+        </xpath>
+        <xpath expr="(//input[@name='zip'])[2]/.." position="attributes">
+            <attribute name="t-if">mode[1] == "shipping"</attribute>
+        </xpath>
+        <xpath expr="//input[@name='city']/.." position="attributes">
+            <attribute name="t-if">mode[1] == "shipping"</attribute>
+        </xpath>
+        <xpath expr="//select[@name='state_id']/.." position="attributes">
+            <attribute name="t-if">mode[1] == "shipping"</attribute>
+        </xpath>
+        <xpath expr="//input[@name='field_required']" position="attributes">
+            <attribute name="t-att-value">'name'</attribute>
+        </xpath>
     </template>
 </odoo>
