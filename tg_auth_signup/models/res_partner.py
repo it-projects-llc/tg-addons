@@ -1,3 +1,5 @@
+from urllib.parse import quote
+
 import werkzeug.urls
 
 from odoo import api, models
@@ -22,6 +24,12 @@ class Partner(models.Model):
                         if isinstance(res[k], str):
                             relative_url = self._get_relative_url(res[k])
                             res[k] = werkzeug.urls.url_join(base_url, relative_url)
+
+        if self.env.context.get("create_user") and self.user_ids.redirect:
+            redirect = self.user_ids.redirect
+            for k in res.keys():
+                if isinstance(res[k], str):
+                    res[k] += "&redirect=" + quote(redirect)
 
         return res
 
