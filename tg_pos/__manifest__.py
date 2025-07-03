@@ -23,6 +23,9 @@
         "point_of_sale._assets_pos": [
             "tg_pos/static/src/**/*",
         ],
+        "web.assets_tests": [
+            "tg_pos/static/tests/tours/pos_customer_button_tour.js",
+        ],
     },
     "post_load": "post_load",
     "pre_init_hook": None,
