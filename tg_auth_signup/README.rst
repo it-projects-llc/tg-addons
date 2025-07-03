@@ -8,6 +8,8 @@
 
 * 'Password reset' email is sent from website's company email
 
+* Saves redirect param when registering using auth_signup_verify_email
+
 Credits
 =======
 
