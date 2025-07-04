@@ -20,5 +20,8 @@
         "web.assets_frontend": [
             "tg_portal/static/src/js/portal.js",
         ],
+        "web.assets_tests": [
+            "tg_portal/static/tests/tours/portal_passport_tour.js",
+        ],
     },
 }
