@@ -17,12 +17,12 @@ registry.category("web_tour.tours").add("tg_pos.customer_button_visible", {
             run: "click",
         },
         {
-            content: "'Customer' button should be enabled",
+            content: "'Customer' button should not be disabled",
             trigger: ".button.set-partner",
             run: () => {
                 const btn = document.querySelector(".button.set-partner");
                 if (btn.hasAttribute("disabled")) {
-                    throw new Error("'Customer' button not found");
+                    throw new Error("'Customer' button should not be disabled");
                 }
             },
         },
