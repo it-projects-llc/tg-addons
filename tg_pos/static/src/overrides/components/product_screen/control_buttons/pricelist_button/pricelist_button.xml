@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t t-inherit="point_of_sale.SetPricelistButton" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_pricelist_button')]" position="replace">
+            <t t-if="pos.user.hasGroupEnablePricelistButton">
+                <div
+                    class="control-button o_pricelist_button btn btn-light rounded-0 fw-bolder"
+                    t-on-click="() => this.click()"
+                >
+                    <i
+                        class="fa fa-th-list me-2"
+                        role="img"
+                        aria-label="Price list"
+                        title="Price list"
+                    />
+                    <t t-esc="currentPricelistName" />
+                </div>
+            </t>
+            <t t-else="">
+                <div
+                    class="control-button o_pricelist_button btn btn-light rounded-0 fw-bolder disabled"
+                    style="opacity: 0.5; pointer-events: none;"
+                    title="Access Denied"
+                >
+                    <i
+                        class="fa fa-th-list me-2"
+                        role="img"
+                        aria-label="Price list"
+                        title="Price list"
+                    />
+                    <t t-esc="currentPricelistName" />
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+</templates>
