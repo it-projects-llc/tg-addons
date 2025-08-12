@@ -11,6 +11,9 @@
 
 * Added user group "Point of Sale - Show +/- in payment screen"
 
+* Added user group "Point of Sale - Enable pricelist button".
+  If user belongs to this group, pricelist button will be enabled, otherwise disabled.
+
 * Contact's barcode does not depend on company (as it was in odoo 10.0)
 
 * Option to display specific products in POS (using POS Shop feature)
