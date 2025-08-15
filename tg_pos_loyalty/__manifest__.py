@@ -8,7 +8,9 @@
     "depends": [
         "pos_loyalty",
     ],
-    "data": [],
+    "data": [
+        "views/loyalty_program_views.xml",
+    ],
     "demo": [],
     "assets": {
         "point_of_sale._assets_pos": [
