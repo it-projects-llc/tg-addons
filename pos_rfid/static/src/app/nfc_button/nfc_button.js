@@ -24,7 +24,7 @@ export class NFCButton extends Component {
         const ndef = new window.NDEFReader();
 
         ndef.addEventListener("reading", ({serialNumber}) => {
-            this.barcodeReader.scan(String(serialNumber.replaceAll(":", "")));
+            this.barcodeReader.scan(String(serialNumber.split(":").reverse().join("")));
         });
 
         try {
