@@ -12,3 +12,5 @@ class LoyaltyProgram(models.Model):
     happy_hours_friday = fields.Boolean("Friday")
     happy_hours_saturday = fields.Boolean("Saturday")
     happy_hours_sunday = fields.Boolean("Sunday")
+    happy_hours_from = fields.Float()
+    happy_hours_to = fields.Float()

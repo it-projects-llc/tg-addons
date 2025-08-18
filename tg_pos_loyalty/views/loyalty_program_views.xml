@@ -37,6 +37,11 @@
                         <label for="happy_hours_sunday" />
                     </span>
                 </div>
+                <label for="happy_hours_from" string="Happy hours" />
+                    <div class="o_row">
+                        <field name="happy_hours_from" widget="float_time" /> -
+                        <field name="happy_hours_to" widget="float_time" />
+                    </div>
             </xpath>
         </field>
     </record>

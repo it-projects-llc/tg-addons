@@ -10,9 +10,16 @@ patch(Order.prototype, {
         if (!res) return res;
 
         const weekday = DateTime.now().weekday;
-        if (!program.weekdays.includes(weekday)) {
+
+        if (
+            program.are_happy_hours_enabled &&
+            !program.happy_hours_weekdays.includes(weekday)
+        ) {
             return false;
         }
+
+        console.log(program.happy_hours_from);
+        console.log(program.happy_hours_to);
 
         return true;
     },
