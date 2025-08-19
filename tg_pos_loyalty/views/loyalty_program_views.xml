@@ -9,7 +9,10 @@
                 expr="//div[@id='o_loyalty_program_availabilities']"
                 position="after"
             >
-                <field name="are_happy_hours_enabled" />
+                <field
+                    name="are_happy_hours_enabled"
+                    invisible="not pos_ok or program_type != 'promotion'"
+                />
                 <label
                     class="o_form_label"
                     for="happy_hours_monday"
@@ -37,11 +40,23 @@
                         <label for="happy_hours_sunday" />
                     </span>
                 </div>
-                <label for="happy_hours_from" string="Happy hours" />
-                    <div class="o_row">
-                        <field name="happy_hours_from" widget="float_time" /> -
-                        <field name="happy_hours_to" widget="float_time" />
-                    </div>
+                <label
+                    for="happy_hours_from"
+                    string="Happy hours"
+                    invisible="not are_happy_hours_enabled"
+                />
+                <div class="o_row" invisible="not are_happy_hours_enabled">
+                    <field
+                        name="happy_hours_from"
+                        widget="float_time"
+                        required="are_happy_hours_enabled"
+                    /> -
+                    <field
+                        name="happy_hours_to"
+                        widget="float_time"
+                        required="are_happy_hours_enabled"
+                    />
+                </div>
             </xpath>
         </field>
     </record>

@@ -1,10 +1,12 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class LoyaltyProgram(models.Model):
     _inherit = "loyalty.program"
 
-    are_happy_hours_enabled = fields.Boolean()
+    are_happy_hours_enabled = fields.Boolean(
+        compute="_compute_are_happy_hours_enabled", store=True, readonly=False
+    )
     happy_hours_monday = fields.Boolean("Monday")
     happy_hours_tuesday = fields.Boolean("Tuesday")
     happy_hours_wednesday = fields.Boolean("Wednesday")
@@ -14,3 +16,9 @@ class LoyaltyProgram(models.Model):
     happy_hours_sunday = fields.Boolean("Sunday")
     happy_hours_from = fields.Float()
     happy_hours_to = fields.Float()
+
+    @api.depends("program_type", "pos_ok")
+    def _compute_are_happy_hours_enabled(self):
+        for program in self:
+            if program.program_type != "promotion" or not program.pos_ok:
+                program.are_happy_hours_enabled = False
