@@ -49,6 +49,8 @@ Happy hours usage
 
 * RESULT: if current time is not in happy hours - discoutn from program above will not be given
 
+NOTE: local browser time is used to determine if it is happy hour or not
+
 Credits
 =======
 
