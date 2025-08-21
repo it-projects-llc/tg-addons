@@ -17,7 +17,7 @@ class PosSession(models.Model):
         Programs = self.env["loyalty.program"]
         res = super()._pos_data_process(loaded_data)
 
-        for p in loaded_data["loyalty.program"]:
+        for p in loaded_data.get("loyalty.program", []):
             if not p["are_happy_hours_enabled"]:
                 continue
 
