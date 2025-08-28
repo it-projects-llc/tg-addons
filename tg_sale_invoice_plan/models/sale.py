@@ -50,8 +50,14 @@ class SaleOrder(models.Model):
             raise UserError(_("Use Invoice Plan selected, but no plan created"))
         return super().action_confirm()
 
-    def create_invoice_plan(
-        self, num_installment, installment_date, interval, interval_type, first_amount
+    def _create_invoice_plan(
+        self,
+        num_installment,
+        installment_date,
+        interval,
+        interval_type,
+        first_amount,
+        amount_total,
     ):
         self.ensure_one()
         self.invoice_plan_ids.unlink()
@@ -75,10 +81,10 @@ class SaleOrder(models.Model):
         for i in range(num_installment):
             this_installment = i + 1
             if num_installment == this_installment:
-                amount = self.amount_total - sum_amount
+                amount = amount_total - sum_amount
             else:
                 amount = float_round(
-                    ratio * (self.amount_total - first_amount),
+                    ratio * (amount_total - first_amount),
                     precision_rounding=self.currency_id.rounding,
                 )
                 sum_amount += amount
