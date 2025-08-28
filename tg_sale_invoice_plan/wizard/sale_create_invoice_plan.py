@@ -39,11 +39,12 @@ class SaleCreateInvoicePlan(models.TransientModel):
     def sale_create_invoice_plan(self):
         sale = self.env["sale.order"].browse(self._context.get("active_id"))
         self.ensure_one()
-        sale.create_invoice_plan(
+        sale._create_invoice_plan(
             self.num_installment,
             self.installment_date,
             self.interval,
             self.interval_type,
             self.first_amount,
+            sale.amount_total,
         )
         return {"type": "ir.actions.act_window_close"}
