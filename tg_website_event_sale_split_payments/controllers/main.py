@@ -1,6 +1,7 @@
 from odoo import _
 from odoo.exceptions import UserError
 from odoo.http import request, route
+from odoo.tools import format_amount
 
 from odoo.addons.website_sale.controllers.main import WebsiteSale
 
@@ -69,3 +70,23 @@ class WebsiteSaleSplitPaymentController(WebsiteSale):
 
         invoice = order._prepare_first_plan_payment()
         return request.redirect(invoice.get_portal_url())
+
+    @route(
+        "/shop/cart/calculate_additional_fee_on_split_payments",
+        auth="public",
+        type="json",
+        website=True,
+    )
+    def shop_cart_calculate_additional_fee_on_split_payments(self, deposit, **kw):
+        order = request.website.sale_get_order().sudo()
+        if not order:
+            raise UserError(_("No cart detected"))
+
+        fee = order._calculate_additional_fee_for_splitting(deposit)
+        if not fee:
+            return _("No additional fee required")
+
+        return _(
+            "%s additional fee is applied if you use this payment method",
+            format_amount(request.env, fee, order.currency_id),
+        )

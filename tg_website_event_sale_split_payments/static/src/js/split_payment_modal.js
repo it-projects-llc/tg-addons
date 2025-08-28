@@ -1,12 +1,14 @@
 /** @odoo-module **/
 /* global Modal */
 
+import {_t} from "@web/core/l10n/translation";
 import {jsonrpc} from "@web/core/network/rpc_service";
 import publicWidget from "@web/legacy/js/public/public_widget";
 
 publicWidget.registry.SplitPaymentModal = publicWidget.Widget.extend({
     selector: "#split_payment_modal",
     events: {
+        "blur input[name=deposit]": "_onBlurDeposit",
         "submit form": "_onSubmit",
     },
 
@@ -25,6 +27,20 @@ publicWidget.registry.SplitPaymentModal = publicWidget.Widget.extend({
             }
         });
         return post;
+    },
+
+    start: function () {
+        this._super.apply(this, arguments);
+        this._onBlurDeposit();
+    },
+
+    _onBlurDeposit: async function () {
+        this.$el.find(".additional-fee").html(_t("Calculating additional fee..."));
+        const output = await jsonrpc(
+            "/shop/cart/calculate_additional_fee_on_split_payments",
+            this._getPost()
+        );
+        this.$el.find(".additional-fee").html(output);
     },
 
     _onSubmit(ev) {
