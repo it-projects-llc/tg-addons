@@ -101,12 +101,13 @@ class SaleOrder(models.Model):
         if period not in interval_pairs:
             raise UserError(_("Incorrect period %s", period))
 
-        self.with_context(mail_auto_subscribe_no_notify=True).create_invoice_plan(
+        self.with_context(mail_auto_subscribe_no_notify=True)._create_invoice_plan(
             payment_count,
             Date.today(),
             interval_pairs[period]["interval"],
             interval_pairs[period]["interval_type"],
             deposit,
+            self._calculate_amount_total_with_additional_fee(),
         )
 
         last_plan_date = max(self.invoice_plan_ids.mapped("plan_date"))
@@ -135,3 +136,22 @@ class SaleOrder(models.Model):
                 raise_if_not_found=False,
             )
             order._send_order_notification_mail(mail_template)
+
+    def _calculate_additional_fee_for_splitting(self, deposit):
+        return max(
+            self._calculate_amount_total_with_additional_fee() - self.amount_total, 0
+        )
+
+    def _calculate_amount_total_with_additional_fee(self):
+        self.ensure_one()
+
+        total_with_max_tier = 0
+        for line in self.order_line:
+            if line.event_ticket_id.max_tier_price:
+                total_with_max_tier += (
+                    line.product_uom_qty * line.event_ticket_id.max_tier_price
+                )
+            else:
+                total_with_max_tier += line.price_total
+
+        return total_with_max_tier

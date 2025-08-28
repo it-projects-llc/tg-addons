@@ -68,6 +68,9 @@
                                     </t>
                                 </select>
                             </div>
+                            <div>
+                                <span class="additional-fee" />
+                            </div>
                         </div>
                         <footer class="modal-footer">
                             <button

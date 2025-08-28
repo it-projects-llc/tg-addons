@@ -17,6 +17,22 @@ Configuration
 
   * Maximum number of installments
 
+Max tier price
+--------------
+
+When splitting payments, original ticket price can be replaced to "max tier price".
+
+For example we have ticket with price 70 and max tier price 100.
+Customer wants to buy 1 ticket and chooses split payments.
+In this case full payment will be 100 instead of 70.
+Additional price will be 30.
+
+To set max tier price:
+
+- Main menu -> Event -> open any event
+
+- In tickets section you can set "Max tier price" for ticket
+
 Usage
 -----
 
@@ -38,7 +54,7 @@ Usage
 
 - Click 'Generate invoice plan'
 
-- On new popup review invoice plan
+- On new popup review invoice plan and additional fee
 
 - Click 'Confirm'
 
