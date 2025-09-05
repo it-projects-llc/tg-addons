@@ -15,6 +15,9 @@
                     <setting>
                         <field name="invoice_plan_max_deposit_percent" />
                     </setting>
+                    <setting>
+                        <field name="invoice_plan_min_deposit_abs" />
+                    </setting>
                 </block>
             </block>
         </field>

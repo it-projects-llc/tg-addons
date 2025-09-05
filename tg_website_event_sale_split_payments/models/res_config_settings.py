@@ -13,6 +13,10 @@ class ResConfigSettings(models.TransientModel):
         string="Maximum advance payment (%)",
         config_parameter="tg_website_event_sale_split_payments.invoice_plan_max_deposit_percent",
     )
+    invoice_plan_min_deposit_abs = fields.Float(
+        string="Minimum advance payment (absolute)",
+        config_parameter="tg_website_event_sale_split_payments.invoice_plan_min_deposit_abs",
+    )
 
     @api.constrains(
         "invoice_plan_min_deposit_percent", "invoice_plan_max_deposit_percent"

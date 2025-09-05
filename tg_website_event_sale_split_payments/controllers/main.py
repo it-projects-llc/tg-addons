@@ -18,6 +18,11 @@ class WebsiteSaleSplitPaymentController(WebsiteSale):
             return resp
 
         amount_total = website_sale_order.amount_total
+        min_deposit_abs = website_sale_order.company_id.invoice_plan_min_deposit_abs
+
+        if amount_total < min_deposit_abs:
+            return resp
+
         min_deposit_percent = (
             website_sale_order.company_id.invoice_plan_min_deposit_percent
         )
@@ -27,7 +32,10 @@ class WebsiteSaleSplitPaymentController(WebsiteSale):
 
         resp.qcontext.update(
             show_split_order=True,
-            min_deposit=min_deposit_percent * amount_total / 100,
+            min_deposit=max(
+                min_deposit_percent * amount_total / 100,
+                min_deposit_abs,
+            ),
             max_deposit=max_deposit_percent * amount_total / 100,
         )
 
