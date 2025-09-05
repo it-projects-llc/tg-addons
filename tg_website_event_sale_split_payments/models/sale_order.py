@@ -63,8 +63,6 @@ class SaleOrder(models.Model):
         min_deposit = min_deposit_ratio * self.amount_total
         max_deposit = max_deposit_ratio * self.amount_total
 
-        max_num_installments = company.invoice_plan_max_num_installments
-
         if deposit < min_deposit:
             raise UserError(
                 _(
@@ -91,11 +89,6 @@ class SaleOrder(models.Model):
 
         if payment_count <= 1:
             raise UserError(_("Payment count should be more than 1"))
-
-        if payment_count > max_num_installments:
-            raise UserError(
-                _("Payment count should not be greater than %s", max_num_installments)
-            )
 
         interval_pairs = self._get_split_payment_periods()
         if period not in interval_pairs:

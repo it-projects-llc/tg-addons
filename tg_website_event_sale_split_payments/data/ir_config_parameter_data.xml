@@ -11,10 +11,4 @@
         name="set_param"
         eval="('tg_website_event_sale_split_payments.invoice_plan_max_deposit_percent', '80')"
     />
-
-    <function
-        model="ir.config_parameter"
-        name="set_param"
-        eval="('tg_website_event_sale_split_payments.invoice_plan_max_num_installments', '6')"
-    />
 </odoo>

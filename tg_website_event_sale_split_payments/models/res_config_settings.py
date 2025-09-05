@@ -13,10 +13,6 @@ class ResConfigSettings(models.TransientModel):
         string="Maximum advance payment (%)",
         config_parameter="tg_website_event_sale_split_payments.invoice_plan_max_deposit_percent",
     )
-    invoice_plan_max_num_installments = fields.Integer(
-        string="Maximum number of installments",
-        config_parameter="tg_website_event_sale_split_payments.invoice_plan_max_num_installments",
-    )
 
     @api.constrains(
         "invoice_plan_min_deposit_percent", "invoice_plan_max_deposit_percent"
@@ -29,12 +25,4 @@ class ResConfigSettings(models.TransientModel):
             ):
                 raise ValidationError(
                     _("Minimum advance payment should be less than maximum")
-                )
-
-    @api.constrains("invoice_plan_max_num_installments")
-    def _check_invoice_plan_max_installments(self):
-        for settings in self:
-            if settings.invoice_plan_max_num_installments < 2:
-                raise ValidationError(
-                    _("Max number of installments should 2 or greater")
                 )
