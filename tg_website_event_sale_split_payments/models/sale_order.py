@@ -58,9 +58,26 @@ class SaleOrder(models.Model):
 
         company = self.company_id
 
+        min_deposit_abs = company.invoice_plan_min_deposit_abs
+        if self.amount_total < min_deposit_abs:
+            raise UserError(
+                _(
+                    "Payment splitting not allowed. "
+                    "Total amount (%(amount_total)s) is less than minimal absolute deposit amount (%(min_deposit_abs)s)",  # noqa: E501
+                    amount_total=format_amount(
+                        self.env,
+                        self.amount_total,
+                        self.currency_id,
+                    ),
+                    min_deposit_abs=format_amount(
+                        self.env, min_deposit_abs, self.currency_id
+                    ),
+                )
+            )
+
         min_deposit_ratio = company.invoice_plan_min_deposit_percent / 100
         max_deposit_ratio = company.invoice_plan_max_deposit_percent / 100
-        min_deposit = min_deposit_ratio * self.amount_total
+        min_deposit = max(min_deposit_ratio * self.amount_total, min_deposit_abs)
         max_deposit = max_deposit_ratio * self.amount_total
 
         if deposit < min_deposit:

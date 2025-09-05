@@ -15,6 +15,17 @@ Configuration
 
   * Maximum advance payment (%)
 
+  * Minimum advance payment (absolute)
+
+Minimum advance payment (absolute) setting
+------------------------------------------
+
+- If in shop total payment amount is less then value of this setting,
+  then "Split payments" button won't be shown.
+
+- In split payments popup deposit value should comply with value of this setting
+
+
 Max tier price
 --------------
 
