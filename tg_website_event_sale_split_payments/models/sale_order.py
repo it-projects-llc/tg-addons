@@ -1,7 +1,7 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.fields import Date
-from odoo.tools import format_amount
+from odoo.tools import format_amount, format_date
 
 
 class SaleOrder(models.Model):
@@ -127,8 +127,8 @@ class SaleOrder(models.Model):
                 raise UserError(
                     _(
                         "Last payment date (%(last_plan_date)s) exceeds start date of event (%(date_begin)s)",  # noqa: E501
-                        last_plan_date=last_plan_date,
-                        date_begin=date_begin,
+                        last_plan_date=format_date(self.env, last_plan_date),
+                        date_begin=format_date(self.env, date_begin),
                     )
                 )
 
