@@ -15,9 +15,6 @@
                     <setting>
                         <field name="invoice_plan_max_deposit_percent" />
                     </setting>
-                    <setting>
-                        <field name="invoice_plan_max_num_installments" />
-                    </setting>
                 </block>
             </block>
         </field>

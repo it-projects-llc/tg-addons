@@ -15,8 +15,6 @@ Configuration
 
   * Maximum advance payment (%)
 
-  * Maximum number of installments
-
 Max tier price
 --------------
 
