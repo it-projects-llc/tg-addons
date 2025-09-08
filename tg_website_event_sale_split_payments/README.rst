@@ -17,6 +17,10 @@ Configuration
 
   * Minimum advance payment (absolute)
 
+  * Security days
+
+  * Last installment date
+
 Minimum advance payment (absolute) setting
 ------------------------------------------
 
@@ -25,6 +29,26 @@ Minimum advance payment (absolute) setting
 
 - In split payments popup deposit value should comply with value of this setting
 
+Max installment date
+--------------------
+
+When customer decides to split payments, in order to limit max number of installements
+module makes sure, that max installment date does not exceed following values:
+
+- "Last installmen date" from settings minus security days
+
+- start date of event in cart minus security days
+
+- start date of rental start minus security days
+
+"Split payment" button visibility in payment page
+-------------------------------------------------
+
+Split payment is not visible if one condition is true:
+
+- Total payment amount of cart is less than value of "Minimum advance payment (absolute)"
+
+- Max installement date does not exceed 2 weeks
 
 Max tier price
 --------------

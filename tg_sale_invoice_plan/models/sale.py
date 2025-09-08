@@ -107,14 +107,13 @@ class SaleOrder(models.Model):
 
     @api.model
     def _next_date(self, installment_date, interval, interval_type):
-        installment_date = fields.Date.from_string(installment_date)
+        installment_date = fields.Date.to_date(installment_date)
         if interval_type == "month":
             next_date = installment_date + relativedelta(months=+interval)
         elif interval_type == "year":
             next_date = installment_date + relativedelta(years=+interval)
         else:
             next_date = installment_date + relativedelta(days=+interval)
-        next_date = fields.Date.to_string(next_date)
         return next_date
 
     def _create_invoices(self, grouped=False, final=False, date=None):
