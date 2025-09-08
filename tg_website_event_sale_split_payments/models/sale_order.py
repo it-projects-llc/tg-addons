@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.fields import Date
@@ -9,8 +11,64 @@ class SaleOrder(models.Model):
 
     auto_confirm_invoices_for_plan = fields.Boolean()
 
+    def _get_max_installments(self, interval, interval_type):
+        max_installment_date = self._get_max_installment_date()
+
+        max_num_installments = 0
+        installment_date = Date.today()
+        while installment_date < max_installment_date:
+            max_num_installments += 1
+            installment_date = self._next_date(
+                installment_date, interval, interval_type
+            )
+        return max_num_installments
+
+    def _get_max_installment_date(self):
+        self.ensure_one()
+
+        max_installment_date = self.company_id.invoice_plan_max_installment_date
+        security_days = timedelta(days=self.company_id.invoice_plan_security_days)
+
+        for event in self.mapped("order_line.event_id"):
+            max_installment_date = min(event.max_installment_date, max_installment_date)
+
+        # TODO: exclude shuttle products
+
+        # we use gettattr here, since I don't want
+        # to put enterprise dependency to this module
+        has_rented_products = getattr(self, "has_rented_products", False)
+        if has_rented_products:
+            max_installemnt_date_of_rental = (
+                Date.to_date(self.rental_start_date) - security_days
+            )
+            max_installment_date = min(
+                max_installemnt_date_of_rental, max_installment_date
+            )
+
+        return max_installment_date
+
+    def _get_allowed_split_payment_periods(self):
+        max_installments = {}
+
+        split_payment_periods = self._get_split_payment_periods()
+        for k, v in split_payment_periods.items():
+            max_installments[k] = self._get_max_installments(
+                v["interval"], v["interval_type"]
+            )
+
+        for k, v in max_installments.items():
+            if v is None:
+                split_payment_periods[k]["max_installments"] = 20
+            elif v < 2:
+                del split_payment_periods[k]
+            else:
+                split_payment_periods[k]["max_installments"] = max_installments[k]
+
+        return split_payment_periods
+
     @api.model
     def _get_split_payment_periods(self):
+        self.ensure_one()
         return {
             "month": {
                 "interval": 1,
@@ -121,16 +179,16 @@ class SaleOrder(models.Model):
         )
 
         last_plan_date = max(self.invoice_plan_ids.mapped("plan_date"))
-        for event in self.mapped("order_line.event_id"):
-            date_begin = Date.to_date(event.date_begin)
-            if last_plan_date > date_begin:
-                raise UserError(
-                    _(
-                        "Last payment date (%(last_plan_date)s) exceeds start date of event (%(date_begin)s)",  # noqa: E501
-                        last_plan_date=format_date(self.env, last_plan_date),
-                        date_begin=format_date(self.env, date_begin),
-                    )
+        max_installment_date = self._get_max_installment_date()
+
+        if last_plan_date > max_installment_date:
+            raise UserError(
+                _(
+                    "Last payment date (%(last_plan_date)s) exceeds max allowed installment date (%(max_installment_date)s)",  # noqa: E501
+                    last_plan_date=format_date(self.env, last_plan_date),
+                    max_installment_date=format_date(self.env, max_installment_date),
                 )
+            )
 
         self.write(
             {

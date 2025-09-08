@@ -10,6 +10,7 @@ publicWidget.registry.SplitPaymentModal = publicWidget.Widget.extend({
     selector: "#split_payment_modal",
     events: {
         "blur input[name=deposit]": "_onBlurDeposit",
+        "change select[name=period]": "_onChangePeriod",
         "submit form": "_onSubmit",
     },
 
@@ -32,7 +33,16 @@ publicWidget.registry.SplitPaymentModal = publicWidget.Widget.extend({
 
     start: function () {
         this._super.apply(this, arguments);
+        this.maxInstallmentsData = this.$el.data("max-installments-data");
         this._onBlurDeposit();
+        this._onChangePeriod();
+    },
+
+    _onChangePeriod: function () {
+        const period = this.$el.find("select[name=period]").val();
+        this.$el
+            .find("input[name=payment_count]")
+            .prop("max", this.maxInstallmentsData[period]);
     },
 
     _onBlurDeposit: async function () {

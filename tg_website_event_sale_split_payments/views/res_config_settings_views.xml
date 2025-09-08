@@ -18,6 +18,19 @@
                     <setting>
                         <field name="invoice_plan_min_deposit_abs" />
                     </setting>
+                    <setting>
+                        <field name="invoice_plan_last_installment_date" />
+                    </setting>
+                    <setting>
+                        <field name="invoice_plan_security_days" />
+                    </setting>
+                    <div
+                        class="alert alert-info"
+                        role="alert"
+                        invisible="invoice_plan_last_installment_description == ''"
+                    >
+                        <field name="invoice_plan_last_installment_description" />
+                    </div>
                 </block>
             </block>
         </field>

@@ -9,6 +9,7 @@
                 tabindex="-1"
                 role="dialog"
                 aria-hidden="true"
+                t-att-data-max-installments-data="max_installments_data"
             >
                 <div class="modal-dialog">
                     <form class="modal-content" action="/shop/cart/make_invoice_plan">
@@ -57,10 +58,7 @@
                             <div class="mb-3">
                                 <label for="sp_period" class="form-label">Period</label>
                                 <select name="period" class="form-select">
-                                    <t
-                                        t-foreach="order._get_split_payment_periods()"
-                                        t-as="period"
-                                    >
+                                    <t t-foreach="split_payment_periods" t-as="period">
                                         <option
                                             t-att-value="period"
                                             t-out="period_value['display_name']"
