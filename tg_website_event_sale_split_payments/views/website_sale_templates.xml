@@ -124,7 +124,7 @@
             <t t-set="invoice_plan_fields" t-value="env['sale.invoice.plan']._fields" />
             <div class="modal-dialog modal-lg">
                 <form
-                    class="modal-content"
+                    class="modal-content js_website_submit_form"
                     action="/shop/cart/go_to_first_invoice_plan"
                     method="POST"
                 >
