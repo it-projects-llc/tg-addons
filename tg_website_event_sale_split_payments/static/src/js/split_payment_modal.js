@@ -2,6 +2,7 @@
 /* global Modal */
 
 import {_t} from "@web/core/l10n/translation";
+import dom from "@web/legacy/js/core/dom";
 import {jsonrpc} from "@web/core/network/rpc_service";
 import publicWidget from "@web/legacy/js/public/public_widget";
 
@@ -43,16 +44,27 @@ publicWidget.registry.SplitPaymentModal = publicWidget.Widget.extend({
         this.$el.find(".additional-fee").html(output);
     },
 
-    _onSubmit(ev) {
+    _onSubmit: async function (ev) {
         ev.preventDefault();
         const $form = $(ev.currentTarget).closest("form");
         const post = this._getPost();
 
-        return jsonrpc($form.attr("action"), post).then(async function (modal) {
-            var $modal = $(modal);
+        const btnEl = ev.currentTarget.querySelector('button[type="submit"]');
+        const removeLoadingEffect = dom.addButtonLoadingEffect(btnEl);
+
+        try {
+            const modal = await jsonrpc($form.attr("action"), post);
+            const $modal = $(modal);
             $modal.appendTo(document.body);
             const modalBS = new Modal($modal[0], {backdrop: "static", keyboard: false});
             modalBS.show();
-        });
+        } catch (e) {
+            removeLoadingEffect();
+            throw e;
+        }
+
+        setTimeout(() => {
+            removeLoadingEffect();
+        }, 1000);
     },
 });
