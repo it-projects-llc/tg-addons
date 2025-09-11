@@ -22,7 +22,10 @@
     "assets": {
         "web.assets_frontend": [
             "tg_website_event_sale_split_payments/static/src/**/*",
-        ]
+        ],
+        "web.assets_tests": [
+            "tg_website_event_sale_split_payments/static/tests/**/*",
+        ],
     },
     "demo": [],
 }
