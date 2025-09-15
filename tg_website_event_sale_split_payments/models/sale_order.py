@@ -215,11 +215,6 @@ class SaleOrder(models.Model):
 
         total_with_max_tier = 0
         for line in self.order_line:
-            if line.event_ticket_id.max_tier_price:
-                total_with_max_tier += (
-                    line.product_uom_qty * line.event_ticket_id.max_tier_price
-                )
-            else:
-                total_with_max_tier += line.price_total
+            total_with_max_tier += line._get_price_total_using_max_tier_price()
 
         return total_with_max_tier
