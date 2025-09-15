@@ -66,6 +66,13 @@ To set max tier price:
 
 - In tickets section you can set "Max tier price" for ticket
 
+Invoice creation for downpayments
+---------------------------------
+
+Instead of downpayment's product income account, in invoice lines original product accounts are used.
+
+If sale order has products from different accounts, then in downpayments invoices lines are created for every account.
+
 Usage
 -----
 
