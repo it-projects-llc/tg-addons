@@ -33,7 +33,7 @@ class SaleOrder(models.Model):
     @api.depends("invoice_plan_ids")
     def _compute_invoice_plan_total(self):
         for rec in self:
-            installments = rec.invoice_plan_ids.filtered("installment")
+            installments = rec.invoice_plan_ids
             rec.invoice_plan_total_amount = sum(installments.mapped("amount"))
 
     def _compute_invoice_plan_process(self):
