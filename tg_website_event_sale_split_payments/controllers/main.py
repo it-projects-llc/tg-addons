@@ -86,6 +86,8 @@ class WebsiteSaleSplitPaymentController(WebsiteSale):
         if not order.invoice_plan_ids[:1]:
             return request.redirect("/shop/payment")
 
+        order.action_quotation_sent()
+
         invoice = order._prepare_first_plan_payment()
         return request.redirect(invoice.get_portal_url())
 
