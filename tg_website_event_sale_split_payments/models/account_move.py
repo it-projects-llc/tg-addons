@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from odoo import models
 
 
@@ -21,5 +23,17 @@ class AccountMove(models.Model):
                             invoice.action_post()
 
                     order._send_order_invoice_plan_mail()
+
+        return res
+
+    def _calculate_accounts(self):
+        res = defaultdict(float)
+
+        for line in self.mapped("invoice_line_ids"):
+            if line.display_type != "product":
+                continue
+
+            account = line.account_id
+            res[account] += line.price_total
 
         return res

@@ -1,3 +1,4 @@
+from collections import defaultdict
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
@@ -68,6 +69,7 @@ class SaleOrder(models.Model):
     def _prepare_first_plan_payment(self):
         for plan in self.invoice_plan_ids:
             if not plan.invoice_move_ids:
+                is_last_plan = plan == self.invoice_plan_ids[-1]
                 MakeInvoice = self.sudo().env["sale.advance.payment.inv"]
                 makeinvoice = MakeInvoice.create(
                     {
@@ -76,9 +78,25 @@ class SaleOrder(models.Model):
                         "sale_order_ids": [(6, 0, self.ids)],
                     }
                 )
+
+                require_account_sums = None
+
+                if is_last_plan:
+                    require_account_sums = defaultdict(float)
+                    income_accounts_for_so = self._calculate_income_accounts()
+                    income_accounts_from_invoices = self.mapped(
+                        "invoice_plan_ids.invoice_move_ids"
+                    )._calculate_accounts()
+
+                    for account, invoice_sum in income_accounts_from_invoices.items():
+                        require_account_sums[account] = (
+                            income_accounts_for_so[account] - invoice_sum
+                        )
+
                 makeinvoice.sudo().with_context(
                     invoice_plan_id=plan.id,
                     mail_auto_subscribe_no_notify=True,
+                    require_account_sums=require_account_sums,
                 ).create_invoices()
                 plan.invoice_move_ids.invoice_date = plan.plan_date
 
@@ -201,3 +219,21 @@ class SaleOrder(models.Model):
             total_with_max_tier += line._get_price_total_using_max_tier_price()
 
         return total_with_max_tier
+
+    def _calculate_income_accounts(self):
+        self.ensure_one()
+        res = defaultdict(float)
+
+        for line in self.order_line:
+            if line.display_type:
+                continue
+
+            if line.is_downpayment:
+                continue
+
+            product = line.product_id
+            account = product._get_product_accounts()["income"]
+            qty = line._get_price_total_using_max_tier_price()
+            res[account] += qty
+
+        return res
