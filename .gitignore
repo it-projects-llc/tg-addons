@@ -82,3 +82,5 @@ docs/_build/
 
 # OCA rules
 !static/lib/
+
+*.mrbob.ini
