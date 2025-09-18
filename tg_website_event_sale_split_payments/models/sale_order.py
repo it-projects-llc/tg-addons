@@ -1,4 +1,3 @@
-from datetime import timedelta
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
@@ -26,26 +25,10 @@ class SaleOrder(models.Model):
     def _get_max_installment_date(self):
         self.ensure_one()
 
-        max_installment_date = self.company_id.invoice_plan_max_installment_date
-        security_days = timedelta(days=self.company_id.invoice_plan_security_days)
+        if not self.order_line:
+            return self.company_id.invoice_plan_max_installment_date
 
-        for event in self.mapped("order_line.event_id"):
-            max_installment_date = min(event.max_installment_date, max_installment_date)
-
-        # TODO: exclude shuttle products
-
-        # we use gettattr here, since I don't want
-        # to put enterprise dependency to this module
-        has_rented_products = getattr(self, "has_rented_products", False)
-        if has_rented_products:
-            max_installemnt_date_of_rental = (
-                Date.to_date(self.rental_start_date) - security_days
-            )
-            max_installment_date = min(
-                max_installemnt_date_of_rental, max_installment_date
-            )
-
-        return max_installment_date
+        return min(self.order_line.mapped(lambda x: x._get_max_installment_date()))
 
     def _get_allowed_split_payment_periods(self):
         max_installments = {}
