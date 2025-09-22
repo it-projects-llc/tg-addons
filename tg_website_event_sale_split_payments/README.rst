@@ -76,43 +76,78 @@ If sale order has products from different accounts, then in downpayments invoice
 Usage
 -----
 
-- Go to `/event`, choose non-free ticket
+1) In **Settings -> Website -> Shop – Split payment** configure the
+   following:
 
-- Fill in attendee data
+- **Minimum advance payment (%)** - Minimum percentage of the total
+  payment to be paid as an advance.
+- **Maximum advance payment (%)** - Maximum percentage of the total
+  payment to be paid as an advance.
+- **Minimum advance payment (absolute)** - Minimum absolute value of
+  total payment to be paid as an advance. Also shopping carts below this
+  value won’t show the “split payment” option at checkout.
+- **Last installment date** - The latest date that a split payment
+  invoice can be created (max allowed date for installments, except
+  rental and shuttle products).
+- **Installment security days** - If set, it deducts days from the last
+  installment date.
 
-- Navigate to payment page
+.. image:: images/image1.png
 
-- Click on 'Split payment'
+2) On the event's page, configure the "Max Tier Price" for each ticket.
+If a ticket is purchased with a split payment, the "Max Tier Price" will be used as the ticket's final price.
 
-- In first popup input
+.. image:: images/image11.png
 
-  * Initial payment
+3) Add items to the cart and proceed to the payment, on the payment
+   screen press **Split payment**.
 
-  * How many payments
+   This button won't appear if the following are less than two weeks away (depending on type of the products in the cart and its combination):
+   * **Event ticket** - Date of event minus security days
+   * **Shuttle ticket + event ticket** - Date of shuttle ticket minus security days
+   * **Event ticket + rental product** - Date of event minus security days
+   * **Rental product** - Date when rental starts minus security days
+   * **All other products** - Last installment date minus security days
 
-  * Period
+.. image:: images/image2.png
 
-- Click 'Generate invoice plan'
+4) A wizard will open with the following fields:
 
-- On new popup review invoice plan and additional fee
+   1. **Initial payment** the amount that customer will pay at checkout,
+      as the first payment.
+   2. **How many payments** the number of payments the order will be
+      split into.
+   3. **Period** the frequency of payments (biweekly or monthly).
 
-- Click 'Confirm'
+.. image:: images/image3.png
 
-- RESULT: you will be navigated to portal invoice page. Invoice amount equals to given deposit value in first popup
+5) After **Generate invoice plan** button is pressed, customer will see
+   a generated invoice plan with plan dates and amounts for each
+   payment. **Confirm and pay deposit** will redirect customer to the
+   invoice with initial payment.
 
-- RESULT: quotation is not confirmed yet
+.. image:: images/image4.png
+.. image:: images/image5.png
 
-- In portal invoice page pay the invoice
+6) Once the invoice for the initial payment is paid, an attendee is
+   created for the customer, and all remaining invoices are created.
+   Until customer pays all invoices from the payment plan, attendee
+   record’s **Is Fully Paid** field will be unchecked and customer’s
+   ticket will have the **Partially paid** badge on it.
 
-- RESULT: quotation is confirmed
+.. image:: images/image6.png
+.. image:: images/image7.png
 
-- RESULT: attendee record is confirmed, field "Is fully paid" equals to false
+7) This will generate a sale order with the **Use Invoice Plan** field
+   checked, with all invoices shown as **Down Payments**. Additionally,
+   the Invoice Plan is attached to the chatter.
 
-- RESULT: invoices with other installments are created
+.. image:: images/image8.png
+.. image:: images/image9.png
 
-- Pay all other invoices
+8) Down payment lines on the created split payment invoices will have an account assigned to them based on the category of products.
 
-- RESULT: in attendee record field "Is fully paid" equals to true
+.. image:: images/image10.png
 
 Credits
 =======
