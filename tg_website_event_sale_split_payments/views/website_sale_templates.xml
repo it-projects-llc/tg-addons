@@ -105,7 +105,7 @@
                     data-bs-target="#split_payment_modal"
                     class="btn btn-primary w-100 w-md-auto px-5"
                 >
-                    Split payment
+                    Flexipay
                 </button>
             </t>
         </xpath>
