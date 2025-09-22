@@ -103,11 +103,11 @@ Usage
    screen press **Split payment**.
 
    This button won't appear if the following are less than two weeks away (depending on type of the products in the cart and its combination):
-   * **Event ticket** - Date of event minus security days
-   * **Shuttle ticket + event ticket** - Date of shuttle ticket minus security days
-   * **Event ticket + rental product** - Date of event minus security days
-   * **Rental product** - Date when rental starts minus security days
-   * **All other products** - Last installment date minus security days
+- **Event ticket** - Date of event minus security days
+- **Shuttle ticket + event ticket** - Date of shuttle ticket minus security days
+- **Event ticket + rental product** - Date of event minus security days
+- **Rental product** - Date when rental starts minus security days
+- **All other products** - Last installment date minus security days
 
 .. image:: images/image2.png
 
