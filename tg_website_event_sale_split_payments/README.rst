@@ -95,7 +95,7 @@ Usage
 .. image:: images/image1.png
 
 2) On the event's page, configure the "Max Tier Price" for each ticket.
-If a ticket is purchased with a split payment, the "Max Tier Price" will be used as the ticket's final price.
+   If a ticket is purchased with a split payment, the "Max Tier Price" will be used as the ticket's final price.
 
 .. image:: images/image11.png
 
