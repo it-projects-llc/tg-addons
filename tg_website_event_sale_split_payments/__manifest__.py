@@ -1,6 +1,6 @@
 {
     "name": """Split payments for Online ticketing""",
-    "version": "17.0.0.3.0",
+    "version": "17.0.0.4.0",
     "author": "IT-Projects LLC, Eugene Molotov",
     "support": "it@it-projects.info",
     "website": "https://github.com/it-projects-llc/tg-addons",
@@ -13,6 +13,7 @@
         "views/event_ticket_views.xml",
         "data/ir_config_parameter_data.xml",
         "views/event_registration_views.xml",
+        "views/report_invoice.xml",
         "views/res_config_settings_views.xml",
         "views/website_sale_templates.xml",
         "report/invoice_plan_report.xml",
