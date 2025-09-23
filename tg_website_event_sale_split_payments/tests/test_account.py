@@ -77,3 +77,49 @@ class TestAccount(AccountTestInvoicingCommon):
             account_sums_from_so[product_b_income_account],
             account_sums_from_invoices[product_b_income_account],
         )
+
+    def test_invoice_line_naming(self):
+        self.env["res.config.settings"].create(
+            {
+                "invoice_plan_min_deposit_percent": 0,
+                "invoice_plan_max_deposit_percent": 100,
+                "invoice_plan_min_deposit_abs": 10,
+            }
+        ).execute()
+
+        so = (
+            self.env["sale.order"]
+            .with_context(tracking_disable=True)
+            .create(
+                {
+                    "partner_id": self.partner_a.id,
+                    "order_line": [
+                        Command.create(
+                            {
+                                "name": self.product_a.name,
+                                "product_id": self.product_a.id,
+                                "product_uom_qty": 1,
+                                "product_uom": self.product_a.uom_id.id,
+                                "price_unit": self.product_a.list_price,
+                                "tax_id": False,
+                            }
+                        ),
+                    ],
+                }
+            )
+        )
+
+        so._generate_invoice_plan_for_event(
+            100,
+            5,
+            "month",
+        )
+        so._prepare_first_plan_payment()
+
+        first_invoice = so.invoice_plan_ids[0].invoice_move_ids
+        for line in first_invoice.invoice_line_ids:
+            self.assertEqual(line.name, "Down Payment", line)
+
+        other_invoices = so.invoice_plan_ids[1:].invoice_move_ids
+        for line in other_invoices.invoice_line_ids:
+            self.assertEqual(line.name, "Installment", line)

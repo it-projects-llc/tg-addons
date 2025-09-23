@@ -44,12 +44,15 @@ class SaleAdvancePaymentInv(models.TransientModel):
         new_invoice_lines = []
         sum_for_account = defaultdict(float)
         require_account_sums = self.env.context.get("require_account_sums") or {}
+        name_as_installment = self.env.context.get("name_as_installment")
 
         for account, weight in accounts_with_weights.items():
             for oil in original_invoice_lines:
                 x = oil[2].copy()
                 x["quantity"] = weight
                 x["account_id"] = account.id
+                if name_as_installment:
+                    x["name"] = "Installment"
                 sum_for_account[account] += weight * x["price_unit"]
                 new_invoice_lines.append((0, 0, x))
 

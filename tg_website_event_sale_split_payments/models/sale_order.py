@@ -69,6 +69,7 @@ class SaleOrder(models.Model):
     def _prepare_first_plan_payment(self):
         for plan in self.invoice_plan_ids:
             if not plan.invoice_move_ids:
+                is_first_plan = plan == self.invoice_plan_ids[0]
                 is_last_plan = plan == self.invoice_plan_ids[-1]
                 MakeInvoice = self.sudo().env["sale.advance.payment.inv"]
                 makeinvoice = MakeInvoice.create(
@@ -94,6 +95,7 @@ class SaleOrder(models.Model):
                         )
 
                 makeinvoice.sudo().with_context(
+                    name_as_installment=not is_first_plan,
                     invoice_plan_id=plan.id,
                     mail_auto_subscribe_no_notify=True,
                     require_account_sums=require_account_sums,
