@@ -37,3 +37,21 @@ class AccountMove(models.Model):
             res[account] += line.price_total
 
         return res
+
+    def _get_url_to_so(self):
+        self.ensure_one()
+        if self.env.user._is_public():
+            return
+
+        if not self.env.context.get("website_id"):
+            # should be shown in website only
+            return
+
+        so = self.sudo().invoice_line_ids.sale_line_ids.order_id
+        if len(so) != 1:
+            return
+
+        if so.name != self.invoice_origin:
+            return
+
+        return so._get_share_url(redirect=False, share_token=False)

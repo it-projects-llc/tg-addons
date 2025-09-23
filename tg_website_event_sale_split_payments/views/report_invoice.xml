@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="report_invoice_document"
+        inherit_id="account.report_invoice_document"
+        priority="99"
+    >
+        <xpath expr="//span[@t-field='o.invoice_origin']" position="replace">
+            <t t-set="so_url" t-value="o._get_url_to_so()" />
+            <span t-if="so_url">
+                <a
+                    t-att-href="so_url"
+                    t-out="o.invoice_origin"
+                    target="_parent"
+                >SO123</a>
+            </span>
+            <span t-else="" t-field="o.invoice_origin">SO123</span>
+        </xpath>
+    </template>
+</odoo>
