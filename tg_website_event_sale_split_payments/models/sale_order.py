@@ -196,6 +196,7 @@ class SaleOrder(models.Model):
         self.write(
             {
                 "use_invoice_plan": True,
+                "require_payment": False,
                 "auto_confirm_invoices_for_plan": True,
             }
         )

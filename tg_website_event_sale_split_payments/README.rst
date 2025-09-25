@@ -145,6 +145,9 @@ Usage
 .. image:: images/image8.png
 .. image:: images/image9.png
 
+Note: it won't be allowed to pay quotation in customer portal page after splitting payment.
+The payments should be done from invoice pages instead.
+
 8) Down payment lines on the created split payment invoices will have an account assigned to them based on the category of products.
 
 .. image:: images/image10.png
