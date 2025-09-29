@@ -8,6 +8,10 @@
 
   * Hides "email" field for registered user
 
+* For rental products (enterprise):
+
+  * fixes product configurator modal showing incorrect period, that user did not choose
+
 Credits
 =======
 
