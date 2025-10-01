@@ -92,12 +92,12 @@ Usage
 - **Installment security days** - If set, it deducts days from the last
   installment date.
 
-.. image:: images/image1.png
+.. image:: static/description/images/image1.png
 
 2) On the event's page, configure the "Max Tier Price" for each ticket.
    If a ticket is purchased with a split payment, the "Max Tier Price" will be used as the ticket's final price.
 
-.. image:: images/image11.png
+.. image:: static/description/images/image11.png
 
 3) Add items to the cart and proceed to the payment, on the payment
    screen press **Flexipay**.
@@ -109,7 +109,7 @@ Usage
 - **Rental product** - Date when rental starts minus security days
 - **All other products** - Last installment date minus security days
 
-.. image:: images/image2.png
+.. image:: static/description/images/image2.png
 
 4) A wizard will open with the following fields:
 
@@ -119,15 +119,15 @@ Usage
       split into.
    3. **Period** the frequency of payments (biweekly or monthly).
 
-.. image:: images/image3.png
+.. image:: static/description/images/image3.png
 
 5) After **Generate invoice plan** button is pressed, customer will see
    a generated invoice plan with plan dates and amounts for each
    payment. **Confirm and pay deposit** will redirect customer to the
    invoice with initial payment.
 
-.. image:: images/image4.png
-.. image:: images/image5.png
+.. image:: static/description/images/image4.png
+.. image:: static/description/images/image5.png
 
 6) Once the invoice for the initial payment is paid, an attendee is
    created for the customer, and all remaining invoices are created.
@@ -135,22 +135,22 @@ Usage
    record’s **Is Fully Paid** field will be unchecked and customer’s
    ticket will have the **Partially paid** badge on it.
 
-.. image:: images/image6.png
-.. image:: images/image7.png
+.. image:: static/description/images/image6.png
+.. image:: static/description/images/image7.png
 
 7) This will generate a sale order with the **Use Invoice Plan** field
    checked, with all invoices shown as **Down Payments**. Additionally,
    the Invoice Plan is attached to the chatter.
 
-.. image:: images/image8.png
-.. image:: images/image9.png
+.. image:: static/description/images/image8.png
+.. image:: static/description/images/image9.png
 
 Note: it won't be allowed to pay quotation in customer portal page after splitting payment.
 The payments should be done from invoice pages instead.
 
 8) Down payment lines on the created split payment invoices will have an account assigned to them based on the category of products.
 
-.. image:: images/image10.png
+.. image:: static/description/images/image10.png
 
 Credits
 =======
