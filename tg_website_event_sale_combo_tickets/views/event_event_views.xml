@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="event_event_view_form" model="ir.ui.view">
+        <field name="name">event.event.form.combo.tickets</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="website_event.event_event_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='question_type']" position="before">
+                <field name="is_shuttle_ticket" />
+            </xpath>
+            <xpath
+                expr="//field[@name='answer_ids'][@widget='many2many_tags']"
+                position="attributes"
+            >
+                <attribute
+                    name="invisible"
+                >question_type != 'simple_choice' or is_shuttle_ticket</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='answer_ids'][@widget='many2many_tags']"
+                position="after"
+            >
+                <field
+                    name="answer_ids"
+                    invisible="question_type != 'simple_choice' or not is_shuttle_ticket"
+                >
+                    <tree>
+                        <field name="sequence" widget="handle" />
+                        <field name="name" />
+                        <field
+                            name="shuttle_ticket"
+                            required="parent.is_shuttle_ticket"
+                        />
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+</odoo>

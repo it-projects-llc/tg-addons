@@ -1,0 +1,18 @@
+{
+    "name": """Combo tickets""",
+    "version": "17.0.0.1.0",
+    "author": "IT-Projects LLC, Eugene Molotov",
+    "support": "it@it-projects.info",
+    "website": "https://github.com/it-projects-llc/tg-addons",
+    "license": "LGPL-3",
+    "depends": [
+        "website_event_sale",
+        "website_event_questions_by_ticket",
+    ],
+    "data": [
+        "views/res_config_settings_views.xml",
+        "views/event_ticket_views.xml",
+        "views/event_event_views.xml",
+    ],
+    "demo": [],
+}

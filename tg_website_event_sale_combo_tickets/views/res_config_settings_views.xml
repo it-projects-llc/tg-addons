@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field
+            name="name"
+        >res.config.settings.view.form.inherit.tg.website.sale.combo.tickets</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website_sale.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <block id="website_info_settings" position="after">
+                <block title="Shop - Combo Tickets" id="website_sale_combo_tickets">
+                    <setting>
+                        <field name="accomodation_category" />
+                    </setting>
+                </block>
+            </block>
+        </field>
+    </record>
+</odoo>
