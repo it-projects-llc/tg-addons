@@ -45,6 +45,7 @@ class EventRegistration(models.Model):
                     {
                         "parent_reg_for_shuttle": parent.id,
                         "event_ticket_id": shuttle_ticket.id,
+                        "event_id": shuttle_ticket.event_id.id,
                         "registration_answer_ids": False,
                         "registration_answer_choice_ids": False,
                         "state": "open",

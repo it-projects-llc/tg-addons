@@ -10,6 +10,8 @@
         "website_event_questions_by_ticket",
     ],
     "data": [
+        "views/event_question_views.xml",
+        "views/templates.xml",
         "views/res_config_settings_views.xml",
         "views/event_ticket_views.xml",
         "views/event_event_views.xml",

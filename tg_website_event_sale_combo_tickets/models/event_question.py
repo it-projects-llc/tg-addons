@@ -4,7 +4,9 @@ from odoo import api, fields, models
 class EventQuestion(models.Model):
     _inherit = "event.question"
 
-    is_shuttle_ticket = fields.Boolean(compute="_compute_is_shuttle_ticket", store=True)
+    is_shuttle_ticket = fields.Boolean(
+        compute="_compute_is_shuttle_ticket", store=True, readonly=False
+    )
 
     @api.depends("question_type")
     def _compute_is_shuttle_ticket(self):

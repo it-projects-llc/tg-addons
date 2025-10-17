@@ -21,6 +21,15 @@ class TestShuttle(TestWebsiteEventSaleCommon):
             }
         )
 
+        cls.ticket_with_shuttle = cls.env["event.event.ticket"].create(
+            {
+                "event_id": cls.event.id,
+                "name": "Ticket with shuttle",
+                "product_id": cls.product_event.id,
+                "price": 200,
+            },
+        )
+
         cls.shuttle_ticket1 = cls.env["event.event.ticket"].create(
             {
                 "name": "ShuttleTestTicket1",
@@ -49,6 +58,10 @@ class TestShuttle(TestWebsiteEventSaleCommon):
                 "question_type": "simple_choice",
                 "event_id": cls.event.id,
                 "is_shuttle_ticket": True,
+                "restricted_ticket_ids": [
+                    (5,),
+                    (4, cls.ticket_with_shuttle.id),
+                ],
                 "answer_ids": [
                     (
                         0,
@@ -76,11 +89,13 @@ class TestShuttle(TestWebsiteEventSaleCommon):
         shuttle_question = self.event_question_shuttle_1
 
         form_details = {
-            "1-name-%s" % name_question.id: "Eugene",
+            "1-name-%s" % name_question.id: "Alyx",
             "1-simple_choice-%s" % shuttle_question.id: str(
                 shuttle_question.answer_ids[0].id
             ),
-            "1-event_ticket_id": self.ticket.id,
+            "1-event_ticket_id": self.ticket_with_shuttle.id,
+            "2-name-%s" % name_question.id: "Gordon",
+            "2-event_ticket_id": self.ticket.id,
         }
 
         with MockRequest(self.env, website=self.current_website):
@@ -90,5 +105,17 @@ class TestShuttle(TestWebsiteEventSaleCommon):
                 event, registration_data
             )
 
-        self.assertTrue(registrations)  # TODO: это лишнее
-        # TODO: надо проверить, что shuttle регистрации созданы
+        self.assertEqual(len(registrations), 2)
+
+        reg_with_shuttle = registrations.filtered(
+            lambda x: x.event_ticket_id == self.ticket_with_shuttle
+        )
+        reg_without_shuttle = registrations.filtered(
+            lambda x: x.event_ticket_id == self.ticket
+        )
+        self.assertEqual(len(reg_with_shuttle.shuttle_regs), 1)
+        self.assertEqual(len(reg_without_shuttle.shuttle_regs), 0)
+
+        shuttle_reg = reg_with_shuttle.shuttle_regs
+        self.assertEqual(shuttle_reg.event_id, self.shuttle_event)
+        self.assertEqual(shuttle_reg.event_ticket_id, self.shuttle_ticket1)

@@ -21,5 +21,8 @@ class TGWebsiteSale(WebsiteSale):
         if include_accomodation_flag and not accomodation_line:
             res["hide_payment_button"] = True
             res["should_include_accomodation"] = True
+            res[
+                "accomodation_category_url"
+            ] = f"/shop/category/{accomodation_category.id}"
 
         return res

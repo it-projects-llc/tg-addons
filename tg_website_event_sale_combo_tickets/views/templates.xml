@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="navigation_buttons" inherit_id="website_sale.navigation_buttons">
+        <xpath
+            expr="//t[@t-if='website_sale_order and website_sale_order.website_order_line']"
+            position="before"
+        >
+            <t t-if="should_include_accomodation">
+                <a t-att-href="accomodation_category_url" class="text-center">
+                    <i class="fa fa-angle-right me-2 fw-light" />
+                    Choose accomodation
+                </a>
+                <div
+                    t-attf-class="position-relative #{_form_send_navigation and 'd-flex d-lg-none' or 'd-flex'} w-100 justify-content-center align-items-center my-2 opacity-75"
+                >
+                    <hr class="w-100" />
+                    <span class="px-3">or</span>
+                    <hr class="w-100" />
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

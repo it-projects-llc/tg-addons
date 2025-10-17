@@ -15,4 +15,9 @@ class EventQuestionAnswer(models.Model):
                     ("event_id.event_registrations_open", "=", True)
                 ]
             else:
-                record.shuttle_ticket_domain = [(1, "=", 0)]
+                record.shuttle_ticket_domain = []
+
+    @api.onchange("shuttle_ticket")
+    def _onchange_shuttle_ticket(self):
+        if not self.name and self.shuttle_ticket:
+            self.name = self.shuttle_ticket.name
