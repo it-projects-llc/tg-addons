@@ -6,8 +6,10 @@
             position="before"
         >
             <t t-if="should_include_accomodation">
-                <a t-att-href="accomodation_category_url" class="text-center">
-                    <i class="fa fa-angle-right me-2 fw-light" />
+                <a
+                    t-att-href="accomodation_category_url"
+                    t-attf-class="#{_cta_classes} btn btn-primary #{not website_sale_order._is_cart_ready() and 'disabled'} #{_form_send_navigation and 'order-lg-3 w-100 w-lg-auto ms-lg-auto' or 'w-100'}"
+                >
                     Choose accomodation
                 </a>
                 <div

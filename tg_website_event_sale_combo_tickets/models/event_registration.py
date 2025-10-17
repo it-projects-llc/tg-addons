@@ -5,10 +5,15 @@ class EventRegistration(models.Model):
     _inherit = "event.registration"
 
     parent_reg_for_shuttle = fields.Many2one(
-        "event.registration", "Parent registration for shuttle"
+        "event.registration",
+        "Parent registration for shuttle",
+        readonly=True,
     )
     shuttle_regs = fields.One2many(
-        "event.registration", "parent_reg_for_shuttle", "Shuttle registrations"
+        "event.registration",
+        "parent_reg_for_shuttle",
+        "Shuttle registrations",
+        readonly=True,
     )
 
     @api.model_create_multi

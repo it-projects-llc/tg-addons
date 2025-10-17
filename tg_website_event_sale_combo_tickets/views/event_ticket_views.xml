@@ -11,13 +11,24 @@
         </field>
     </record>
 
-    <record id="event_event_ticket_view_form" model="ir.ui.view">
+    <record id="event_event_ticket_view_form_from_event" model="ir.ui.view">
         <field name="name">event.event.ticket.view.form.combo</field>
         <field name="model">event.event.ticket</field>
         <field name="inherit_id" ref="event.event_event_ticket_view_form_from_event" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='description']" position="after">
                 <field name="include_accomodation" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="event_event_ticket_view_tree_from_event" model="ir.ui.view">
+        <field name="name">event.event.ticket.view.tree.combo</field>
+        <field name="model">event.event.ticket</field>
+        <field name="inherit_id" ref="event.event_event_ticket_view_tree_from_event" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='description']" position="after">
+                <field name="include_accomodation" optional="show" />
             </xpath>
         </field>
     </record>
