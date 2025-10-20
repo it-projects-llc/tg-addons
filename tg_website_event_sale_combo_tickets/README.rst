@@ -13,7 +13,7 @@ Shuttle tickets - configuration
 
   * add generic questions like name, email
 
-  * add question with type "Simple choice" and "Is shuttle ticket" checked.
+  * add question with type "Selection" and "Is shuttle ticket" checked.
 
     For this question add answers and corresponding tickets.
 
