@@ -10,12 +10,9 @@ class EventQuestionAnswer(models.Model):
     @api.depends("question_id.event_id")
     def _compute_shuttle_ticket_domain(self):
         for record in self:
-            if record.question_id.event_id:
-                record.shuttle_ticket_domain = [
-                    ("event_id.event_registrations_open", "=", True)
-                ]
-            else:
-                record.shuttle_ticket_domain = []
+            record.shuttle_ticket_domain = [
+                ("event_id.pipe_end", "=", False),
+            ]
 
     @api.onchange("shuttle_ticket")
     def _onchange_shuttle_ticket(self):
