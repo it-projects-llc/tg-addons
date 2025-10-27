@@ -15,8 +15,11 @@ class TGWebsiteSale(WebsiteSale):
             include_accomodation_flag = (
                 line.event_ticket_id.include_accomodation or include_accomodation_flag
             )
-            if accomodation_category in line.product_id.public_categ_ids:
-                accomodation_line = line.product_id.public_categ_ids
+            if (
+                accomodation_category
+                in line.product_id.public_categ_ids.parents_and_self
+            ):
+                accomodation_line = line
 
         if include_accomodation_flag and not accomodation_line:
             res.update(
