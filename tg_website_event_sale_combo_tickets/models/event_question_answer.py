@@ -11,7 +11,7 @@ class EventQuestionAnswer(models.Model):
     def _compute_shuttle_ticket_domain(self):
         for record in self:
             record.shuttle_ticket_domain = [
-                ("event_id.pipe_end", "=", False),
+                ("event_id.stage_id.pipe_end", "=", False),
             ]
 
     @api.onchange("shuttle_ticket")
