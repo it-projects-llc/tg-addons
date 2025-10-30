@@ -13,3 +13,18 @@ class EventQuestion(models.Model):
         for record in self:
             if record.question_type != "simple_choice":
                 record.is_shuttle_ticket = False
+
+    def action_generate_shuttle_ticket_answers(self):
+        w = self.env["generate.shuttle.ticket.answers"].create(
+            {
+                "question": self.id,
+            }
+        )
+
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": w._name,
+            "res_id": w.id,
+            "view_mode": "form",
+            "target": "new",
+        }

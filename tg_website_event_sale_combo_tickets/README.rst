@@ -17,6 +17,8 @@ Shuttle tickets - configuration
 
     For this question add answers and corresponding tickets.
 
+    If you already have prepared shuttle events with tickets - you can use "Generate shuttle tickets" button
+
 - Close question form
 
 - Save

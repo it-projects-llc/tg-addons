@@ -10,6 +10,8 @@
         "website_event_questions_by_ticket",
     ],
     "data": [
+        "security/ir.model.access.csv",
+        "wizard/generate_shuttle_ticket_answers_views.xml",
         "views/event_registration_views.xml",
         "views/event_question_views.xml",
         "views/templates.xml",

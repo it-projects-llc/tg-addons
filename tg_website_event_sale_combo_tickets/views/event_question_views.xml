@@ -10,6 +10,13 @@
                     name="is_shuttle_ticket"
                     invisible="question_type != 'simple_choice'"
                 />
+                <button
+                    name="action_generate_shuttle_ticket_answers"
+                    string="Generate answers"
+                    class="btn btn-secondary"
+                    type="object"
+                    invisible="question_type != 'simple_choice' or not is_shuttle_ticket"
+                />
             </xpath>
             <xpath expr="//field[@name='answer_ids']/tree" position="inside">
                 <field
