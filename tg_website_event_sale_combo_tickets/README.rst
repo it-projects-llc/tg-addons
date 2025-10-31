@@ -33,7 +33,7 @@ Shuttle tickets - usage
 
 - Fill all fields registration data
 
-- Pay for registration, if required
+- Pay for registration for the event, if required
 
 - RESULT: you will have at least 2 registrations.
   One is the event, that you have just registered.
