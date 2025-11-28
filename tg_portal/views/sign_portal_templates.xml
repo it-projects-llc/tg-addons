@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Override for sign portal template -->
+    <template id="tg_portal_my_home_sign" inherit_id="sign.portal_my_home_sign">
+        <xpath
+            expr="//t[@t-call='portal.portal_docs_entry'][2]/t[@t-set='bg_color']"
+            position="attributes"
+        >
+            <attribute name="t-value">'text-bg-light'</attribute>
+        </xpath>
+    </template>
+
+</odoo>
