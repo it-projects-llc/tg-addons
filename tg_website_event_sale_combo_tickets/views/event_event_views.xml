@@ -14,7 +14,7 @@
                     invisible="question_type != 'simple_choice'"
                 />
                 <button
-                    name="action_generate_shuttle_ticket_answers"
+                    name="action_generate_ticket_answers"
                     string="Generate answers"
                     class="btn btn-secondary"
                     type="object"
