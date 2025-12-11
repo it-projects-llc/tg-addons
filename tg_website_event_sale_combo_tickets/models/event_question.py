@@ -1,5 +1,5 @@
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError
 
 
 class EventQuestion(models.Model):
@@ -29,8 +29,21 @@ class EventQuestion(models.Model):
     def _check_shuttle_accomodation(self):
         for record in self:
             if record.is_shuttle_ticket and record.is_accomodation:
-                raise UserError(
+                raise ValidationError(
                     _("Question cannot be both for shuttle and accomodation")
+                )
+
+    def _check_accomodation_answers(self):
+        for question in self.filtered("is_accomodation"):
+            has_positive_accomodation_answer = any(
+                question.answer_ids.mapped("is_positive_accomodation_answer")
+            )
+            if not has_positive_accomodation_answer:
+                raise ValidationError(
+                    _(
+                        'Accomodation "%s" question should have positive answer',
+                        question.title,
+                    )
                 )
 
     def action_generate_ticket_answers(self):
@@ -55,18 +68,27 @@ class EventQuestion(models.Model):
             EQA = self.env["event.question.answer"].sudo()
 
             has_positive_accomodation_answer = any(
-                self.answer_ids.is_positive_accomodation_answer
+                self.answer_ids.mapped("is_positive_accomodation_answer")
             )
             if not has_positive_accomodation_answer:
                 EQA.create(
                     {
                         "name": _("Yes"),
                         "question_id": self.id,
-                        "is_positive_accomodation_answer": False,
+                        "is_positive_accomodation_answer": True,
                     }
                 )
 
         else:
             raise NotImplementedError()
 
-    # TODO: проверка, что есть положительные ответ на accomodation question
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        records._check_accomodation_answers()
+        return records
+
+    def write(self, vals):
+        res = super().write(vals)
+        self._check_accomodation_answers()
+        return res

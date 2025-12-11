@@ -13,12 +13,16 @@
                     name="is_shuttle_ticket"
                     invisible="question_type != 'simple_choice'"
                 />
+                <field
+                    name="is_accomodation"
+                    invisible="question_type != 'simple_choice'"
+                />
                 <button
                     name="action_generate_ticket_answers"
                     string="Generate answers"
                     class="btn btn-secondary"
                     type="object"
-                    invisible="question_type != 'simple_choice' or not is_shuttle_ticket"
+                    invisible="not is_shuttle_ticket and not is_accomodation"
                 />
             </xpath>
             <xpath expr="//form//field[@name='answer_ids']/tree" position="inside">
@@ -30,6 +34,11 @@
                     domain="shuttle_ticket_domain"
                 />
                 <field name="shuttle_ticket_domain" column_invisible="1" />
+                <field
+                    name="is_positive_accomodation_answer"
+                    column_invisible="not parent.is_accomodation"
+                    required="parent.is_accomodation"
+                />
             </xpath>
         </field>
     </record>

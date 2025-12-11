@@ -19,7 +19,7 @@
                     string="Generate answers"
                     class="btn btn-secondary"
                     type="object"
-                    invisible="question_type != 'simple_choice' or not is_shuttle_ticket"
+                    invisible="not is_shuttle_ticket and not is_accomodation"
                 />
             </xpath>
             <xpath expr="//field[@name='answer_ids']/tree" position="inside">

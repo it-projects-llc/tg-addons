@@ -17,7 +17,7 @@ class TGWebsiteSale(WebsiteSale):
                 or any(
                     line.registration_ids.registration_answer_choice_ids.filtered(
                         lambda x: x.question_id.is_accomodation
-                    ).value_answer_id.is_positive_accomodation_answer
+                    ).mapped("value_answer_id.is_positive_accomodation_answer")
                 )
             )
 
