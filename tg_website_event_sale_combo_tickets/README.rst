@@ -13,7 +13,7 @@ Shuttle tickets - configuration
 
   * add generic questions like name, email
 
-  * add question with type "Selection" and "Is shuttle ticket" checked.
+  * add question with type "Selection" and "Is shuttle" checked.
 
     For this question add answers and corresponding tickets.
 
@@ -33,11 +33,11 @@ Shuttle tickets - usage
 
 - Fill all fields registration data
 
-- Pay for registration for the event, if required
+- Proceed to cart
 
-- RESULT: you will have at least 2 registrations.
-  One is the event, that you have just registered.
-  Second one is shuttle event, that is used in shuttle ticket question
+- RESULT: you will have at least 2 lines in cart.
+  One is related to event, that you are registerting.
+  Second one is related to shuttle event, that is used in shuttle question
 
 Accomodation - configuration
 ----------------------------
@@ -46,9 +46,13 @@ Accomodation - configuration
 
 - In "Tickets" tab add tickets, if none exists
 
-- Put tick on "Navigate to accomodation"
+- In questions tab:
 
-- Set price to ticket
+  * add generic questions like name, email
+
+  * add question with type "Selection" and "Is accomodation" checked.
+
+  * Press "Generate shuttle tickets" button
 
 - Save
 
