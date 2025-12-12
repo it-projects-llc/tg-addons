@@ -6,10 +6,7 @@
         <field name="inherit_id" ref="website_event.event_question_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='question_type']" position="after">
-                <field
-                    name="is_shuttle_ticket"
-                    invisible="question_type != 'simple_choice'"
-                />
+                <field name="is_shuttle" invisible="question_type != 'simple_choice'" />
                 <field
                     name="is_accomodation"
                     invisible="question_type != 'simple_choice'"
@@ -19,15 +16,15 @@
                     string="Generate answers"
                     class="btn btn-secondary"
                     type="object"
-                    invisible="not is_shuttle_ticket and not is_accomodation"
+                    invisible="not is_shuttle and not is_accomodation"
                 />
             </xpath>
             <xpath expr="//field[@name='answer_ids']/tree" position="inside">
                 <field
                     name="shuttle_ticket"
                     context="{'name_with_event_name': True}"
-                    column_invisible="not parent.is_shuttle_ticket"
-                    required="parent.is_shuttle_ticket"
+                    column_invisible="not parent.is_shuttle"
+                    required="parent.is_shuttle"
                     domain="shuttle_ticket_domain"
                 />
                 <field name="shuttle_ticket_domain" column_invisible="1" />

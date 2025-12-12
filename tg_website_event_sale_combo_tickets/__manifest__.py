@@ -1,6 +1,6 @@
 {
     "name": """Combo tickets""",
-    "version": "17.0.0.1.0",
+    "version": "17.0.0.2.0",
     "author": "IT-Projects LLC, Eugene Molotov",
     "support": "it@it-projects.info",
     "website": "https://github.com/it-projects-llc/tg-addons",
@@ -12,7 +12,6 @@
     "data": [
         "security/ir.model.access.csv",
         "wizard/generate_shuttle_ticket_answers_views.xml",
-        "views/event_registration_views.xml",
         "views/event_question_views.xml",
         "views/templates.xml",
         "views/res_config_settings_views.xml",

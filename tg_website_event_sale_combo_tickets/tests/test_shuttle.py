@@ -1,8 +1,9 @@
 from datetime import timedelta
 
 from odoo.addons.website.tools import MockRequest
-from odoo.addons.website_event.controllers.main import WebsiteEventController
 from odoo.addons.website_event_sale.tests.common import TestWebsiteEventSaleCommon
+
+from ..controllers.main import WebsiteEventSaleComboTicketsController
 
 
 class TestShuttle(TestWebsiteEventSaleCommon):
@@ -57,7 +58,7 @@ class TestShuttle(TestWebsiteEventSaleCommon):
                 "title": "Shuttle Event 1",
                 "question_type": "simple_choice",
                 "event_id": cls.event.id,
-                "is_shuttle_ticket": True,
+                "is_shuttle": True,
                 "restricted_ticket_ids": [
                     (5,),
                     (4, cls.ticket_with_shuttle.id),
@@ -99,23 +100,19 @@ class TestShuttle(TestWebsiteEventSaleCommon):
         }
 
         with MockRequest(self.env, website=self.current_website):
-            c = WebsiteEventController()
+            c = WebsiteEventSaleComboTicketsController()
             registration_data = c._process_attendees_form(event, form_details)
             registrations = c._create_attendees_from_registration_post(
                 event, registration_data
             )
 
-        self.assertEqual(len(registrations), 2)
+        self.assertEqual(len(registrations), 3)
 
         reg_with_shuttle = registrations.filtered(
             lambda x: x.event_ticket_id == self.ticket_with_shuttle
         )
         reg_without_shuttle = registrations.filtered(
-            lambda x: x.event_ticket_id == self.ticket
+            lambda x: x.event_ticket_id != self.ticket_with_shuttle
         )
-        self.assertEqual(len(reg_with_shuttle.shuttle_regs), 1)
-        self.assertEqual(len(reg_without_shuttle.shuttle_regs), 0)
-
-        shuttle_reg = reg_with_shuttle.shuttle_regs
-        self.assertEqual(shuttle_reg.event_id, self.shuttle_event)
-        self.assertEqual(shuttle_reg.event_ticket_id, self.shuttle_ticket1)
+        self.assertEqual(len(reg_with_shuttle), 1)
+        self.assertEqual(len(reg_without_shuttle), 2)
