@@ -22,3 +22,6 @@ class Company(models.Model):
     fiscal_company_mapping_bank_account = fields.One2many(
         "res.company.fiscal.mapping.bank.account", "company_from"
     )
+    fiscal_company_mapping_payment_term = fields.One2many(
+        "res.company.fiscal.mapping.payment.term", "company_from"
+    )
