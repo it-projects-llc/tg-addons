@@ -19,4 +19,9 @@
         "views/event_event_views.xml",
     ],
     "demo": [],
+    "assets": {
+        "web.assets_frontend": [
+            "tg_website_event_sale_combo_tickets/static/**/*",
+        ]
+    },
 }

@@ -33,6 +33,16 @@ Shuttle tickets - usage
 
 - Fill all fields registration data
 
+- Input non-empty answer for shuttle question
+
+- RESULT: shuttle price warning will appear
+
+- Input empty answer for shuttle question
+
+- RESULT: shuttle price warning will disappear
+
+- Input non-empty answer for shuttle question
+
 - Proceed to cart
 
 - RESULT: you will have at least 2 lines in cart.

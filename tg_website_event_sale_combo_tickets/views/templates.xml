@@ -22,4 +22,32 @@
             </t>
         </xpath>
     </template>
+
+    <template
+        id="registration_event_question"
+        inherit_id="website_event.registration_event_question"
+    >
+        <xpath expr="//select" position="attributes">
+            <attribute
+                name="t-att-data-shuttle-price-warning"
+            >'.shuttle-price-warning-{}'.format(counter) if question.is_shuttle else None</attribute>
+        </xpath>
+    </template>
+
+    <template
+        id="registration_attendee_details"
+        inherit_id="website_event.registration_attendee_details"
+        priority="999"
+    >
+        <xpath expr="//div[hasclass('modal-body')]" position="inside">
+            <div
+                t-attf-class="row shuttle-price-warning-#{counter}"
+                style="display: none"
+            >
+                <div class="col mt-2 alert alert-warning">
+                    *Shuttle price is not included to the ticket price and will be added to the cart separately
+                </div>
+            </div>
+        </xpath>
+    </template>
 </odoo>
