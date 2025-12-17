@@ -59,3 +59,22 @@ class CompanyFiscalMappingBankAccount(models.Model):
     bank_account_to = fields.Many2one(
         "res.partner.bank", domain="[('company_id', '=', company_to)]", required=True
     )
+
+
+class CompanyFiscalMappingPaymentTerms(models.Model):
+    _name = "res.company.fiscal.mapping.payment.term"
+    _description = "Company Fiscal Mapping Payment Term"
+
+    company_from = fields.Many2one("res.company", required=True)
+    company_to = fields.Many2one(related="company_from.fiscal_company", required=True)
+
+    payment_term_from = fields.Many2one(
+        "account.payment.term",
+        domain="[('company_id', '=', company_from)]",
+        required=True,
+    )
+    payment_term_to = fields.Many2one(
+        "account.payment.term",
+        domain="[('company_id', 'in', [False, company_to])]",
+        required=True,
+    )

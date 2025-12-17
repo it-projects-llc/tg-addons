@@ -51,6 +51,15 @@
                             <field name="bank_account_to" />
                         </tree>
                     </field>
+                    <label for="fiscal_company_mapping_payment_term" />
+                    <field name="fiscal_company_mapping_payment_term">
+                        <tree editable="top">
+                            <field name="company_from" column_invisible="1" />
+                            <field name="company_to" column_invisible="1" />
+                            <field name="payment_term_from" />
+                            <field name="payment_term_to" />
+                        </tree>
+                    </field>
                 </page>
             </xpath>
         </field>

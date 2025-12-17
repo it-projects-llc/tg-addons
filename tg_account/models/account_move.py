@@ -96,6 +96,7 @@ class AccountMove(models.Model):
         fiscal_company_id = self.env.context.get("duplicate_invoice_to_fiscal_company")
         JournalMappings = self.sudo().env["res.company.fiscal.mapping.journal"]
         BankAccountMappings = self.sudo().env["res.company.fiscal.mapping.bank.account"]
+        PaymentTermMappings = self.sudo().env["res.company.fiscal.mapping.payment.term"]
 
         for move, data in zip(self, data_list, strict=False):
             data["company_id"] = fiscal_company_id
@@ -111,6 +112,18 @@ class AccountMove(models.Model):
 
             if new_journal:
                 data["journal_id"] = new_journal.id
+
+            new_payment_term = PaymentTermMappings.search(
+                [
+                    ("company_from", "=", move.company_id.id),
+                    ("company_to", "=", fiscal_company_id),
+                    ("payment_term_from", "=", move.invoice_payment_term_id.id),
+                ],
+                limit=1,
+            ).payment_term_to
+
+            if new_payment_term:
+                data["invoice_payment_term_id"] = new_payment_term.id
 
             new_bank_account = BankAccountMappings.search(
                 [
