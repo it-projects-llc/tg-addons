@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from odoo.http import request
 
 from odoo.addons.website_event_sale.controllers.main import WebsiteEventSaleController
@@ -14,7 +16,7 @@ class WebsiteEventSaleComboTicketsController(WebsiteEventSaleController):
                 answer_id = answer[2].get("value_answer_id")
                 answer_record = request.env["event.question.answer"].browse(answer_id)
                 if answer_record.question_id.is_shuttle:
-                    extra_reg = reg.copy()
+                    extra_reg = deepcopy(reg)
                     extra_reg.update(event_ticket_id=answer_record.shuttle_ticket.id)
                     extra_registrations.append(extra_reg)
         return registrations + extra_registrations
