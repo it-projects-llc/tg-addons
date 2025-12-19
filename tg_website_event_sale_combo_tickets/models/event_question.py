@@ -46,6 +46,13 @@ class EventQuestion(models.Model):
                     )
                 )
 
+    def _check_accomodation_category(self):
+        questions = self.filtered("is_accomodation")
+
+        for company in questions.mapped("event_id.company_id"):
+            if not company.accomodation_category:
+                raise ValidationError(_("Accomodation category is not set in settings"))
+
     def action_generate_ticket_answers(self):
         self._check_shuttle_accomodation()
 
@@ -85,10 +92,12 @@ class EventQuestion(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         records = super().create(vals_list)
+        records._check_accomodation_category()
         records._check_accomodation_answers()
         return records
 
     def write(self, vals):
         res = super().write(vals)
+        self._check_accomodation_category()
         self._check_accomodation_answers()
         return res
