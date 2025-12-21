@@ -97,6 +97,8 @@ class AccountMove(models.Model):
         JournalMappings = self.sudo().env["res.company.fiscal.mapping.journal"]
         BankAccountMappings = self.sudo().env["res.company.fiscal.mapping.bank.account"]
         PaymentTermMappings = self.sudo().env["res.company.fiscal.mapping.payment.term"]
+        invoice_date = self.invoice_date
+        invoice_date_due = self.invoice_date_due
 
         for move, data in zip(self, data_list, strict=False):
             data["company_id"] = fiscal_company_id
@@ -135,5 +137,9 @@ class AccountMove(models.Model):
             ).bank_account_to
 
             data["partner_bank_id"] = new_bank_account.id
+
+            data["invoice_date"] = invoice_date
+
+            data["invoice_date_due"] = invoice_date_due
 
         return data_list
