@@ -3,29 +3,39 @@
 ==============================================
 
 * Removes "Recipient Bank" from invoice report template
+* Allows to duplicate the invoice(s) by linking them to another company according
+  to predefined mappings
+
 
 Duplicate to fiscal invoice
 ---------------------------
 
 - Login as admin
-- Enable developers mode
-- Settings -> Users -> Groups
+- Enable the developers mode
+- Go to Settings -> Users -> Groups menu
 - Search for "Show Full Accounting Features" and open record
 - Add admin user to this group
-- Settings -> Users -> Groups
+- Go to Settings -> Users -> Groups menu
 - Search for "Multi Companies" and open record
 - Add admin user to this group
 
-- Open any company form (Settings -> Users -> Company). Let is be "Company 1"
-- In company form set fiscal company. For example "Company 2"
-- In "Fiscal Company Mappings" add mappings
+- Open any company form (in Settings -> Users -> Company menu). Let's call it
+  "Company 1"
+- In the company form set a so-called fiscal company. For example "Company 2"
+- In the "Fiscal Company Mappings" tab add mappings for:
+
+  - Journals
+  - Accounts
+  - Taxes
+  - Payment Terms
+
 - Save
 
-- In company switcher choose "Company 1" and add tick on "Company 2"
-- Open or create any customer invoice, that is related to "Company 1"
+- In the company switcher choose "Company 1" and add tick on "Company 2"
+- Open or create any customer invoice that is related to "Company 1"
 - Make sure, that there are some products/services in "Invoice lines"
-- Actions -> "Duplicate to fiscal invoice"
-- RESULT: invoice related to "Company 2" is created
+- Click on Actions -> "Duplicate to fiscal invoice"
+- RESULT: The invoice related to the "Company 2" is created according to the mappings
 
 Credits
 =======
@@ -34,6 +44,7 @@ Contributors
 ------------
 
 * `Eugene Molotov <https://github.com/em230418>`__
+* `Ilmir Karamov <https://github.com/ilmir-k>`__
 
 Sponsors
 --------
