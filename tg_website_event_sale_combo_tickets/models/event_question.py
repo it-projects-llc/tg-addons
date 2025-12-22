@@ -33,11 +33,13 @@ class EventQuestion(models.Model):
                     _("Question cannot be both for shuttle and accomodation")
                 )
 
-    def _check_accomodation_answers(self):
+    def _check_accomodation_answers(self, allow_empty=False):
         for question in self.filtered("is_accomodation"):
-            has_positive_accomodation_answer = any(
-                question.answer_ids.mapped("is_positive_accomodation_answer")
-            )
+            flags = question.answer_ids.mapped("is_positive_accomodation_answer")
+            if not flags and allow_empty:
+                continue
+
+            has_positive_accomodation_answer = any(flags)
             if not has_positive_accomodation_answer:
                 raise ValidationError(
                     _(
@@ -93,11 +95,11 @@ class EventQuestion(models.Model):
     def create(self, vals_list):
         records = super().create(vals_list)
         records._check_accomodation_category()
-        records._check_accomodation_answers()
+        records._check_accomodation_answers(allow_empty=True)
         return records
 
     def write(self, vals):
         res = super().write(vals)
         self._check_accomodation_category()
-        self._check_accomodation_answers()
+        self._check_accomodation_answers(allow_empty=True)
         return res
