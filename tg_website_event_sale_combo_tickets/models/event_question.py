@@ -16,13 +16,13 @@ class EventQuestion(models.Model):
     @api.depends("question_type")
     def _compute_is_shuttle(self):
         for record in self:
-            if record.question_type != "simple_choice":
+            if record.question_type != "simple_choice" or record.is_accomodation:
                 record.is_shuttle = False
 
     @api.depends("question_type")
     def _compute_is_accomodation(self):
         for record in self:
-            if record.question_type != "simple_choice":
+            if record.question_type != "simple_choice" or record.is_shuttle:
                 record.is_accomodation = False
 
     @api.constrains("is_shuttle", "is_accomodation")

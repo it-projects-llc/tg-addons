@@ -6,10 +6,15 @@
         <field name="inherit_id" ref="website_event.event_question_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='question_type']" position="after">
-                <field name="is_shuttle" invisible="question_type != 'simple_choice'" />
+                <field
+                    name="is_shuttle"
+                    invisible="question_type != 'simple_choice'"
+                    readonly="is_accomodation"
+                />
                 <field
                     name="is_accomodation"
                     invisible="question_type != 'simple_choice'"
+                    readonly="is_shuttle"
                 />
                 <button
                     name="action_generate_ticket_answers"
