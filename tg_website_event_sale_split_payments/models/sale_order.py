@@ -100,7 +100,14 @@ class SaleOrder(models.Model):
                     mail_auto_subscribe_no_notify=True,
                     require_account_sums=require_account_sums,
                 ).create_invoices()
-                plan.invoice_move_ids.invoice_date = plan.plan_date
+
+                plan.invoice_move_ids.write(
+                    {
+                        "invoice_date": fields.Date.today(),
+                        "invoice_payment_term_id": False,
+                        "invoice_date_due": plan.plan_date,
+                    }
+                )
 
         invoice = self.invoice_plan_ids[0].invoice_move_ids[:1]
         if invoice.state != "posted":
