@@ -3,7 +3,7 @@ from collections import defaultdict
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.fields import Date
-from odoo.tools import float_is_zero, format_amount, format_date
+from odoo.tools import format_amount, format_date
 
 
 class SaleOrder(models.Model):
@@ -227,8 +227,6 @@ class SaleOrder(models.Model):
         self.ensure_one()
         res = defaultdict(float)
 
-        currency_rounding = self.currency_id.rounding
-
         for line in self.order_line:
             if line.display_type:
                 continue
@@ -236,12 +234,9 @@ class SaleOrder(models.Model):
             if line.is_downpayment:
                 continue
 
-            qty = line._get_price_total_using_max_tier_price()
-            if float_is_zero(qty, precision_rounding=currency_rounding):
-                continue
-
             product = line.product_id
             account = product._get_product_accounts()["income"]
+            qty = line._get_price_total_using_max_tier_price()
             res[account] += qty
 
         return res
