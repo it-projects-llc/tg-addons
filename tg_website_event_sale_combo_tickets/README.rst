@@ -17,10 +17,10 @@ Shuttle tickets - configuration
 
     For this question add answers and corresponding tickets.
 
-    If you already have prepared shuttle events with tickets, you can use "Generate shuttle tickets" button. 
+    If you already have prepared shuttle events with tickets, you can use "Generate shuttle tickets" button.
 
     After pressing the "Generate shuttle tickets" button, a wizard will open. Press "Add a line", and a new window will open, allowing you to select events to add to the Answers list.
-    
+
     By checking the checkbox in the upper-left corner, you can select all events at once.
 
 - Close question form
@@ -56,7 +56,7 @@ Accommodation - configuration
 
   * add question with the type "Selection" and the "Is Accommodation" checked.
 
-    For this question add an answer and check the "Is Positive Accommodation Answer" checkbox. 
+    For this question add an answer and check the "Is Positive Accommodation Answer" checkbox.
     Pressing the "Generate Answers" button will automatically generate a single answer named "Yes" with a "Is Positive Accommdation Answer" checkbox already set.
 
 - Set the price for the ticket
@@ -81,10 +81,10 @@ Accommodation - usage
 
 - Click "Checkout"
 
-- RESULT: in the payment page you will see "Choose accommodation" instead of the payment button. 
+- RESULT: in the payment page you will see "Choose accommodation" instead of the payment button.
 
   After the "Choose accommodation" button is pressed, you will be redirected to the shop page with a preselected category configured earlier in the "configuration" step.
-  
+
   Once an accommodation product is added to the shopping cart, the order can be processed.
 
 Credits
@@ -94,6 +94,8 @@ Contributors
 ------------
 
 * `Eugene Molotov <https://github.com/em230418>`__
+
+* `Igor Makarenkov <https://github.com/SecretAgentNull>`__
 
 Sponsors
 --------
