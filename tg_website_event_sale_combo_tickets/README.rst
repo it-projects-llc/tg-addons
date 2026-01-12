@@ -5,11 +5,11 @@
 Shuttle tickets - configuration
 -------------------------------
 
-- Main menu -> Events -> Choose exising or add new event
+- Go to Main menu -> Events -> Choose existing or add a new event
 
-- In "Tickets" tab add tickets, if none exists
+- In the "Tickets" tab add tickets, if none exist
 
-- In questions tab:
+- In the Questions tab:
 
   * add generic questions like name, email
 
@@ -17,7 +17,11 @@ Shuttle tickets - configuration
 
     For this question add answers and corresponding tickets.
 
-    If you already have prepared shuttle events with tickets - you can use "Generate shuttle tickets" button
+    If you already have prepared shuttle events with tickets, you can use "Generate shuttle tickets" button. 
+
+    After pressing the "Generate shuttle tickets" button, a wizard will open. Press "Add a line", and a new window will open, allowing you to select events to add to the Answers list.
+    
+    By checking the checkbox in the upper-left corner, you can select all events at once.
 
 - Close question form
 
@@ -28,63 +32,60 @@ Shuttle tickets - usage
 
 - Go to `/events`
 
-- Click on "Register" button in event, that was used in configuration above,
+- Click on "Get tickets" button in the event, that was used in the configuration above, then
   choose one ticket
 
-- Fill all fields registration data
+- Fill in registration data and select a shuttle
 
-- Input non-empty answer for shuttle question
+- Pay for the registration for the event, if required
 
-- RESULT: shuttle price warning will appear
+- RESULT: You will have at least 2 registrations.
+  One is the event for which you have just registered.
+  Second one is the shuttle event, that is used in the shuttle ticket question
 
-- Input empty answer for shuttle question
+Accommodation - configuration
+-----------------------------
 
-- RESULT: shuttle price warning will disappear
+- Go to Main menu -> Events -> Choose existing or add a new event
 
-- Input non-empty answer for shuttle question
+- In the "Tickets" tab add tickets, if none exists
 
-- Proceed to cart
-
-- RESULT: you will have at least 2 lines in cart.
-  One is related to event, that you are registerting.
-  Second one is related to shuttle event, that is used in shuttle question
-
-Accomodation - configuration
-----------------------------
-
-- Main menu -> Events -> Choose exising or add new event
-
-- In "Tickets" tab add tickets, if none exists
-
-- In questions tab:
+- In the Questions tab:
 
   * add generic questions like name, email
 
-  * add question with type "Selection" and "Is accomodation" checked.
+  * add question with the type "Selection" and the "Is Accommodation" checked.
 
-  * Press "Generate shuttle tickets" button
+    For this question add an answer and check the "Is Positive Accommodation Answer" checkbox. 
+    Pressing the "Generate Answers" button will automatically generate a single answer named "Yes" with a "Is Positive Accommdation Answer" checkbox already set.
+
+- Set the price for the ticket
 
 - Save
 
-- Main menu -> Events -> Configuration -> Settings
+- Go to Main menu -> Events -> Configuration -> Settings
 
-- In "Shop - Combo Tickets" block set "Accomodation Category" value
+- In "Shop - Combo Tickets" section set the "Accommodation Category" value
 
-Accomodation - usage
---------------------
+Accommodation - usage
+---------------------
 
 - Go to `/events`
 
-- Click on "Register" button in event, that was used in configuration above,
-  choose one ticket with "Navigate to accomodation" enabled
+- Click on "Get tickets" button in the event, that was used in the configuration above, then
+  choose one ticket with the question with the type "Selection" and "Is Accommodation" checked.
 
-- Fill in answers to questions
+- Fill in answers to questions, in the question for accommodation, pick answer that was set as the "Is Positive Accommodation Answer".
 
 - Click on "Go to payment"
 
 - Click "Checkout"
 
-- RESULT: in payment page you will see "Choose accomodation" instead of payment button
+- RESULT: in the payment page you will see "Choose accommodation" instead of the payment button. 
+
+  After the "Choose accommodation" button is pressed, you will be redirected to the shop page with a preselected category configured earlier in the "configuration" step.
+  
+  Once an accommodation product is added to the shopping cart, the order can be processed.
 
 Credits
 =======
