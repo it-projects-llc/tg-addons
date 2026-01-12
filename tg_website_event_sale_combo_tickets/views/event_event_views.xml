@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="event_event_view_form" model="ir.ui.view">
+        <field name="name">event.event.form.combo.tickets</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="website_event.event_event_view_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='question_ids']/form//field[@name='question_type']"
+                position="after"
+            >
+                <field
+                    name="is_shuttle"
+                    invisible="question_type != 'simple_choice'"
+                    readonly="is_accomodation"
+                />
+                <field
+                    name="is_accomodation"
+                    invisible="question_type != 'simple_choice'"
+                    readonly="is_shuttle"
+                />
+                <button
+                    name="action_generate_ticket_answers"
+                    string="Generate answers"
+                    class="btn btn-secondary"
+                    type="object"
+                    invisible="not is_shuttle and not is_accomodation"
+                />
+            </xpath>
+            <xpath expr="//form//field[@name='answer_ids']/tree" position="inside">
+                <field
+                    name="shuttle_ticket"
+                    context="{'name_with_event_name': True}"
+                    column_invisible="not parent.is_shuttle"
+                    required="parent.is_shuttle"
+                    domain="shuttle_ticket_domain"
+                />
+                <field name="shuttle_ticket_domain" column_invisible="1" />
+                <field
+                    name="is_positive_accomodation_answer"
+                    column_invisible="not parent.is_accomodation"
+                    required="parent.is_accomodation"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

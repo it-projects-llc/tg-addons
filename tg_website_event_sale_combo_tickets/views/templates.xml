@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="navigation_buttons" inherit_id="website_sale.navigation_buttons">
+        <xpath
+            expr="//t[@t-if='website_sale_order and website_sale_order.website_order_line']"
+            position="before"
+        >
+            <t t-if="should_include_accomodation">
+                <a
+                    t-att-href="accomodation_category_url"
+                    t-attf-class="#{_cta_classes} btn btn-primary #{not website_sale_order._is_cart_ready() and 'disabled'} #{_form_send_navigation and 'order-lg-3 w-100 w-lg-auto ms-lg-auto' or 'w-100'}"
+                >
+                    Choose accommodation
+                </a>
+                <div
+                    t-attf-class="position-relative #{_form_send_navigation and 'd-flex d-lg-none' or 'd-flex'} w-100 justify-content-center align-items-center my-2 opacity-75"
+                >
+                    <hr class="w-100" />
+                    <span class="px-3">or</span>
+                    <hr class="w-100" />
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+    <template
+        id="registration_event_question"
+        inherit_id="website_event.registration_event_question"
+    >
+        <xpath expr="//select" position="attributes">
+            <attribute
+                name="t-att-data-shuttle-price-warning"
+            >'.shuttle-price-warning-{}'.format(counter) if question.is_shuttle else None</attribute>
+        </xpath>
+    </template>
+
+    <template
+        id="registration_attendee_details"
+        inherit_id="website_event.registration_attendee_details"
+        priority="999"
+    >
+        <xpath expr="//div[hasclass('modal-body')]" position="inside">
+            <div
+                t-attf-class="row shuttle-price-warning-#{counter}"
+                style="display: none"
+            >
+                <div class="col mt-2 alert alert-warning">
+                    *Shuttle price is not included to the ticket price and will be added to the cart separately
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
