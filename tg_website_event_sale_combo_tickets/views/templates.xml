@@ -10,7 +10,7 @@
                     t-att-href="accomodation_category_url"
                     t-attf-class="#{_cta_classes} btn btn-primary #{not website_sale_order._is_cart_ready() and 'disabled'} #{_form_send_navigation and 'order-lg-3 w-100 w-lg-auto ms-lg-auto' or 'w-100'}"
                 >
-                    Choose accomodation
+                    Choose accommodation
                 </a>
                 <div
                     t-attf-class="position-relative #{_form_send_navigation and 'd-flex d-lg-none' or 'd-flex'} w-100 justify-content-center align-items-center my-2 opacity-75"
