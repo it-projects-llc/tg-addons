@@ -94,7 +94,7 @@
                     <t t-foreach="countries or []" t-as="country">
                         <option
                             t-att-value="country.id"
-                            t-att-selected="country.id == int(country_id) if country_id else country.id == partner.country_id.id"
+                            t-att-selected="country.id == int(nationality_id) if nationality_id else country.id == partner.nationality_id.id"
                         >
                             <t t-esc="country.name" />
                         </option>

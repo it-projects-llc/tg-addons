@@ -36,6 +36,13 @@ registry.category("web_tour.tours").add("tg_portal.portal_passport_tour", {
             },
         },
         {
+            content: "Enter Nationality",
+            trigger: 'select[name="nationality_id"]',
+            run: () => {
+                $('select[name="nationality_id"] option:eq(1)').attr("selected", true);
+            },
+        },
+        {
             content: "Submit the form",
             trigger: "button[type=submit]",
             run: "click",
