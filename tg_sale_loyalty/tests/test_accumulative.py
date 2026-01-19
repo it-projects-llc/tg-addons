@@ -108,6 +108,7 @@ class TestAccumulative(AccountTestInvoicingCommon):
         order = self._make_programs_and_order(True, True)
         self.assertNotIn("error", order._try_apply_code("test_10pc1"))
         self.assertNotIn("error", order._try_apply_code("test_10pc2"))
+        order.action_open_reward_wizard()
 
     def test_accumulative_02(self):
         order = self._make_programs_and_order(True, False)
