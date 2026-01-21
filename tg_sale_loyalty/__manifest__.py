@@ -13,7 +13,7 @@
         "views/loyalty_program_views.xml",
     ],
     "demo": [],
-    "post_load": None,
+    "post_load": "post_load",
     "pre_init_hook": None,
     "post_init_hook": None,
     "uninstall_hook": None,
