@@ -31,11 +31,11 @@ def post_load():
             # changes start
             if global_discount_reward and global_discount_reward != reward and global_discount_reward.discount >= reward.discount and (global_discount_reward.program_id.is_accumulative is False or reward.program_id.is_accumulative is False):
                 return {'error': _('A better global discount is already applied.')}
-            # changes end
-            elif global_discount_reward and global_discount_reward != reward:
+            elif global_discount_reward and global_discount_reward != reward and (global_discount_reward.program_id.is_accumulative is False or reward.program_id.is_accumulative is False):
                 # Invalidate the old global discount as it may impact the new discount to apply
                 global_discount_reward_lines._reset_loyalty(True)
                 old_reward_lines |= global_discount_reward_lines
+            # changes end
         if not reward.program_id.is_nominative and reward.program_id.applies_on == 'future' and coupon in self.coupon_point_ids.coupon_id:
             return {'error': _('The coupon can only be claimed on future orders.')}
         elif self._get_real_points_for_coupon(coupon) < reward.required_points:

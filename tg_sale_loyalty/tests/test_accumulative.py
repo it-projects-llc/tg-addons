@@ -232,8 +232,12 @@ class TestAccumulative(AccountTestInvoicingCommon):
             )
         )
 
+        self.assertEqual(len(order.order_line), 2)
+
         order._update_programs_and_rewards()
         claimable_rewards = order._get_claimable_rewards()
         for coupon, rewards in claimable_rewards.items():
             res = order._apply_program_reward(rewards, coupon)
             self.assertFalse(bool(res))
+
+        self.assertEqual(len(order.order_line), 4)
