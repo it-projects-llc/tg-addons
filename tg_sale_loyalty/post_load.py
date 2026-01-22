@@ -29,9 +29,11 @@ def post_load():
             global_discount_reward_lines = self._get_applied_global_discount_lines()
             global_discount_reward = global_discount_reward_lines.reward_id
             # changes start
-            if global_discount_reward and global_discount_reward != reward and global_discount_reward.discount >= reward.discount and (global_discount_reward.program_id.is_accumulative is False or reward.program_id.is_accumulative is False):
+            is_global_discount_accumulative = any(global_discount_reward.mapped("program_id.is_accumulative"))
+            global_discount_exceeds_reward = any([gdr.discount >= reward.discount for gdr in global_discount_reward])
+            if global_discount_reward and global_discount_reward != reward and global_discount_exceeds_reward and is_global_discount_accumulative is False and reward.program_id.is_accumulative is False:
                 return {'error': _('A better global discount is already applied.')}
-            elif global_discount_reward and global_discount_reward != reward and (global_discount_reward.program_id.is_accumulative is False or reward.program_id.is_accumulative is False):
+            elif global_discount_reward and global_discount_reward != reward and (is_global_discount_accumulative is False or reward.program_id.is_accumulative is False):
                 # Invalidate the old global discount as it may impact the new discount to apply
                 global_discount_reward_lines._reset_loyalty(True)
                 old_reward_lines |= global_discount_reward_lines
@@ -67,9 +69,12 @@ def post_load():
                 continue
             points = self._get_real_points_for_coupon(coupon)
             for reward in coupon.program_id.reward_ids:
-
-                if reward.is_global_discount and global_discount_reward and global_discount_reward.discount >= reward.discount and (global_discount_reward.program_id.is_accumulative is False or reward.program_id.is_accumulative is False):
+                # changes start
+                is_global_discount_accumulative = any(global_discount_reward.mapped("program_id.is_accumulative"))
+                global_discount_exceeds_reward = any([gdr.discount >= reward.discount for gdr in global_discount_reward])
+                if reward.is_global_discount and global_discount_reward and global_discount_exceeds_reward and is_global_discount_accumulative is False and reward.program_id.is_accumulative is False:
                     continue
+                # changes end
 
                 # Discounts are not allowed if the total is zero unless there is a payment reward, in which case we allow discounts.
                 # If the total is 0 again without the payment reward it will be removed.
