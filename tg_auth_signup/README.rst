@@ -3,6 +3,7 @@
 ===========================================
 
 * Increases font of "Reset password" and "Signup buttons" under "Login" button
+  and wraps them in buttons for better visibility
 
 * Signup URL depends on current website
 
@@ -17,6 +18,7 @@ Contributors
 ------------
 
 * `Eugene Molotov <https://github.com/em230418>`__:
+* `Ilmir Karamov <https://github.com/ilmir-k>`__:
 
 Sponsors
 --------

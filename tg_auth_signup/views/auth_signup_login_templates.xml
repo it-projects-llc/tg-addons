@@ -2,8 +2,17 @@
 <odoo>
     <template id="login" inherit_id="auth_signup.login">
         <xpath expr="//a[@t-if='signup_enabled']/.." position="attributes">
-            <!-- removed small class -->
-            <attribute name="class">justify-content-between mt-2 d-flex</attribute>
+            <!-- removed small, mt-2 class and added flex-column -->
+            <attribute name="class">justify-content-between d-flex flex-column</attribute>
+            <attribute name="style">margin-top: -0.2rem !important</attribute>
+        </xpath>
+        <xpath expr="//a[@t-if='signup_enabled']" position="attributes">
+            <!-- wrapped the signup link in a button -->
+            <attribute name="class">btn btn-secondary mt-2</attribute>
+        </xpath>
+        <xpath expr="//a[@t-if='reset_password_enabled']" position="attributes">
+            <!-- wrapped the reset password link in a button -->
+            <attribute name="class">btn btn-secondary mt-2</attribute>
         </xpath>
     </template>
 </odoo>
