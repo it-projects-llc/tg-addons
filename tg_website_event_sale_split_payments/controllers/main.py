@@ -38,11 +38,13 @@ class WebsiteSaleSplitPaymentController(WebsiteSale):
 
         resp.qcontext.update(
             show_split_order=True,
-            min_deposit=max(
-                min_deposit_percent * amount_total / 100,
-                min_deposit_abs,
+            min_deposit=int(
+                max(
+                    min_deposit_percent * amount_total / 100,
+                    min_deposit_abs,
+                )
             ),
-            max_deposit=max_deposit_percent * amount_total / 100,
+            max_deposit=int(max_deposit_percent * amount_total / 100),
             max_installments_data=json.dumps(
                 {k: v["max_installments"] for k, v in split_payment_periods.items()}
             ),

@@ -145,8 +145,8 @@ class SaleOrder(models.Model):
 
         min_deposit_ratio = company.invoice_plan_min_deposit_percent / 100
         max_deposit_ratio = company.invoice_plan_max_deposit_percent / 100
-        min_deposit = max(min_deposit_ratio * self.amount_total, min_deposit_abs)
-        max_deposit = max_deposit_ratio * self.amount_total
+        min_deposit = int(max(min_deposit_ratio * self.amount_total, min_deposit_abs))
+        max_deposit = int(max_deposit_ratio * self.amount_total)
 
         if deposit < min_deposit:
             raise UserError(

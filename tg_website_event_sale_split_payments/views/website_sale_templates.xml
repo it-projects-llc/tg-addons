@@ -34,7 +34,6 @@
                                     t-att-value="str(min_deposit)"
                                     t-att-min="str(min_deposit)"
                                     t-att-max="str(max_deposit)"
-                                    step="0.01"
                                     class="form-control"
                                     id="sp_deposit"
                                     aria-describedby="sp_deposit"
