@@ -29,28 +29,10 @@ class SaleOrder(models.Model):
         if not program or not program.active:
             return super()._try_apply_code(code)
 
-        # almost copy-pase from sale_loyalty from _try_apply_code stops here
-
-        points_programs = self._get_points_programs()
-        coupon_programs = self.applied_coupon_ids.program_id
-        program_domain = self._get_program_domain()
-        domain = expression.AND(
-            [
-                program_domain,
-                [
-                    ("id", "not in", points_programs.ids),
-                    ("trigger", "=", "auto"),
-                    ("rule_ids.mode", "=", "auto"),
-                ],
-            ]
+        all_programs_applied = (
+            self.order_line.filtered("is_reward_line").mapped("reward_id.program_id")
+            | self._get_points_programs()
         )
-        automatic_programs = (
-            self.env["loyalty.program"]
-            .search(domain)
-            .filtered(lambda p: not p.limit_usage or p.total_order_count < p.max_usage)
-        )
-
-        all_programs_applied = points_programs | coupon_programs | automatic_programs
 
         if not program.is_accumulative and all_programs_applied:
             return {
