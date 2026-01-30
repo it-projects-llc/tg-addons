@@ -19,17 +19,35 @@ class TestAccumulative(AccountTestInvoicingCommon):
             }
         )
 
+        cls.product_B = cls.env["product.product"].create(
+            {
+                "name": "Product B",
+                "list_price": 100,
+                "sale_ok": True,
+                "taxes_id": [(5,)],
+            }
+        )
+
+        cls.product_C = cls.env["product.product"].create(
+            {
+                "name": "Product C",
+                "list_price": 100,
+                "sale_ok": True,
+                "taxes_id": [(5,)],
+            }
+        )
+
+        cls.user_salemanager = new_test_user(
+            cls.env, login="user_salemanager", groups="sales_team.group_sale_manager"
+        )
+
     def _make_programs_and_order(
         self, is_program1_accumulative, is_program2_accumulative
     ):
-        user_salemanager = new_test_user(
-            self.env, login="user_salemanager", groups="sales_team.group_sale_manager"
-        )
-
         LoyaltyProgram = self.env["loyalty.program"]
         LoyaltyProgram.create(
             {
-                "name": "Promo 1 (accumulative)",
+                "name": "Discount code 1 (accumulative)",
                 "trigger": "with_code",
                 "program_type": "promo_code",
                 "applies_on": "current",
@@ -55,9 +73,10 @@ class TestAccumulative(AccountTestInvoicingCommon):
                 ],
             }
         )
+
         LoyaltyProgram.create(
             {
-                "name": "Promo 2 (non-accumulative)",
+                "name": "Discount code 2 (non-accumulative)",
                 "trigger": "with_code",
                 "program_type": "promo_code",
                 "applies_on": "current",
@@ -86,7 +105,7 @@ class TestAccumulative(AccountTestInvoicingCommon):
 
         order = (
             self.env["sale.order"]
-            .with_user(user_salemanager)
+            .with_user(self.user_salemanager)
             .create(
                 {
                     "partner_id": self.partner_a.id,
@@ -123,3 +142,102 @@ class TestAccumulative(AccountTestInvoicingCommon):
         order = self._make_programs_and_order(False, True)
         self.assertNotIn("error", order._try_apply_code("test_10pc1"))
         self.assertIn("error", order._try_apply_code("test_10pc2"))
+
+    def test_promotion_accumulative(self):
+        LoyaltyProgram = self.env["loyalty.program"]
+        LoyaltyProgram.create(
+            {
+                "name": "Promotion 1 (accumulative)",
+                "trigger": "auto",
+                "program_type": "promotion",
+                "applies_on": "current",
+                "is_accumulative": True,
+                "rule_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "reward_point_mode": "unit",
+                            "reward_point_amount": 1,
+                            "product_ids": [self.product_A.id],
+                        },
+                    )
+                ],
+                "reward_ids": [
+                    Command.create(
+                        {
+                            "reward_type": "discount",
+                            "discount_mode": "percent",
+                            "discount": 10,
+                            "discount_applicability": "order",
+                            "required_points": 1,
+                        }
+                    )
+                ],
+            }
+        )
+        LoyaltyProgram.create(
+            {
+                "name": "Promotion 2 (non-accumulative)",
+                "trigger": "auto",
+                "program_type": "promotion",
+                "applies_on": "current",
+                "is_accumulative": True,
+                "rule_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "reward_point_mode": "unit",
+                            "reward_point_amount": 1,
+                            "product_ids": [self.product_B.id],
+                        },
+                    )
+                ],
+                "reward_ids": [
+                    Command.create(
+                        {
+                            "reward_type": "discount",
+                            "discount_mode": "percent",
+                            "discount": 10,
+                            "discount_applicability": "order",
+                            "required_points": 1,
+                        }
+                    )
+                ],
+            }
+        )
+
+        order = (
+            self.env["sale.order"]
+            .with_user(self.user_salemanager)
+            .create(
+                {
+                    "partner_id": self.partner_a.id,
+                    "order_line": [
+                        Command.create(
+                            {
+                                "product_id": self.product_A.id,
+                                "tax_id": False,
+                            }
+                        ),
+                        Command.create(
+                            {
+                                "product_id": self.product_B.id,
+                                "tax_id": False,
+                            }
+                        ),
+                    ],
+                }
+            )
+        )
+
+        self.assertEqual(len(order.order_line), 2)
+
+        order._update_programs_and_rewards()
+        claimable_rewards = order._get_claimable_rewards()
+        for coupon, rewards in claimable_rewards.items():
+            res = order._apply_program_reward(rewards, coupon)
+            self.assertFalse(bool(res))
+
+        self.assertEqual(len(order.order_line), 4)
