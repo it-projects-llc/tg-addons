@@ -33,6 +33,7 @@ jobs:
     name: ${{ matrix.name }}
     env:
       EXCLUDE: ${{ matrix.exclude }}
+      ADDONS_PATH: /opt/odoo/addons,./enterprise
     strategy:
       fail-fast: false
       matrix:
@@ -56,6 +57,8 @@ jobs:
       - uses: actions/checkout@v3
         with:
           persist-credentials: false
+      - name: Clone enterprise
+        run: git clone http://git.dev.it-projects.info/enterprise.git -b 17.0 --depth 1
       - name: Install addons and dependencies
         run: oca_install_addons
       - name: Check licenses
