@@ -3,6 +3,8 @@
 import WebsiteSaleDaterangePicker from "@website_sale_renting/js/website_sale_renting_daterangepicker";
 const {DateTime} = luxon;
 
+luxon.Settings.defaultZone = "America/Panama";
+
 WebsiteSaleDaterangePicker.include({
     _initSaleRentingDateRangePicker(el) {
         const hasDefaultDates = Boolean(this._hasDefaultDates());
