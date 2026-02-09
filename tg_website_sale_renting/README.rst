@@ -2,6 +2,9 @@
  eCommerce Rental modifications for Tribal Gathering
 =====================================================
 
+- In frontend enforces America/Panama timezone in rental date range widgets.
+  In backend no timezone is enforced (default behavior).
+
 Rental dates defaults
 ---------------------
 
