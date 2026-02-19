@@ -31,9 +31,7 @@ class SaleOrder(models.Model):
 
         # almost copy-pase from sale_loyalty from _try_apply_code stops here
 
-        points_programs = self._get_points_programs().filtered(
-            lambda x: x.trigger != "auto"
-        )
+        points_programs = self._get_points_programs()
         coupon_programs = self.applied_coupon_ids.program_id
         program_domain = self._get_program_domain()
         domain = expression.AND(
@@ -54,7 +52,9 @@ class SaleOrder(models.Model):
 
         all_programs_applied = points_programs | coupon_programs | automatic_programs
 
-        if not program.is_accumulative and all_programs_applied:
+        if not program.is_accumulative and all_programs_applied.filtered(
+            lambda x: x.trigger == program.trigger
+        ):
             return {
                 "error": _(
                     "The given code cannot be accumulated with already applied "
@@ -64,7 +64,7 @@ class SaleOrder(models.Model):
 
         if program.is_accumulative and all_programs_applied.filtered(
             lambda x: not x.is_accumulative
-        ):
+        ).filtered(lambda x: x.trigger == program.trigger):
             return {
                 "error": _("There is already non-accumulative discount program applied")
             }
