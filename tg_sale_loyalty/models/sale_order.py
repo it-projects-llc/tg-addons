@@ -31,7 +31,9 @@ class SaleOrder(models.Model):
 
         # almost copy-pase from sale_loyalty from _try_apply_code stops here
 
-        points_programs = self._get_points_programs()
+        points_programs = self._get_points_programs().filtered(
+            lambda x: x.trigger != "auto"
+        )
         coupon_programs = self.applied_coupon_ids.program_id
         program_domain = self._get_program_domain()
         domain = expression.AND(
