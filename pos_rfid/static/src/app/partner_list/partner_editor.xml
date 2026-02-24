@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t
+        t-name="pos_rfid.PartnerDetailsEdit"
+        t-inherit="point_of_sale.PartnerDetailsEdit"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+
+        <xpath
+            expr="//div[hasclass('partner-details-box')]//input"
+            position="attributes"
+        >
+            <attribute name="t-on-change">ev => this.onChangeField(item, ev)</attribute>
+        </xpath>
+
+    </t>
+
+</templates>
