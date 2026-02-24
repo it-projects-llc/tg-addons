@@ -9,6 +9,7 @@
         "tg_website_event_sale",
         "portal_event_tickets",
         "payment_custom",
+        "partner_email_check",
     ],
     "data": [],
     "demo": [],

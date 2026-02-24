@@ -2,6 +2,8 @@
  Portal modifications for Tribal Gathering
 ===========================================
 
+* Adds hack to enable creating portal user (using Grant portal access) with email address, that share multiple partners
+
 * "Grant portal access" wizard:
 
   * User's "allowed companies" fields is copied from portal user template
