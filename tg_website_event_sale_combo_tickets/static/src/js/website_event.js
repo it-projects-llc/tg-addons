@@ -9,7 +9,12 @@ EventRegistrationForm.include({
                 "form#attendee_registration .modal-body select[data-shuttle-price-warning]"
             ).on("change", function (ev) {
                 const selector = $(ev.target).data("shuttle-price-warning");
-                if (ev.target.value) {
+                if (
+                    $("select[data-shuttle-price-warning]")
+                        .map((i, x) => x.value)
+                        .get()
+                        .some(Boolean)
+                ) {
                     $(selector).show("slow");
                 } else {
                     $(selector).hide("slow");
