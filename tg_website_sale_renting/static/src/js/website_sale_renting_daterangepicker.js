@@ -2,8 +2,11 @@
 
 import WebsiteSaleDaterangePicker from "@website_sale_renting/js/website_sale_renting_daterangepicker";
 const {DateTime} = luxon;
+import {RentingMixinFix} from "@tg_website_sale_renting/js/renting_mixin";
 
 luxon.Settings.defaultZone = "America/Panama";
+
+WebsiteSaleDaterangePicker.include(RentingMixinFix);
 
 WebsiteSaleDaterangePicker.include({
     _initSaleRentingDateRangePicker(el) {
