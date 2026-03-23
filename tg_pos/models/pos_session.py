@@ -42,7 +42,7 @@ class PosSession(models.Model):
                 move_vals.pop("ref", 0)
                 move_vals.pop("invoice_origin", 0)
 
-                new_move = order._create_invoice(move_vals)
+                new_move = company_orders[:1]._create_invoice(move_vals)
                 moves += new_move
 
         return {
