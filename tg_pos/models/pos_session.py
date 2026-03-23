@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import _, models
 
 
 class PosSession(models.Model):
@@ -20,3 +20,38 @@ class PosSession(models.Model):
                 in groups,
             )
         return res
+
+    def _generate_grouped_pos_invoice(self):
+        moves = self.env["account.move"]
+
+        for _partner, orders in (
+            self.mapped("order_ids").sorted("partner_id").grouped("partner_id").items()
+        ):
+            for company, company_orders in (
+                orders.sorted("company_id").grouped("company_id").items()
+            ):
+                move_vals = company_orders[:1]._prepare_invoice_vals()
+
+                for order in company_orders[1:]:
+                    move_vals["invoice_line_ids"] += order._prepare_invoice_lines()
+
+                move_vals["narration"] = "\n".join(
+                    [company.name] + company_orders.mapped("name")
+                )
+                move_vals["invoice_user_id"] = self.env.user.id
+                move_vals.pop("ref", 0)
+                move_vals.pop("invoice_origin", 0)
+
+                new_move = order._create_invoice(move_vals)
+                moves += new_move
+
+        return {
+            "name": _("Customer Invoice"),
+            "view_mode": "form",
+            "view_id": self.env.ref("account.view_move_form").id,
+            "res_model": "account.move",
+            "context": "{'move_type':'out_invoice'}",
+            "type": "ir.actions.act_window",
+            "target": "current",
+            "res_id": moves and moves.ids[0] or False,
+        }

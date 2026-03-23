@@ -1,6 +1,6 @@
 {
     "name": """Point of Sale modifications for Tribal Gathering""",
-    "version": "17.0.0.2.0",
+    "version": "17.0.0.3.0",
     "author": "IT-Projects LLC, Eugene Molotov",
     "support": "it@it-projects.info",
     "website": "https://github.com/it-projects-llc/tg-addons",
@@ -15,6 +15,7 @@
         "security/ir.model.access.csv",
         "security/point_of_sale_security.xml",
         "views/product_view.xml",
+        "views/pos_session_views.xml",
         "views/pos_shop_views.xml",
         "views/res_config_settings_views.xml",
     ],
