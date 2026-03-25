@@ -34,6 +34,7 @@ jobs:
     env:
       EXCLUDE: ${{ matrix.exclude }}
       ADDONS_PATH: /opt/odoo/addons,./enterprise
+      ODOO_BROWSER_LOG_VERBOSITY: 1
     strategy:
       fail-fast: false
       matrix:
