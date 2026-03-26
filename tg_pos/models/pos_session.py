@@ -1,4 +1,5 @@
 from odoo import _, models
+from odoo.exceptions import UserError
 
 
 class PosSession(models.Model):
@@ -44,6 +45,9 @@ class PosSession(models.Model):
 
                 new_move = company_orders[:1]._create_invoice(move_vals)
                 moves += new_move
+
+        if not moves:
+            raise UserError(_("No invoices generated"))
 
         return {
             "name": _("Customer Invoice"),

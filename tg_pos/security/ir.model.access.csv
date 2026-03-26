@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_pos_shop_user,access_pos_shop_manager,tg_pos.model_pos_shop,point_of_sale.group_pos_user,1,0,0,0
 access_pos_shop_manager,access_pos_shop_manager,tg_pos.model_pos_shop,point_of_sale.group_pos_manager,1,1,1,1
+access_generate_grouped_invoice,access_generate_grouped_invoice,model_generate_grouped_invoice,account.group_account_manager,1,1,1,1
