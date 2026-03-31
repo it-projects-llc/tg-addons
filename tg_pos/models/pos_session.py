@@ -25,8 +25,29 @@ class PosSession(models.Model):
     def _generate_grouped_pos_invoice(self):
         moves = self.env["account.move"]
 
+        if not self:
+            raise UserError(_("No sessions detected"))
+
+        not_closed = self.filtered(lambda x: x.state != "closed")
+        if not_closed:
+            raise UserError(
+                _(
+                    "Following sessions are not closed: %s",
+                    ", ".join(not_closed.mapped("display_name")),
+                )
+            )
+
+        all_orders = self.mapped("order_ids")
+        if not all_orders:
+            raise UserError(_("No orders detected"))
+
+        orders_without_invoices = all_orders.filtered(lambda x: not x.account_move)
+
+        if not all_orders:
+            raise UserError(_("No orders without invoices detected"))
+
         for _partner, orders in (
-            self.mapped("order_ids").sorted("partner_id").grouped("partner_id").items()
+            orders_without_invoices.sorted("partner_id").grouped("partner_id").items()
         ):
             for company, company_orders in (
                 orders.sorted("company_id").grouped("company_id").items()
@@ -44,18 +65,30 @@ class PosSession(models.Model):
                 move_vals.pop("invoice_origin", 0)
 
                 new_move = company_orders[:1]._create_invoice(move_vals)
+                company_orders.write(
+                    {
+                        "account_move": new_move,
+                        "state": "invoiced",
+                    }
+                )
                 moves += new_move
 
         if not moves:
             raise UserError(_("No invoices generated"))
 
-        return {
-            "name": _("Customer Invoice"),
-            "view_mode": "form",
-            "view_id": self.env.ref("account.view_move_form").id,
-            "res_model": "account.move",
-            "context": "{'move_type':'out_invoice'}",
-            "type": "ir.actions.act_window",
-            "target": "current",
-            "res_id": moves and moves.ids[0] or False,
-        }
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "account.action_move_out_invoice_type"
+        )
+        if len(moves) > 1:
+            action["domain"] = [("id", "in", moves.ids)]
+        else:
+            form_view = [(self.env.ref("account.view_move_form").id, "form")]
+            if "views" in action:
+                action["views"] = form_view + [
+                    (state, view) for state, view in action["views"] if view != "form"
+                ]
+            else:
+                action["views"] = form_view
+            action["res_id"] = moves.id
+
+        return action
