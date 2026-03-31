@@ -30,6 +30,7 @@ class PosOrder(models.Model):
             except ValidationError:
                 if not move.duplicated_fiscal_invoice:
                     move.must_be_duplicated = True
+                continue
 
             if order.config_id.debug_auto_duplicate_invoices:
                 move._duplicate_invoice_inner()
