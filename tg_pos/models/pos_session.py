@@ -43,7 +43,7 @@ class PosSession(models.Model):
 
         orders_without_invoices = all_orders.filtered(lambda x: not x.account_move)
 
-        if not all_orders:
+        if not orders_without_invoices:
             raise UserError(_("No orders without invoices detected"))
 
         for _partner, orders in (
