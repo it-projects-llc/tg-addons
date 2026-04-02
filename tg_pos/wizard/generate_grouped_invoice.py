@@ -6,14 +6,14 @@ class GenerateGroupedInvoice(models.TransientModel):
     _name = "generate.grouped.invoice"
     _descrition = "Generate Grouped Invoice Wizard"
 
-    pos_config = fields.Many2one(
-        "pos.config", required=True, default=lambda self: self._default_pos_config()
+    pos_configs = fields.Many2many(
+        "pos.config", required=True, default=lambda self: self._default_pos_configs()
     )
     date_start = fields.Date()
     date_end = fields.Date()
 
-    def _default_pos_config(self):
-        return self.env.context.get("active_id")
+    def _default_pos_configs(self):
+        return self.env.context.get("active_ids")
 
     def generate(self):
         self.ensure_one()
@@ -28,7 +28,7 @@ class GenerateGroupedInvoice(models.TransientModel):
             [
                 ("start_at", ">=", self.date_start),
                 ("start_at", "<=", self.date_end),
-                ("config_id", "=", self.pos_config.id),
+                ("config_id", "in", self.pos_configs.ids),
             ]
         )
         return sessions._generate_grouped_pos_invoice()

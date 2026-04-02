@@ -6,9 +6,13 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="pos_config" readonly="1" />
-                    <field name="date_start" />
-                    <field name="date_end" />
+                    <field name="date_start" required="1" />
+                    <field name="date_end" required="1" />
+                    <field name="pos_configs" readonly="1">
+                        <tree>
+                            <field name="display_name" />
+                        </tree>
+                    </field>
                 </group>
                 <footer>
                     <button
