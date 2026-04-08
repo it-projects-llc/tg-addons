@@ -25,7 +25,7 @@ Minimum advance payment (absolute) setting
 ------------------------------------------
 
 - If total payment amount is less than the value of this setting in the shop cart,
-  then "Flexipay" button won't be shown.
+  then "Split Payments" button won't be shown.
 
 - In Split payments popup deposit value should comply with value of this setting
 
@@ -41,10 +41,10 @@ the module makes sure that max installment date does not exceed the following va
 
 - start date of rental start minus security days
 
-"Flexipay" button visibility in payment page
+"Split Payments" button visibility in payment page
 --------------------------------------------
 
-"Flexipay" button is not visible if one of the conditions is true:
+"Split Payments" button is not visible if one of the conditions is true:
 
 - Total payment amount of cart is less than value of "Minimum advance payment (absolute)"
 
