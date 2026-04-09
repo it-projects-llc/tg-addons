@@ -98,6 +98,7 @@ class PosSession(models.Model):
                 move_vals["invoice_user_id"] = self.env.user.id
                 move_vals.pop("ref", 0)
                 move_vals.pop("invoice_origin", 0)
+                move_vals.pop("partner_bank_id", 0)
 
                 move_vals["invoice_line_ids"] = merge_line_values(
                     move_vals["invoice_line_ids"]
