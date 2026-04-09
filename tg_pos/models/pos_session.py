@@ -1,5 +1,40 @@
+from collections import defaultdict
+
 from odoo import _, models
 from odoo.exceptions import UserError
+
+
+def merge_line_values(invoice_lines):
+    res = []
+    product_line_indices = defaultdict(list)
+    for t in invoice_lines:
+        if t[0] != 0:
+            raise NotImplementedError()
+
+        line = t[2]
+        if line.get("display_type"):
+            continue
+
+        product_id = line["product_id"]
+        current_line_clean = line.copy()
+        current_line_clean.pop("quantity")
+
+        add_to_res = True
+        for existing_product_line_index in product_line_indices[product_id]:
+            product_line = res[existing_product_line_index][2]
+            product_line_clean = product_line.copy()
+            product_line_clean.pop("quantity")
+            if product_line_clean == current_line_clean:
+                product_line["quantity"] += line["quantity"]
+                add_to_res = False
+                break
+
+        if add_to_res:
+            new_product_line_index = len(res)
+            product_line_indices[product_id].append(new_product_line_index)
+            res.append((0, 0, line.copy()))
+
+    return res
 
 
 class PosSession(models.Model):
@@ -63,6 +98,10 @@ class PosSession(models.Model):
                 move_vals["invoice_user_id"] = self.env.user.id
                 move_vals.pop("ref", 0)
                 move_vals.pop("invoice_origin", 0)
+
+                move_vals["invoice_line_ids"] = merge_line_values(
+                    move_vals["invoice_line_ids"]
+                )
 
                 new_move = company_orders[:1]._create_invoice(move_vals)
                 company_orders.write(

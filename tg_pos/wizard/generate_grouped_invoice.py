@@ -7,7 +7,10 @@ class GenerateGroupedInvoice(models.TransientModel):
     _descrition = "Generate Grouped Invoice Wizard"
 
     pos_configs = fields.Many2many(
-        "pos.config", required=True, default=lambda self: self._default_pos_configs()
+        "pos.config",
+        required=True,
+        default=lambda self: self._default_pos_configs(),
+        context={"active_test": False},
     )
     date_start = fields.Date()
     date_end = fields.Date()
