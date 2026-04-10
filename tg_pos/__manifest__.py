@@ -14,6 +14,7 @@
     "data": [
         "security/ir.model.access.csv",
         "security/point_of_sale_security.xml",
+        "views/account_move_views.xml",
         "views/product_view.xml",
         "views/pos_session_views.xml",
         "views/pos_shop_views.xml",

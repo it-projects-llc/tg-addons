@@ -76,6 +76,26 @@ class TestGroupedInvoice(TestPoSCommon):
                 )
             ]
         )
+        self.env["pos.order"].create_from_ui(
+            [
+                self.create_ui_order_data(
+                    [
+                        (self.product2, 1, 100),
+                    ],
+                    customer=self.customer,
+                )
+            ]
+        )
+        self.env["pos.order"].create_from_ui(
+            [
+                self.create_ui_order_data(
+                    [
+                        (self.product2, 0),
+                    ],
+                    customer=self.customer,
+                )
+            ]
+        )
         self.pos_session.action_pos_session_validate()
 
         action = self.pos_session._generate_grouped_pos_invoice()

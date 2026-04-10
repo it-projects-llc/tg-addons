@@ -3,6 +3,8 @@ from collections import defaultdict
 from odoo import _, models
 from odoo.exceptions import UserError
 
+from .account_move import sentinel
+
 
 def merge_line_values(invoice_lines):
     res = []
@@ -13,6 +15,12 @@ def merge_line_values(invoice_lines):
 
         line = t[2]
         if line.get("display_type"):
+            continue
+
+        if int(line.get("discount")) == 100:
+            continue
+
+        if not line.get("quantity"):
             continue
 
         product_id = line["product_id"]
@@ -92,8 +100,8 @@ class PosSession(models.Model):
                 for order in company_orders[1:]:
                     move_vals["invoice_line_ids"] += order._prepare_invoice_lines()
 
-                move_vals["narration"] = "\n".join(
-                    [company.name] + company_orders.mapped("name")
+                move_vals["pos_sessions_origin"] = "\n".join(
+                    [company.name] + company_orders.mapped("session_id.name")
                 )
                 move_vals["invoice_user_id"] = self.env.user.id
                 move_vals.pop("ref", 0)
@@ -104,7 +112,14 @@ class PosSession(models.Model):
                     move_vals["invoice_line_ids"]
                 )
 
-                new_move = company_orders[:1]._create_invoice(move_vals)
+                if not move_vals["invoice_line_ids"]:
+                    continue
+
+                new_move = (
+                    company_orders[:1]
+                    .with_context(mail_create_nolog=True, no_message_post=sentinel)
+                    ._create_invoice(move_vals)
+                )
                 company_orders.write(
                     {
                         "account_move": new_move,
