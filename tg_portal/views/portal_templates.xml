@@ -105,4 +105,11 @@
         </xpath>
     </template>
 
+    <template id="user_sign_in_redirect" inherit_id="portal.user_sign_in">
+        <xpath expr="//a" position="attributes">
+            <attribute
+                name="t-attf-href"
+            >/web/login?redirect={{request.httprequest.path}}</attribute>
+        </xpath>
+    </template>
 </odoo>
