@@ -89,9 +89,12 @@ class PosSession(models.Model):
         if not orders_without_invoices:
             raise UserError(_("No orders without invoices detected"))
 
-        for _partner, orders in (
+        for partner, orders in (
             orders_without_invoices.sorted("partner_id").grouped("partner_id").items()
         ):
+            if not partner:
+                continue
+
             for company, company_orders in (
                 orders.sorted("company_id").grouped("company_id").items()
             ):
