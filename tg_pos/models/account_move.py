@@ -1,7 +1,5 @@
 from odoo import api, fields, models
 
-sentinel = object()
-
 
 class AccountMove(models.Model):
     _inherit = "account.move"
@@ -14,7 +12,7 @@ class AccountMove(models.Model):
 
     @api.returns("mail.message", lambda value: value.id)
     def message_post(self, *args, **kw):
-        if self.env.context.get("no_message_post") == sentinel:
+        if self.env.context.get("no_message_post_body") == kw.get("body", object()):
             return self.env["mail.message"]
 
         return super().message_post(*args, **kw)
