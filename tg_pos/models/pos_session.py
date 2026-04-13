@@ -120,7 +120,7 @@ class PosSession(models.Model):
 
                 new_move = (
                     company_orders[:1]
-                    .with_context(mail_create_nolog=True, no_message_post=sentinel)
+                    .with_context(no_message_post=sentinel)
                     ._create_invoice(move_vals)
                 )
                 company_orders.write(
