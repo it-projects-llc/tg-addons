@@ -3,6 +3,8 @@ from collections import defaultdict
 from odoo import _, models
 from odoo.exceptions import UserError
 
+from .account_move import sentinel
+
 
 def merge_line_values(invoice_lines):
     res = []
@@ -116,13 +118,11 @@ class PosSession(models.Model):
                 if not move_vals["invoice_line_ids"]:
                     continue
 
-                fo = company_orders[:1]
-                new_move = fo.with_context(
-                    no_message_post_body=_(
-                        "This invoice has been created from the point of sale session: %s",  # noqa: E501
-                        fo._get_html_link(),
-                    )
-                )._create_invoice(move_vals)
+                new_move = (
+                    company_orders[:1]
+                    .with_context(no_message_post=sentinel)
+                    ._create_invoice(move_vals)
+                )
                 company_orders.write(
                     {
                         "account_move": new_move,
