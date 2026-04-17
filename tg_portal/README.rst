@@ -26,6 +26,8 @@
 
   * If partner has 2 or more IDs, new one is created
 
+* "Sign in" button has redirect param
+
 Credits
 =======
 
