@@ -1,10 +1,12 @@
-==========================================
- Events modification for Tribal Gathering
-==========================================
+==================================================
+ Website Event Modifications for Tribal Gathering
+==================================================
 
-* Forces "Website" to be set in event
+* Forces "Website" to be set in the event form
 
-* Removes social links from registration page
+* Removes social links from registration page on website
+
+* Adds "Visible on current website" field in the event tree view
 
 Credits
 =======
@@ -13,6 +15,7 @@ Contributors
 ------------
 
 * `Eugene Molotov <https://github.com/em230418>`__
+* `Ilmir Karamov <https://github.com/ilmir-k>`__
 
 Sponsors
 --------
