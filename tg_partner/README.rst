@@ -3,6 +3,7 @@
 ======================================================
 
 * Added the fields to specify a group the contact belongs to, e.g. band, tribe and Nickname/Alias of the contact.
+* Added the fields to search view
 
 Credits
 =======
