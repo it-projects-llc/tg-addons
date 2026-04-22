@@ -11,4 +11,21 @@
             </xpath>
         </field>
     </record>
+    <record id="tg_view_res_partner_filter" model="ir.ui.view">
+        <field name="name">res.partner.select</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field
+                    name="group_name"
+                    filter_domain="[('group_name', 'ilike', self)]"
+                />
+                <field
+                    name="alias_name"
+                    filter_domain="[('alias_name', 'ilike', self)]"
+                />
+            </field>
+        </field>
+    </record>
 </odoo>
