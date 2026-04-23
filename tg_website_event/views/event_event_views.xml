@@ -16,8 +16,18 @@
         <field name="model">event.event</field>
         <field name="inherit_id" ref="event.view_event_tree" />
         <field name="arch" type="xml">
+            <tree position="attributes">
+                <attribute name="editable">bottom</attribute>
+                <attribute name="open_form_view">True</attribute>
+            </tree>
+            <field name="name" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
             <xpath expr="//field[@name='stage_id']" position="after">
-                <field name="website_published" optional="hide" />
+                <field
+                    name="website_published"
+                    optional="hide"
+                />
             </xpath>
         </field>
     </record>
