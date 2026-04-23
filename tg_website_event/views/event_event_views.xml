@@ -24,10 +24,7 @@
                 <attribute name="readonly">1</attribute>
             </field>
             <xpath expr="//field[@name='stage_id']" position="after">
-                <field
-                    name="website_published"
-                    optional="hide"
-                />
+                <field name="website_published" optional="hide" />
             </xpath>
         </field>
     </record>
