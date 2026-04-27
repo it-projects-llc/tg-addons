@@ -4,7 +4,7 @@ from odoo.exceptions import UserError
 
 class GenerateGroupedInvoice(models.TransientModel):
     _name = "generate.grouped.invoice"
-    _descrition = "Generate Grouped Invoice Wizard"
+    _description = "Generate Grouped Invoice Wizard"
 
     pos_configs = fields.Many2many(
         "pos.config",

@@ -7,8 +7,8 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     pos_sessions_origin = fields.Text(
-        "Origin (POS Session)",
-        help="Origin, that describes, from which POS sessions this invoice is created from",  # noqa: E501
+        "Origin (POS Sessions)",
+        help="The origin that describes which POS session(s) this invoice is created from",  # noqa: E501
         readonly=True,
     )
 
