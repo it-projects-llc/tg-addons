@@ -2,10 +2,11 @@
  Point of Sale modifications for Tribal Gathering
 ==================================================
 
-* Allows to scan customer in payment screen (feature was implemented in point_of_sale module from 10.0)
+* Allows to scan customer barcode in the payment screen (feature was implemented in
+  point_of_sale module since Odoo 10.0)
 
-* In POS loads all partners at once (feature existed in Odoo 10.0 - 16.0)
-  No need to press "Search More" in partner list screen
+* All partners are loaded in POS at once (the feature existed since Odoo 10.0 - 16.0)
+  No need to press "Search More" in the partner list screen
 
 * Added user group "Point of Sale - Show customer button"
 
@@ -14,7 +15,7 @@
 * Added user group "Point of Sale - Enable pricelist button".
   If user belongs to this group, pricelist button will be enabled, otherwise disabled.
 
-* Contact's barcode does not depend on company (as it was in odoo 10.0)
+* Contact's barcode does not depend on company it belongs (as it was in odoo 10.0)
 
 * Option to display specific products in POS (using POS Shop feature)
 
@@ -23,7 +24,7 @@ POS Shop usage
 
 * Open Main menu -> Point of Sale -> Configuration -> POS Shops
 
-* Create record, set name and add some products
+* Create record, set a name and add some products
 
 * Open Main menu -> Point of Sale -> Configuration -> Settings
 
@@ -43,7 +44,7 @@ Automatic invoice duplication
 -----------------------------
 
 - Make sure, you are able to manually create duplicated invoice.
-  See "Duplicate to fiscal invoice" section from tg_account's readme
+  See "Duplicate to fiscal invoice" section from tg_account's documentation
 
 - Open Main menu -> Point of Sale -> Configuration -> Settings
 
@@ -55,27 +56,27 @@ Automatic invoice duplication
 
 - Open Main menu -> Point of Sale
 
-- Open POS, what was configured above
+- Open POS session configured above
 
-- Make order, set "Invoice" flag, validate order
+- Create an order, click "Invoice" button and validate order
 
 - RESULT: order has been successfully validated
 
 - Open Main menu -> Point of Sale -> Orders
 
-- Open last order, click on "Invoice" smart button
+- Open the order created, click on "Invoice" smart button
 
 - RESULT: "Duplicated Fiscal Invoice" field it set (see "Other Info" tab)
 
 - Return back to POS
 
-- Make order, set 100% discount, set "Invoice" flag, validate order
+- Create an order, set 100% discount, click "Invoice" button, validate order
 
 - RESULT: order has been successfully validated
 
 - Open Main menu -> Point of Sale -> Orders
 
-- Open last order, click on "Invoice" smart button
+- Open the order created, click on "Invoice" smart button
 
 - RESULT: "Duplicated Fiscal Invoice" field it NOT set (see "Other Info" tab)
 
@@ -86,6 +87,8 @@ Contributors
 ------------
 
 * `Eugene Molotov <https://github.com/em230418>`__
+
+* `Ilmir Karamov <https://github.com/ilmir-k>`__
 
 * `Odoo S.A. <https://github.com/odoo>`__
 

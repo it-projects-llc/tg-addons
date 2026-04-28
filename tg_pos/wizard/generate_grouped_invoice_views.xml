@@ -28,7 +28,7 @@
     </record>
 
     <record id="generate_grouped_invoice_action" model="ir.actions.act_window">
-        <field name="name">Generate grouped invoice</field>
+        <field name="name">Generate Grouped Invoices</field>
         <field name="res_model">generate.grouped.invoice</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
