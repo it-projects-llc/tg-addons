@@ -109,6 +109,7 @@ class PosSession(models.Model):
                 move_vals["invoice_user_id"] = self.env.user.id
                 if date_end:
                     move_vals["invoice_date"] = date_end
+                    move_vals["invoice_date_due"] = date_end
                 move_vals.pop("ref", 0)
                 move_vals.pop("invoice_origin", 0)
                 move_vals.pop("partner_bank_id", 0)
