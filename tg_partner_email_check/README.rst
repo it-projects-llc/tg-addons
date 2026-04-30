@@ -1,17 +1,17 @@
 ====================================
- Email checker for Tribal Gathering
+ Email Checker for Tribal Gathering
 ====================================
 
-* Allows to register new user with email, that is already used in existing contact, but not user.
-  Existing user will be chosen by largest credit (``pos_credit_notebook``) or the last one by id.
+* Allows to register new user with email that is already used in the existing contact/partner, but without a user linked.
+  The existing contact to be linked is chosen by largest credit amount (``pos_credit_notebook``) or by highest id (i.e. the last created one).
 
-* If "Filter duplicate email addresses" is enabled, this module excludes emails for checking if:
+* If the "Filter duplicate email addresses" option is enabled, this module excludes the emails from duplicate checking if:
 
-  - contact type is "Invoice address"
+  - the contact type is "Invoice address"
 
-  - contact type is "Delivery address"
+  - the contact type is "Delivery address"
 
-  - email domain is included "Partner Email Check Ignore" list (Settings -> Technical -> Email -> Partner Email Check Ignore Records)
+  - the email domain is included to "Partner Email Check Ignore" list (``Settings -> Technical -> Email -> Partner Email Check Ignore``)
 
 Credits
 =======
