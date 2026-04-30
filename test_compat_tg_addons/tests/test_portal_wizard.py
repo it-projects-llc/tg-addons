@@ -1,5 +1,6 @@
-from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
+
+from odoo.addons.auth_signup.models.res_users import SignupError
 
 
 class TestPortalWizard(TransactionCase):
@@ -20,7 +21,7 @@ class TestPortalWizard(TransactionCase):
         )
 
         self.env.company.partner_email_check_filter_duplicates = True
-        with self.assertRaises(UserError):
+        with self.assertRaises(SignupError):
             partner1._check_email_unique()
 
         portal_wizard = (

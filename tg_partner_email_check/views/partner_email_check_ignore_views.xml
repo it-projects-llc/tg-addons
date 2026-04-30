@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="partner_email_check_ignore_view_tree" model="ir.ui.view">
+        <field name="name">partner.email.check.ignore.form</field>
+        <field name="model">partner.email.check.ignore</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="domain" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_show_ignore_list" model="ir.actions.act_window">
+        <field name="name">Partner Email Check Ignore</field>
+        <field name="res_model">partner.email.check.ignore</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem
+        id="menu_show_ignore_list"
+        action="action_show_ignore_list"
+        parent="base.menu_email"
+        sequence="9999"
+    />
+</odoo>
