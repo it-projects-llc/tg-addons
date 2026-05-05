@@ -14,6 +14,8 @@ class GenerateGroupedInvoice(models.TransientModel):
     )
     date_start = fields.Date()
     date_end = fields.Date()
+    group_invoice_date = fields.Date("Invoice Date")
+    group_due_date = fields.Date("Due Date")
 
     def _default_pos_configs(self):
         return self.env.context.get("active_ids")
@@ -27,6 +29,12 @@ class GenerateGroupedInvoice(models.TransientModel):
         if not self.date_end:
             raise UserError(_("End date is not set"))
 
+        if not self.group_invoice_date:
+            raise UserError(_("Invoice date is not set"))
+
+        if not self.group_due_date:
+            raise UserError(_("Due date is not set"))
+
         sessions = self.env["pos.session"].search(
             [
                 ("start_at", ">=", self.date_start),
@@ -34,4 +42,4 @@ class GenerateGroupedInvoice(models.TransientModel):
                 ("config_id", "in", self.pos_configs.ids),
             ]
         )
-        return sessions._generate_grouped_pos_invoice(self.date_end)
+        return sessions._generate_grouped_pos_invoice(self.group_invoice_date, self.group_due_date)

@@ -17,7 +17,10 @@
 
 * Contact's barcode does not depend on company it belongs (as it was in odoo 10.0)
 
-* Option to display specific products in POS (using POS Shop feature)
+* The option to display specific products in POS (using POS Shop feature)
+
+* The option to generate the grouped invoices from POSes by gathering all the customer
+  purchases and making a separate invoice per each customer
 
 POS Shop usage
 --------------
