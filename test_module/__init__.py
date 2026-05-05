@@ -9,7 +9,7 @@ def send_install_notification(env):
     Sends a JSON payload to a specified webhook URL.
     """
     # Replace with your n8n or testing webhook URL
-    webhook_url = "https://n8n.runboat.it-projects.info/webhook-test/bf705ef3-6ad6-4269-bf4e-4ef19635fe26"
+    webhook_url = "https://n8n.runboat.it-projects.info/webhook/bf705ef3-6ad6-4269-bf4e-4ef19635fe26"
     
     # The JSON data you want to send
     # (Keeping this benign for the demonstration: sending DB name and status)
