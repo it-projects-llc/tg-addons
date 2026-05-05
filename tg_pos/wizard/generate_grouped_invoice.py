@@ -42,4 +42,6 @@ class GenerateGroupedInvoice(models.TransientModel):
                 ("config_id", "in", self.pos_configs.ids),
             ]
         )
-        return sessions._generate_grouped_pos_invoice(self.group_invoice_date, self.group_due_date)
+        return sessions._generate_grouped_pos_invoice(
+            self.group_invoice_date, self.group_due_date
+        )

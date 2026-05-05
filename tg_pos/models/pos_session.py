@@ -65,7 +65,9 @@ class PosSession(models.Model):
             )
         return res
 
-    def _generate_grouped_pos_invoice(self, group_invoice_date=None, group_due_date=None):
+    def _generate_grouped_pos_invoice(
+        self, group_invoice_date=None, group_due_date=None
+    ):
         moves = self.env["account.move"]
 
         if not self:
