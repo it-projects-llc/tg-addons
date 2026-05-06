@@ -65,7 +65,9 @@ class PosSession(models.Model):
             )
         return res
 
-    def _generate_grouped_pos_invoice(self, date_end=None):
+    def _generate_grouped_pos_invoice(
+        self, group_invoice_date=None, group_due_date=None
+    ):
         moves = self.env["account.move"]
 
         if not self:
@@ -107,9 +109,12 @@ class PosSession(models.Model):
                     [company.name] + company_orders.mapped("session_id.name")
                 )
                 move_vals["invoice_user_id"] = self.env.user.id
-                if date_end:
-                    move_vals["invoice_date"] = date_end
-                    move_vals["invoice_date_due"] = date_end
+                if group_invoice_date:
+                    move_vals["invoice_date"] = group_invoice_date
+
+                if group_due_date:
+                    move_vals["invoice_date_due"] = group_due_date
+
                 move_vals.pop("ref", 0)
                 move_vals.pop("invoice_origin", 0)
                 move_vals.pop("partner_bank_id", 0)
