@@ -109,7 +109,7 @@
         <xpath expr="//a" position="attributes">
             <attribute
                 name="t-attf-href"
-            >/web/login?redirect={{request.httprequest.path}}</attribute>
+            >/web/login?redirect={{request.httprequest.path if not request.httprequest.path.endswith("/login") else ''}}</attribute>
         </xpath>
     </template>
 </odoo>
