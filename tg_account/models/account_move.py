@@ -54,6 +54,7 @@ class AccountMove(models.Model):
                 duplicate_invoice_to_fiscal_company=fiscal_company.id,
             ).copy()
             old_move.duplicated_fiscal_invoice = new_move
+            old_move.must_be_duplicated = False
             new_move_ids.append(new_move.id)
 
         return new_move_ids
