@@ -21,12 +21,12 @@ class AccountMove(models.Model):
 
         for move in self:
             if move.duplicated_fiscal_invoice:
-                have_duplicated_invoice.append(move.name)
+                have_duplicated_invoice.append(move.display_name)
                 continue
 
             fiscal_company = move.company_id.fiscal_company
             if not fiscal_company:
-                no_fiscal_companies.append(move.name)
+                no_fiscal_companies.append(move.display_name)
                 continue
 
         error_msgs = []
