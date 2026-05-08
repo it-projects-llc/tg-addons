@@ -7,6 +7,7 @@
 * Removes social links from registration page on website
 
 * Adds "Visible on current website" field in the event tree view
+  and make it editable from this view directly
 
 Credits
 =======
