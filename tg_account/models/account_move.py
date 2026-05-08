@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -14,6 +14,14 @@ class AccountMove(models.Model):
         groups="account.group_account_user",
         tracking=True,
     )
+
+    @api.onchange("duplicated_fiscal_invoice")
+    def _onchange_duplicated_fiscal_invoice(self):
+        if (
+            not self.duplicated_fiscal_invoice
+            and self._origin.duplicated_fiscal_invoice
+        ):
+            self.must_be_duplicated = True
 
     def _duplicate_invoice_check(self):
         no_fiscal_companies = []
