@@ -22,6 +22,8 @@
 * The option to generate the grouped invoices from POSes by gathering all the customer
   purchases and making a separate invoice per each customer
 
+* Disallows to delete contact, that is customer of existing pos order
+
 POS Shop usage
 --------------
 
