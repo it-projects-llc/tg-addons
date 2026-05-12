@@ -4,6 +4,8 @@ from odoo import SUPERUSER_ID, api, models, registry
 from odoo.exceptions import ValidationError
 from odoo.tools import float_is_zero
 
+from .account_move import sentinel
+
 _logger = logging.getLogger(__name__)
 
 
@@ -57,3 +59,8 @@ class PosOrder(models.Model):
                         cr.rollback()
 
         return res
+
+    def _prepare_tax_base_line_values(self, sign=1):
+        if sign < 0 and self.env.context.get("sign_only_positive") == sentinel:
+            sign = -1 * sign
+        return super()._prepare_tax_base_line_values(sign)
