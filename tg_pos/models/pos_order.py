@@ -1,6 +1,6 @@
 import logging
 
-from odoo import SUPERUSER_ID, api, models, registry
+from odoo import SUPERUSER_ID, api, fields, models, registry
 from odoo.exceptions import ValidationError
 from odoo.tools import float_is_zero
 
@@ -9,6 +9,8 @@ _logger = logging.getLogger(__name__)
 
 class PosOrder(models.Model):
     _inherit = "pos.order"
+
+    partner_id = fields.Many2one(ondelete="restrict")
 
     def _generate_pos_order_invoice(self):
         res = super()._generate_pos_order_invoice()
