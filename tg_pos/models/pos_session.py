@@ -100,6 +100,10 @@ class PosSession(models.Model):
             for company, company_orders in (
                 orders.sorted("company_id").grouped("company_id").items()
             ):
+                company_orders = company_orders.with_context(
+                    sign_only_positive=sentinel
+                )
+
                 move_vals = company_orders[:1]._prepare_invoice_vals()
 
                 for order in company_orders[1:]:
