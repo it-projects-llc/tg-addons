@@ -20,6 +20,8 @@ Rental dates defaults
 
   * Renting Max End Date
 
+Also renting min start date and max end dates can be overriden in product form
+
 Usage
 -----
 
