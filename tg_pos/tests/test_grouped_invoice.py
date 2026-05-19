@@ -1,3 +1,4 @@
+from odoo.exceptions import UserError
 from odoo.tests.common import tagged
 
 from odoo.addons.point_of_sale.tests.common import TestPoSCommon
@@ -111,7 +112,7 @@ class TestGroupedInvoice(TestPoSCommon):
         self.assertEqual(len(product1_invoice_line), 1)
         self.assertEqual(len(product2_invoice_line), 1)
 
-    def test_refund(self):
+    def test_refund_01(self):
         self.open_new_session()
         PosOrder = self.env["pos.order"]
         PosOrder.create_from_ui(
@@ -165,3 +166,96 @@ class TestGroupedInvoice(TestPoSCommon):
 
         self.assertEqual(len(product1_invoice_lines), 1)
         self.assertEqual(product1_invoice_lines[0].quantity, 1)
+
+    def test_refund_02(self):
+        self.open_new_session()
+        PosOrder = self.env["pos.order"]
+        order_datas = PosOrder.create_from_ui(
+            [
+                self.create_ui_order_data(
+                    [
+                        (self.product1, 1),
+                    ],
+                    customer=self.customer,
+                )
+            ]
+        )
+
+        # make refund order and pay
+        pos_order_to_refund = PosOrder.browse(order_datas[0]["id"])
+        refund_order = pos_order_to_refund._refund()
+
+        make_payment = (
+            self.env["pos.make.payment"]
+            .with_context(
+                active_ids=[refund_order.id],
+                active_id=refund_order.id,
+            )
+            .create(
+                {
+                    "payment_method_id": self.cash_pm1.id,
+                    "amount": -pos_order_to_refund.amount_total,
+                }
+            )
+        )
+        make_payment.check()
+
+        self.pos_session.action_pos_session_validate()
+
+        with self.assertRaises(UserError):
+            self.pos_session._generate_grouped_pos_invoice()
+
+    def test_refund_03(self):
+        self.open_new_session()
+        PosOrder = self.env["pos.order"]
+        PosOrder.create_from_ui(
+            [
+                self.create_ui_order_data(
+                    [
+                        (self.product2, 1),
+                    ],
+                    customer=self.customer,
+                )
+            ]
+        )
+        order_datas = PosOrder.create_from_ui(
+            [
+                self.create_ui_order_data(
+                    [
+                        (self.product1, 1),
+                    ],
+                    customer=self.customer,
+                )
+            ]
+        )
+
+        # make refund order and pay
+        pos_order_to_refund = PosOrder.browse(order_datas[0]["id"])
+        refund_order = pos_order_to_refund._refund()
+
+        make_payment = (
+            self.env["pos.make.payment"]
+            .with_context(
+                active_ids=[refund_order.id],
+                active_id=refund_order.id,
+            )
+            .create(
+                {
+                    "payment_method_id": self.cash_pm1.id,
+                    "amount": -pos_order_to_refund.amount_total,
+                }
+            )
+        )
+        make_payment.check()
+
+        self.pos_session.action_pos_session_validate()
+
+        action = self.pos_session._generate_grouped_pos_invoice()
+        move = self.env["account.move"].browse(action["res_id"])
+
+        product2_invoice_lines = move.invoice_line_ids.filtered(
+            lambda x: x.product_id == self.product2
+        )
+
+        self.assertEqual(len(product2_invoice_lines), 1)
+        self.assertEqual(product2_invoice_lines[0].quantity, 1)

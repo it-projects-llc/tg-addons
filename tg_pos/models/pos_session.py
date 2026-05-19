@@ -42,7 +42,7 @@ def merge_line_values(invoice_lines):
             product_line_indices[product_id].append(new_product_line_index)
             res.append((0, 0, line.copy()))
 
-    return res
+    return list(filter(lambda x: abs(x[2]["quantity"]) > 0.01, res))
 
 
 class PosSession(models.Model):
