@@ -100,9 +100,12 @@ class PosSession(models.Model):
             for company, company_orders in (
                 orders.sorted("company_id").grouped("company_id").items()
             ):
+                # amount_total desc sorting is required to make sure,
+                # that result move will be invoice, not refund
+                # at least when there is at least one order with positive amount_total
                 company_orders = company_orders.with_context(
                     sign_only_positive=sentinel
-                )
+                ).sorted("amount_total", reverse=True)
 
                 move_vals = company_orders[:1]._prepare_invoice_vals()
 

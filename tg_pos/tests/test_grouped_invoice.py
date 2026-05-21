@@ -98,6 +98,9 @@ class TestGroupedInvoice(TestPoSCommon):
             ]
         )
         self.pos_session.action_pos_session_validate()
+        self.pos_session._invalidate_cache(
+            ["order_ids"]
+        )  # resets order of session.order_ids
 
         action = self.pos_session._generate_grouped_pos_invoice()
         move = self.env["account.move"].browse(action["res_id"])
@@ -109,6 +112,7 @@ class TestGroupedInvoice(TestPoSCommon):
             lambda x: x.product_id == self.product2
         )
 
+        self.assertEqual(move.move_type, "out_invoice")
         self.assertEqual(len(product1_invoice_line), 1)
         self.assertEqual(len(product2_invoice_line), 1)
 
@@ -156,6 +160,9 @@ class TestGroupedInvoice(TestPoSCommon):
         make_payment.check()
 
         self.pos_session.action_pos_session_validate()
+        self.pos_session._invalidate_cache(
+            ["order_ids"]
+        )  # resets order of session.order_ids
 
         action = self.pos_session._generate_grouped_pos_invoice()
         move = self.env["account.move"].browse(action["res_id"])
@@ -164,6 +171,7 @@ class TestGroupedInvoice(TestPoSCommon):
             lambda x: x.product_id == self.product1
         )
 
+        self.assertEqual(move.move_type, "out_invoice")
         self.assertEqual(len(product1_invoice_lines), 1)
         self.assertEqual(product1_invoice_lines[0].quantity, 1)
 
@@ -249,6 +257,9 @@ class TestGroupedInvoice(TestPoSCommon):
         make_payment.check()
 
         self.pos_session.action_pos_session_validate()
+        self.pos_session._invalidate_cache(
+            ["order_ids"]
+        )  # resets order of session.order_ids
 
         action = self.pos_session._generate_grouped_pos_invoice()
         move = self.env["account.move"].browse(action["res_id"])
@@ -257,5 +268,6 @@ class TestGroupedInvoice(TestPoSCommon):
             lambda x: x.product_id == self.product2
         )
 
+        self.assertEqual(move.move_type, "out_invoice")
         self.assertEqual(len(product2_invoice_lines), 1)
         self.assertEqual(product2_invoice_lines[0].quantity, 1)
