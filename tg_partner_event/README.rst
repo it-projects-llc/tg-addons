@@ -2,7 +2,7 @@
  Link partner to events modifications for Tribal Gathering
 ===========================================================
 
-* Does not update attendee partner in registration
+* Does not update attendee partner in registration, if related attendee partner changed email
 
 Credits
 =======
