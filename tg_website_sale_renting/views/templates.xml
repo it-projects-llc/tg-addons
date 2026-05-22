@@ -10,4 +10,15 @@
             >product._get_renting_max_end_date()</attribute>
         </xpath>
     </template>
+
+    <template id="cart" inherit_id="website_sale_renting.cart">
+        <xpath expr="//div[@id='rentingDates']" position="attributes">
+            <attribute
+                name="t-att-data-min-start-date"
+            >website_sale_order.mapped('order_line.product_template_id')._get_renting_min_start_date()</attribute>
+            <attribute
+                name="t-att-data-max-end-date"
+            >website_sale_order.mapped('order_line.product_template_id')._get_renting_max_end_date()</attribute>
+        </xpath>
+    </template>
 </odoo>
