@@ -23,12 +23,29 @@ class ProductTemplate(models.Model):
 
     def _get_renting_min_start_date(self):
         company = self.company_id or self.env.company
-        return fields.Datetime.to_datetime(
-            self.renting_min_start_date or company.renting_min_start_date
+        dates = list(
+            filter(
+                lambda x: x,
+                self.mapped("renting_min_start_date")
+                + [company.renting_min_start_date],
+            )
         )
+        if dates:
+            res = max(dates)
+        else:
+            res = False
+        return fields.Datetime.to_datetime(res)
 
     def _get_renting_max_end_date(self):
         company = self.company_id or self.env.company
-        return fields.Datetime.to_datetime(
-            self.renting_max_end_date or company.renting_max_end_date
+        dates = list(
+            filter(
+                lambda x: x,
+                self.mapped("renting_max_end_date") + [company.renting_max_end_date],
+            )
         )
+        if dates:
+            res = min(dates)
+        else:
+            res = False
+        return fields.Datetime.to_datetime(res)
