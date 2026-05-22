@@ -1,6 +1,8 @@
 from pytz import UTC, timezone
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
+from odoo.tools.misc import format_date
 
 PANAMA_TZ = timezone("America/Panama")
 
@@ -58,3 +60,25 @@ class ProductTemplate(models.Model):
         else:
             res = False
         return fields.Datetime.to_datetime(res)
+
+    @api.constrains(
+        "renting_min_start_date",
+        "renting_max_end_date",
+    )
+    def _check_renting_dates_and_ranges1(self):
+        def f(v):
+            return format_date(self.env, v)
+
+        for c in self:
+            if (
+                c.renting_min_start_date
+                and c.renting_max_end_date
+                and c.renting_min_start_date > c.renting_max_end_date
+            ):
+                raise ValidationError(
+                    _(
+                        "Renting minimal start date (%(min_start_date)s) cannot be greater than maximal end date (%(max_end_date)s)",  # noqa: E501
+                        min_start_date=f(c.renting_min_start_date),
+                        max_end_date=f(c.renting_max_end_date),
+                    )
+                )
