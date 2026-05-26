@@ -18,7 +18,7 @@ class ProductTemplate(models.Model):
         company = self.company_id or self.env.company
         res = fields.Datetime.to_datetime(company.renting_default_start_date)
         if res:
-            return PANAMA_TZ.localize(res).astimezone(UTC)
+            return PANAMA_TZ.localize(res).astimezone(UTC).replace(tzinfo=None)
         else:
             return super()._get_default_start_date(*args, **kw)
 
@@ -28,7 +28,7 @@ class ProductTemplate(models.Model):
         res = fields.Datetime.to_datetime(company.renting_default_end_date)
 
         if res:
-            return PANAMA_TZ.localize(res).astimezone(UTC)
+            return PANAMA_TZ.localize(res).astimezone(UTC).replace(tzinfo=None)
         else:
             return super()._get_default_end_date(*args, **kw)
 
