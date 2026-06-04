@@ -12,10 +12,10 @@
     </template>
 
     <template id="cart" inherit_id="website_sale_renting.cart">
-        <xpath expr="//div[@id='rentingDates']/../../.." position="attributes">
+        <xpath expr="//div[@id='rentingDates']/../.." position="attributes">
             <attribute
                 name="t-if"
-            >combination_info.get('is_rental') and (not website.prevent_zero_price_sale or combination_info['current_rental_price']) and not website_sale_order._has_product_specific_renting_period()</attribute>
+            >website_sale_order.has_rented_products and not website_sale_order._has_product_specific_renting_period()</attribute>
         </xpath>
     </template>
 </odoo>
