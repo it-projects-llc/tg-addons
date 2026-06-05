@@ -1,3 +1,7 @@
+from datetime import timedelta
+
+from odoo import fields
+
 from odoo.addons.partner_event.tests.test_event_registration import (
     TestEventRegistration as Base,
 )
@@ -22,6 +26,8 @@ class TestEventRegistration(Base):
                 "event_id": self.event_0.id,
             }
         )
+
+        self.event_0.date_end = fields.Datetime.now() + timedelta(days=1)
 
         partner2.with_context(
             allow_attendee_partner_change=True
