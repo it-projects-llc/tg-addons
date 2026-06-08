@@ -30,7 +30,15 @@ WebsiteSaleDaterangePicker.include({
                     range: true,
                     type: this._isDurationWithHours() ? "datetime" : "date",
                     minDate: minStartDate.isValid
-                        ? minStartDate
+                        ? DateTime.max(
+                              DateTime.now().set({
+                                  hour: 0,
+                                  minute: 0,
+                                  second: 0,
+                                  millisecond: 0,
+                              }),
+                              minStartDate
+                          )
                         : DateTime.min(DateTime.now(), this.startDate),
                     maxDate: maxEndDate.isValid
                         ? maxEndDate
