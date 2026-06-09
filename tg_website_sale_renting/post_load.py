@@ -36,7 +36,7 @@ def post_load():
 
     def _is_valid_renting_dates(self):
         """ Override to take into account the preparation time."""
-        res = super()._is_valid_renting_dates()
+        res = super(SaleOrder, self)._is_valid_renting_dates()
         rental_order_lines = self.order_line.filtered('reservation_begin')
         if not rental_order_lines or not res:
             return res
