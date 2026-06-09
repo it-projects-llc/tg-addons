@@ -19,4 +19,5 @@
         "views/res_config_settings_views.xml",
     ],
     "demo": [],
+    "post_load": "post_load",
 }

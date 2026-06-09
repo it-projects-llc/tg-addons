@@ -5,6 +5,8 @@
 - In frontend enforces America/Panama timezone in rental date range widgets.
   In backend no timezone is enforced (default behavior).
 
+- Allows to rent from today
+
 Rental dates defaults
 ---------------------
 
