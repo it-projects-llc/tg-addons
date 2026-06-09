@@ -29,3 +29,19 @@ def post_load():
         )
 
     SaleOrder._is_valid_renting_dates = _is_valid_renting_dates
+
+    from odoo.addons.website_sale_stock_renting.models.sale_order import (  # pylint: disable=reimported
+        SaleOrder,
+    )
+
+    def _is_valid_renting_dates(self):
+        """ Override to take into account the preparation time."""
+        res = super()._is_valid_renting_dates()
+        rental_order_lines = self.order_line.filtered('reservation_begin')
+        if not rental_order_lines or not res:
+            return res
+        max_padding_time = max(rental_order_lines.product_id.mapped('preparation_time'), default=0)
+        initial_time = self.rental_start_date - timedelta(hours=max_padding_time)
+        return initial_time >= fields.Datetime.now() - timedelta(days=1)   # <--- changes here
+
+    SaleOrder._is_valid_renting_dates = _is_valid_renting_dates
