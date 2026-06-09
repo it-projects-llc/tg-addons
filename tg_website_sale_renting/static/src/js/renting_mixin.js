@@ -1,10 +1,10 @@
 /** @odoo-module **/
 /* eslint-disable no-unused-vars, init-declarations */
 
-import {msecPerUnit, unitMessages} from "@website_sale_renting/js/renting_mixin";
 import {_t} from "@web/core/l10n/translation";
-import {sprintf} from "@web/core/utils/strings";
+import {msecPerUnit, unitMessages} from "@website_sale_renting/js/renting_mixin";
 import {session} from "@web/session";
+import {sprintf} from "@web/core/utils/strings";
 
 export const RentingMixinFix = {
     _getInvalidMessage(startDate, endDate, productId = false) {

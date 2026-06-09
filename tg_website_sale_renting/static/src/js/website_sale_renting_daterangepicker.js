@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
-import WebsiteSaleDaterangePicker from "@website_sale_renting/js/website_sale_renting_daterangepicker";
 const {DateTime} = luxon;
+import WebsiteSaleDaterangePicker from "@website_sale_renting/js/website_sale_renting_daterangepicker";
 import {RentingMixinFix} from "@tg_website_sale_renting/js/renting_mixin";
 import {_t} from "@web/core/l10n/translation";
 import {session} from "@web/session";
