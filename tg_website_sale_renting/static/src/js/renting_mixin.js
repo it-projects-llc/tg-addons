@@ -4,12 +4,16 @@
 import {msecPerUnit, unitMessages} from "@website_sale_renting/js/renting_mixin";
 import {_t} from "@web/core/l10n/translation";
 import {sprintf} from "@web/core/utils/strings";
+import {session} from "@web/session";
 
 export const RentingMixinFix = {
     _getInvalidMessage(startDate, endDate, productId = false) {
         let message;
         if (!this.rentingUnavailabilityDays || !this.rentingMinimalTime) {
             return message;
+        }
+        if (session.denyRenting) {
+            return session.denyRenting;
         }
         if (startDate && endDate) {
             if (this.rentingUnavailabilityDays[startDate.weekday]) {

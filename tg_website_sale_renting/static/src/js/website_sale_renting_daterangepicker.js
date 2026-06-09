@@ -3,19 +3,64 @@
 import WebsiteSaleDaterangePicker from "@website_sale_renting/js/website_sale_renting_daterangepicker";
 const {DateTime} = luxon;
 import {RentingMixinFix} from "@tg_website_sale_renting/js/renting_mixin";
+import {_t} from "@web/core/l10n/translation";
+import {session} from "@web/session";
 
 luxon.Settings.defaultZone = "America/Panama";
 
 WebsiteSaleDaterangePicker.include(RentingMixinFix);
 
 WebsiteSaleDaterangePicker.include({
+    async _loadRentingConstraints() {
+        return this._super().then(() => {
+            const $el = $(this.el).find("#rentingDates");
+            const maxEndDateFromOptions = DateTime.fromSQL($el.data("max-end-date"));
+            if (
+                maxEndDateFromOptions.isValid &&
+                DateTime.now() > maxEndDateFromOptions
+            ) {
+                session.denyRenting = _t(
+                    "The product is not available for renting since %s",
+                    maxEndDateFromOptions.toLocaleString(DateTime.DATE_FULL)
+                );
+            }
+        });
+    },
+
     _initSaleRentingDateRangePicker(el) {
         const hasDefaultDates = Boolean(this._hasDefaultDates());
         el.dataset.hasDefaultDates = hasDefaultDates;
         // <-- changes start
-        const minStartDate = DateTime.fromSQL(el.dataset.minStartDate);
-        const maxEndDate = DateTime.fromSQL(el.dataset.maxEndDate);
+        const minStartDateFromOptions = DateTime.fromSQL(el.dataset.minStartDate);
+        const maxEndDateFromOptions = DateTime.fromSQL(el.dataset.maxEndDate);
+
+        let minStartDate = DateTime.min(DateTime.now(), this.startDate);
+        if (minStartDateFromOptions.isValid) {
+            minStartDate = DateTime.max(
+                DateTime.now().set({
+                    hour: 0,
+                    minute: 0,
+                    second: 0,
+                    millisecond: 0,
+                }),
+                minStartDateFromOptions
+            );
+        }
+
+        let maxEndDate = DateTime.max(DateTime.now().plus({years: 3}), this.endDate);
+
+        if (maxEndDateFromOptions.isValid) {
+            maxEndDate = maxEndDateFromOptions;
+        }
+
+        if (maxEndDate < minStartDate) {
+            el.querySelector("input[name=renting_start_date]").disabled = true;
+            el.querySelector("input[name=renting_end_date]").disabled = true;
+            return;
+        }
+
         // <-- changes end;
+
         const value =
             this.isShopDatePicker && !hasDefaultDates
                 ? ["", ""]
@@ -29,20 +74,8 @@ WebsiteSaleDaterangePicker.include({
                     value,
                     range: true,
                     type: this._isDurationWithHours() ? "datetime" : "date",
-                    minDate: minStartDate.isValid
-                        ? DateTime.max(
-                              DateTime.now().set({
-                                  hour: 0,
-                                  minute: 0,
-                                  second: 0,
-                                  millisecond: 0,
-                              }),
-                              minStartDate
-                          )
-                        : DateTime.min(DateTime.now(), this.startDate),
-                    maxDate: maxEndDate.isValid
-                        ? maxEndDate
-                        : DateTime.max(DateTime.now().plus({years: 3}), this.endDate),
+                    minDate: minStartDate,
+                    maxDate: maxEndDate,
                     isDateValid: this._isValidDate.bind(this),
                     dayCellClass: (date) => this._isCustomDate(date).join(" "),
                 },
