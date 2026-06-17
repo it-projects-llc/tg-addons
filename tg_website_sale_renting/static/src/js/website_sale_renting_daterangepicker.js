@@ -15,6 +15,8 @@ WebsiteSaleDaterangePicker.include({
         return this._super().then(() => {
             const $el = $(this.el).find("#rentingDates");
             const maxEndDateFromOptions = DateTime.fromSQL($el.data("max-end-date"));
+            const denyRentThisProduct = $el.data("deny-rent-this-product");
+            console.debug("denyRentThisProduct", denyRentThisProduct);
             if (
                 maxEndDateFromOptions.isValid &&
                 DateTime.now() > maxEndDateFromOptions
@@ -22,6 +24,10 @@ WebsiteSaleDaterangePicker.include({
                 session.denyRenting = _t(
                     "The product is not available for renting since %s",
                     maxEndDateFromOptions.toLocaleString(DateTime.DATE_FULL)
+                );
+            } else if (denyRentThisProduct) {
+                session.denyRenting = _t(
+                    "This product cannot be rented with other products in cart"
                 );
             }
         });

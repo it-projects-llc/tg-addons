@@ -7,8 +7,8 @@
 
 - Allows to rent from today
 
-Rental dates defaults
----------------------
+Rental dates
+------------
 
 - Settings -> Rental -> Rent online
 
@@ -22,7 +22,9 @@ Rental dates defaults
 
   * Renting Max End Date
 
-Also renting min start date and max end dates can be overriden in product form
+Also renting min start date and max end dates can be overriden in product form.
+
+Note: in one cart you cannot mix products with default renting dates and product with specific renting dates
 
 Usage
 -----

@@ -3,6 +3,9 @@
     <template id="rental_product" inherit_id="website_sale_renting.rental_product">
         <xpath expr="//div[@id='rentingDates']" position="attributes">
             <attribute
+                name="t-att-data-deny-rent-this-product"
+            >deny_rent_this_product</attribute>
+            <attribute
                 name="t-att-data-min-start-date"
             >product._get_renting_min_start_date()</attribute>
             <attribute
@@ -12,10 +15,22 @@
     </template>
 
     <template id="cart" inherit_id="website_sale_renting.cart">
+        <xpath expr="//div[@id='rentingDates']/../.." position="before">
+            <t
+                t-set="allowed_renting_periods"
+                t-value="website_sale_order._get_allowed_renting_periods()"
+            />
+        </xpath>
         <xpath expr="//div[@id='rentingDates']/../.." position="attributes">
+            <attribute name="t-if">len(allowed_renting_periods) == 1</attribute>
+        </xpath>
+        <xpath expr="//div[@id='rentingDates']" position="attributes">
             <attribute
-                name="t-if"
-            >website_sale_order.has_rented_products and not website_sale_order._has_product_specific_renting_period()</attribute>
+                name="t-att-data-min-start-date"
+            >allowed_renting_periods[0][0]</attribute>
+            <attribute
+                name="t-att-data-max-end-date"
+            >allowed_renting_periods[0][1]</attribute>
         </xpath>
     </template>
 </odoo>
