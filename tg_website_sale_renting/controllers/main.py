@@ -10,3 +10,15 @@ class TGWebsiteSaleRenting(WebsiteSaleRenting):
         order_sudo = request.website.sale_get_order()
         res["deny_rent_this_product"] = not order_sudo._can_rent_this_product(product)
         return res
+
+    def _cart_values(self, **post):
+        res = super()._cart_values(**post)
+        order = res["website_sale_order"]
+        if order and res["suggested_products"]:
+            res["suggested_products"] = list(
+                filter(
+                    lambda x: not x.rent_ok or order._can_rent_this_product(x),
+                    res["suggested_products"],
+                )
+            )
+        return res
