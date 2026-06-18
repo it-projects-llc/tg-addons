@@ -23,7 +23,7 @@ class SaleOrder(models.Model):
 
         self.ensure_one()
         p = self._get_products_with_specific_renting_period()
-        return p._get_allowed_renting_periods(self.company_id)
+        return list(set(p._get_allowed_renting_periods(self.company_id)))
 
     def _can_rent_this_product(self, product):
         if not self:
