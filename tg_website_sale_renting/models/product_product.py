@@ -6,7 +6,7 @@ class Product(models.Model):
 
     def _website_show_quick_add(self):
         self.ensure_one()
-        if self.rend_ok:
+        if self.rent_ok:
             # escaping situation when mixing product
             # with different allowed renting periods
             return False
