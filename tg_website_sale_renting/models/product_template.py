@@ -65,3 +65,16 @@ class ProductTemplate(models.Model):
                         max_end_date=f(c.renting_max_end_date),
                     )
                 )
+
+    def _get_allowed_renting_periods(self, company):
+        min_start_date = company.renting_min_start_date
+        max_end_date = company.renting_max_end_date
+        if self:
+            return self.mapped(
+                lambda x: (
+                    x.renting_min_start_date or min_start_date,
+                    x.renting_max_end_date or max_end_date,
+                )
+            )
+        else:
+            return [(min_start_date, max_end_date)]
