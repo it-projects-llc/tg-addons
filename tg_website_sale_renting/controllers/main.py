@@ -13,7 +13,7 @@ class TGWebsiteSaleRenting(WebsiteSaleRenting):
 
     def _cart_values(self, **post):
         res = super()._cart_values(**post)
-        order = res["website_sale_order"]
+        order = request.website.sale_get_order()
         if order and res["suggested_products"]:
             res["suggested_products"] = list(
                 filter(
