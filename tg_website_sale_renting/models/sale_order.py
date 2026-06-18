@@ -50,8 +50,7 @@ class SaleOrder(models.Model):
             is_adding_product_with_specific_renting_period
             and existing_products_with_specific_renting_period
             and (
-                product.product_tmpl_id
-                in existing_products_with_specific_renting_period
+                product in existing_products_with_specific_renting_period
                 or (product_renting_period in self._get_allowed_renting_periods())
             )
         ):
