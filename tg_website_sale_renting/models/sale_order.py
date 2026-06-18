@@ -34,6 +34,10 @@ class SaleOrder(models.Model):
         if not all_products:
             return True
 
+        product_renting_period = (
+            product.renting_min_start_date,
+            product.renting_max_end_date,
+        )
         is_adding_product_with_specific_renting_period = bool(
             product.renting_min_start_date or product.renting_max_end_date
         )
@@ -45,7 +49,11 @@ class SaleOrder(models.Model):
         if (
             is_adding_product_with_specific_renting_period
             and existing_products_with_specific_renting_period
-            and product in existing_products_with_specific_renting_period
+            and (
+                product.product_tmpl_id
+                in existing_products_with_specific_renting_period
+                or (product_renting_period in self._get_allowed_renting_periods())
+            )
         ):
             return True
         elif not is_adding_product_with_specific_renting_period and other_products:
