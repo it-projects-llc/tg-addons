@@ -27,7 +27,7 @@ WebsiteSaleDaterangePicker.include({
                 );
             } else if (denyRentThisProduct) {
                 session.denyRenting = _t(
-                    "This product cannot be rented with other products in cart"
+                    "This product cannot be mixed with other rental product(s) in the cart due to different rental periods availability setup. Please complete the order for the one added to cart first or remove the product(s) from the cart to proceed."
                 );
             }
         });
