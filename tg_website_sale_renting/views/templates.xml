@@ -22,7 +22,9 @@
             />
         </xpath>
         <xpath expr="//div[@id='rentingDates']/../.." position="attributes">
-            <attribute name="t-if">len(allowed_renting_periods) == 1</attribute>
+            <attribute
+                name="t-if"
+            >website_sale_order.has_rented_products and len(allowed_renting_periods) == 1</attribute>
         </xpath>
         <xpath expr="//div[@id='rentingDates']" position="attributes">
             <attribute

@@ -33,7 +33,7 @@ class SaleOrder(models.Model):
             product = product.product_tmpl_id
 
         self.ensure_one()
-        all_products = self.mapped("order_line.product_template_id")
+        all_products = self.mapped("order_line.product_template_id").filtered("rent_ok")
         if not all_products:
             return True
 
