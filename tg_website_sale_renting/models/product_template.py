@@ -15,8 +15,14 @@ class ProductTemplate(models.Model):
 
     @api.model
     def _get_default_start_date(self, *args, **kw):
-        company = self.company_id or self.env.company
-        res = fields.Datetime.to_datetime(company.renting_default_start_date)
+        if self.renting_min_start_date:
+            res = self.renting_min_start_date
+        else:
+            company = self.company_id or self.env.company
+            res = company.renting_default_start_date
+
+        res = fields.Datetime.to_datetime(res)
+
         if res:
             return PANAMA_TZ.localize(res).astimezone(UTC).replace(tzinfo=None)
         else:
@@ -24,8 +30,13 @@ class ProductTemplate(models.Model):
 
     @api.model
     def _get_default_end_date(self, *args, **kw):
-        company = self.company_id or self.env.company
-        res = fields.Datetime.to_datetime(company.renting_default_end_date)
+        if self.renting_max_end_date:
+            res = self.renting_max_end_date
+        else:
+            company = self.company_id or self.env.company
+            res = company.renting_default_end_date
+
+        res = fields.Datetime.to_datetime(res)
 
         if res:
             return PANAMA_TZ.localize(res).astimezone(UTC).replace(tzinfo=None)

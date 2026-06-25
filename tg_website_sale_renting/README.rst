@@ -23,6 +23,7 @@ Rental dates
   * Renting Max End Date
 
 Also renting min start date and max end dates can be overriden in product form.
+In that case default renting start and ends dates are taken from product-specific renting min start and renting max end dates.
 
 Note: in one cart you cannot mix products with default renting dates and product with specific renting dates
 
