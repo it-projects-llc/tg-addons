@@ -76,3 +76,53 @@ def post_load():
         return initial_time >= fields.Datetime.now() - timedelta(days=1)   # <--- changes here
 
     SaleOrder._is_valid_renting_dates = _is_valid_renting_dates
+
+    from odoo.addons.website_sale_renting.models.product_template import (
+        UTC,
+        UserError,
+        _,
+        api,
+        relativedelta,
+        request,
+        timezone,
+    )
+
+    @api.model
+    def _get_default_renting_dates(self, start_date, end_date, duration, unit):
+        """ Get default renting dates to help user
+
+        :param datetime start_date: a start_date which is directly returned if defined
+        :param datetime end_date: a end_date which is directly returned if defined
+        :param int duration: the duration expressed in int, in the unit given
+        :param string unit: The duration unit, which can be 'hour', 'day', 'week' or 'month'
+        """
+        if start_date and end_date and start_date >= end_date:
+            raise UserError(_("Please choose a return date that is after the pickup date."))
+
+        if start_date or end_date:
+            return start_date, end_date
+
+        default_start_dt = self._get_default_start_date()
+        if unit == 'hour':
+            default_end_dt = self._get_default_end_date(default_start_dt, duration, unit)
+        else:
+            # <-- changes start
+            # If unit in day, week, month, take into account the entire day.
+            # 21st + 1 day --> from 21st 00:00:00 to 22nd 23:59:59
+            # default_start_dt = datetime.combine(default_start_dt.date(), datetime.min.time())
+            # yes, we did commented it out
+            # <-- changes end
+            # remove a second to avoid adding a day (from date point of view)
+            default_end_dt = self._get_default_end_date(default_start_dt + relativedelta(seconds=-1), duration, unit)
+            # Consider the timezone if frontend request
+            # Return the UTC value according to the client
+            # because the frontend will convert values according to its timezone
+            # (and without conversion, we risk changing day).
+            # <-- changes start
+            # Use only Panama timezone
+            if request and request.is_frontend:
+                PANAMA_TZ = timezone("America/Panama")
+                default_start_dt = PANAMA_TZ.localize(default_start_dt).astimezone(UTC)
+                default_end_dt = PANAMA_TZ.localize(default_end_dt).astimezone(UTC)
+            # <-- changes end
+        return default_start_dt, default_end_dt

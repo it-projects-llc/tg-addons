@@ -8,6 +8,8 @@ PANAMA_TZ = timezone("America/Panama")
 
 
 def make_panana_dt(x):
+    if not x:
+        return x
     res = fields.Datetime.to_datetime(x)
     return PANAMA_TZ.localize(res).astimezone(UTC).replace(tzinfo=None)
 
@@ -84,9 +86,9 @@ class ProductTemplate(models.Model):
         if self:
             return self.mapped(
                 lambda x: (
-                    x.renting_min_start_date or min_start_date,
-                    x.renting_max_end_date or max_end_date,
+                    make_panana_dt(x.renting_min_start_date or min_start_date),
+                    make_panana_dt(x.renting_max_end_date or max_end_date),
                 )
             )
         else:
-            return [(min_start_date, max_end_date)]
+            return [(make_panana_dt(min_start_date), make_panana_dt(max_end_date))]
