@@ -26,8 +26,6 @@ class ProductTemplate(models.Model):
             company = self.company_id or self.env.company
             res = company.renting_default_start_date
 
-        res = fields.Datetime.to_datetime(res)
-
         if res:
             return make_panana_dt(res)
         else:
