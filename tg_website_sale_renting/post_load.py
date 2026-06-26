@@ -79,6 +79,7 @@ def post_load():
 
     from odoo.addons.website_sale_renting.models.product_template import (
         UTC,
+        ProductTemplate,
         UserError,
         _,
         api,
@@ -126,3 +127,5 @@ def post_load():
                 default_end_dt = PANAMA_TZ.localize(default_end_dt).astimezone(UTC)
             # <-- changes end
         return default_start_dt, default_end_dt
+
+    ProductTemplate._get_default_renting_dates = _get_default_renting_dates
