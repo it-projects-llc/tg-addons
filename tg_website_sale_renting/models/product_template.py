@@ -7,6 +7,11 @@ from odoo.tools.misc import format_date
 PANAMA_TZ = timezone("America/Panama")
 
 
+def make_panana_dt(x):
+    res = fields.Datetime.to_datetime(x)
+    return PANAMA_TZ.localize(res).astimezone(UTC).replace(tzinfo=None)
+
+
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
@@ -24,7 +29,7 @@ class ProductTemplate(models.Model):
         res = fields.Datetime.to_datetime(res)
 
         if res:
-            return PANAMA_TZ.localize(res).astimezone(UTC).replace(tzinfo=None)
+            return make_panana_dt(res)
         else:
             return super()._get_default_start_date(*args, **kw)
 
@@ -36,10 +41,8 @@ class ProductTemplate(models.Model):
             company = self.company_id or self.env.company
             res = company.renting_default_end_date
 
-        res = fields.Datetime.to_datetime(res)
-
         if res:
-            return PANAMA_TZ.localize(res).astimezone(UTC).replace(tzinfo=None)
+            return make_panana_dt(res)
         else:
             return super()._get_default_end_date(*args, **kw)
 
@@ -47,13 +50,13 @@ class ProductTemplate(models.Model):
         self.ensure_one()
         company = self.company_id or self.env.company
         res = self.renting_min_start_date or company.renting_min_start_date
-        return fields.Datetime.to_datetime(res)
+        return make_panana_dt(res)
 
     def _get_renting_max_end_date(self):
         self.ensure_one()
         company = self.company_id or self.env.company
         res = self.renting_max_end_date or company.renting_max_end_date
-        return fields.Datetime.to_datetime(res)
+        return make_panana_dt(res)
 
     @api.constrains(
         "renting_min_start_date",
