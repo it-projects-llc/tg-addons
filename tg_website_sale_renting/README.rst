@@ -5,8 +5,10 @@
 - In frontend enforces America/Panama timezone in rental date range widgets.
   In backend no timezone is enforced (default behavior).
 
-Rental dates defaults
----------------------
+- Allows to rent from today
+
+Rental dates
+------------
 
 - Settings -> Rental -> Rent online
 
@@ -19,6 +21,11 @@ Rental dates defaults
   * Renting Min Start Date
 
   * Renting Max End Date
+
+Also renting min start date and max end dates can be overriden in product form.
+In that case default renting start and ends dates are taken from product-specific renting min start and renting max end dates.
+
+Note: in one cart you cannot mix products with default renting dates and product with specific renting dates
 
 Usage
 -----
