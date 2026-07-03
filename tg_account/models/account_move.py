@@ -14,6 +14,22 @@ class AccountMove(models.Model):
         groups="account.group_account_user",
         tracking=True,
     )
+    is_duplicated_invoice = fields.Boolean(
+        compute="_compute_is_duplicated_invoice", store=False
+    )
+
+    def _compute_is_duplicated_invoice(self):
+        self.env.cr.execute(
+            """
+SELECT array_agg(DISTINCT duplicated_fiscal_invoice)
+FROM account_move
+WHERE duplicated_fiscal_invoice IN %s
+        """,
+            [tuple(self.ids)],
+        )
+        duplicated_invoice_ids = self.env.cr.fetchone()[0] or []
+        for move in self:
+            move.is_duplicated_invoice = move.id in duplicated_invoice_ids
 
     @api.onchange("duplicated_fiscal_invoice")
     def _onchange_duplicated_fiscal_invoice(self):
@@ -68,6 +84,24 @@ class AccountMove(models.Model):
         return new_move_ids
 
     def _action_duplicate_to_fiscal_company(self):
+        already_duplicated = self.filtered("duplicated_fiscal_invoice")
+
+        if already_duplicated:
+            w = self.env["already.duplicated.invoices.wizard"].create(
+                {
+                    "invoices_to_duplicate": [(6, 0, (self - already_duplicated).ids)],
+                    "already_duplicated_invoices": [(6, 0, already_duplicated.ids)],
+                }
+            )
+            return {
+                "name": "Duplicated invoices",
+                "type": "ir.actions.act_window",
+                "res_model": "already.duplicated.invoices.wizard",
+                "view_mode": "form",
+                "res_id": w.id,
+                "target": "new",
+            }
+
         self._duplicate_invoice_check()
 
         new_move_ids = self._duplicate_invoice_inner()

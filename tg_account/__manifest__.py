@@ -9,6 +9,7 @@
         "account",
     ],
     "data": [
+        "wizard/already_duplicated_invoices_wizard_views.xml",
         "security/ir.model.access.csv",
         "views/account_move_views.xml",
         "views/report_invoice.xml",

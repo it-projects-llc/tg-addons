@@ -39,6 +39,19 @@ Duplicate to fiscal invoice
 - Click on Actions -> "Duplicate to fiscal invoice"
 - RESULT: The invoice related to the "Company 2" is created according to the mappings
 
+- Open or create other invoice that is related to "Company 1"
+- Make sure, that there are some products/services in "Invoice lines"
+- Go back to list of invoices
+
+- Select 2 invoices: that one, that already has duplicated invoice and that one, that does not
+- Click on Actions -> "Duplicate to fiscal invoice"
+
+- RESULT: Dialog will appear:
+- RESULT: first invoice appears in "Already duplicated" table
+
+- Click on "Ignore and duplicate others"
+- RESULT: duplicated invoice will created
+
 Credits
 =======
 
