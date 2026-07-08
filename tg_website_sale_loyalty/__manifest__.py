@@ -5,13 +5,17 @@
     "author": "IT-Projects LLC, Eugene Molotov",
     "support": "it@it-projects.info",
     "website": "https://github.com/it-projects-llc/tg-addons",
-    "license": "LGPL-3",
+    "license": "AGPL-3",
     "depends": [
+        "partner_contact_nationality",
+        "website_event_sale",
         "website_sale_loyalty",
     ],
     "data": [
         "security/ir.model.access.csv",
+        "views/nationality_discount_program_views.xml",
         "views/loyalty_program_views.xml",
+        "views/menuitems.xml",
     ],
     "demo": [],
 }

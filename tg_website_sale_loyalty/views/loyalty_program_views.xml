@@ -5,16 +5,15 @@
         <field name="model">loyalty.program</field>
         <field name="inherit_id" ref="loyalty.loyalty_program_view_form" />
         <field name="arch" type="xml">
-            <xpath
-                expr="//div[@id='o_loyalty_program_availabilities']"
-                position="inside"
-            >
+            <xpath expr="//field[@name='website_id']" position="after">
                 <field name="nationality_programs">
-                    <tree>
-                        <field name="nationality" />
+                    <tree editable="bottom">
+                        <field name="nationality" options="{'no_create': 1}" />
                     </tree>
                 </field>
             </xpath>
         </field>
     </record>
+
+
 </odoo>

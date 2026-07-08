@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="nationality_discounts_action_show" model="ir.actions.act_window">
+        <field name="name">Nationality Discounts</field>
+        <field name="res_model">nationality.discount.program</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_nationality_discounts"
+        action="nationality_discounts_action_show"
+        parent="sale.product_menu_catalog"
+        groups="sales_team.group_sale_manager"
+        sequence="55"
+    />
+</odoo>

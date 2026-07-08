@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class NationalityDiscountProgram(models.Model):
@@ -7,6 +7,12 @@ class NationalityDiscountProgram(models.Model):
 
     nationality = fields.Many2one("res.country", required=True)
     discount_program = fields.Many2one("loyalty.program", required=True)
+    discount_code = fields.Char(compute="_compute_discount_code")
     company_id = fields.Many2one(
         "res.company", related="discount_program.company_id", store=True
     )
+
+    @api.depends("discount_program.rule_ids.code")
+    def _compute_discount_code(self):
+        for record in self:
+            record.discount_code = record.discount_program.rule_ids[:1].code
