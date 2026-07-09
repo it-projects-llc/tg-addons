@@ -6,7 +6,9 @@ class NationalityDiscountProgram(models.Model):
     _description = "Nationality discount program"
 
     nationality = fields.Many2one("res.country", required=True)
-    discount_program = fields.Many2one("loyalty.program", required=True)
+    discount_program = fields.Many2one(
+        "loyalty.program", required=True, domain="[('program_type', '=', 'promo_code')]"
+    )
     discount_code = fields.Char(compute="_compute_discount_code")
     company_id = fields.Many2one(
         "res.company", related="discount_program.company_id", store=True

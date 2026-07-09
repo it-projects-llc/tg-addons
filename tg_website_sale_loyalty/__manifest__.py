@@ -13,9 +13,15 @@
     ],
     "data": [
         "security/ir.model.access.csv",
+        "security/loyalty_security.xml",
         "views/nationality_discount_program_views.xml",
         "views/loyalty_program_views.xml",
         "views/menuitems.xml",
     ],
     "demo": [],
+    "assets": {
+        "web.assets_tests": [
+            "tg_website_sale_loyalty/static/tests/**/*",
+        ],
+    },
 }

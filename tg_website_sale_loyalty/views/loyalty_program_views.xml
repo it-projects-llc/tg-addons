@@ -6,7 +6,10 @@
         <field name="inherit_id" ref="loyalty.loyalty_program_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='website_id']" position="after">
-                <field name="nationality_programs">
+                <field
+                    name="nationality_programs"
+                    invisible="program_type != 'promo_code'"
+                >
                     <tree editable="bottom">
                         <field name="nationality" options="{'no_create': 1}" />
                     </tree>
@@ -14,6 +17,4 @@
             </xpath>
         </field>
     </record>
-
-
 </odoo>
