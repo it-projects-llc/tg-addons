@@ -3,10 +3,10 @@
 import {registry} from "@web/core/registry";
 import wsTourUtils from "@website_sale/js/tours/tour_utils";
 
-registry.category("web_tour.tours").add("panama_event_buy_tickets", {
-    test: true,
-    url: "/event",
-    steps: () => [
+const DISCOUNT_CODE = "test_10pc"; // Make sure it is equal in tests
+
+function makeSteps(expectedAmount) {
+    return [
         {
             content: "Go to the `Events` page",
             trigger:
@@ -48,8 +48,56 @@ registry.category("web_tour.tours").add("panama_event_buy_tickets", {
         wsTourUtils.goToCart({quantity: 1}),
         wsTourUtils.goToCheckout(),
         ...wsTourUtils.assertCartAmounts({
-            untaxed: "900.00",
+            untaxed: expectedAmount,
         }),
-        ...wsTourUtils.payWithTransfer(),
-    ],
+    ];
+}
+
+registry.category("web_tour.tours").add("panama_event_buy_tickets", {
+    test: true,
+    url: "/event",
+    steps: () =>
+        makeSteps("900.00").concat([
+            {
+                content: "insert discount code",
+                extra_trigger: 'form[name="coupon_code"]',
+                trigger: 'form[name="coupon_code"] input[name="promo"]',
+                run: "text " + DISCOUNT_CODE,
+            },
+            {
+                content: "validate the promo code",
+                trigger: 'form[name="coupon_code"] .a-submit',
+            },
+            {
+                content: "check refused message",
+                trigger: '.alert-danger:contains("This promo code is already applied")',
+                isCheck: true,
+            },
+        ]),
 });
+
+registry
+    .category("web_tour.tours")
+    .add("not_panama_event_buy_tickets_and_try_apply_" + DISCOUNT_CODE, {
+        test: true,
+        url: "/event",
+        steps: () =>
+            makeSteps("1,000.00").concat([
+                {
+                    content: "insert discount code",
+                    extra_trigger: 'form[name="coupon_code"]',
+                    trigger: 'form[name="coupon_code"] input[name="promo"]',
+                    run: "text " + DISCOUNT_CODE,
+                },
+                {
+                    content: "validate the promo code",
+                    trigger: 'form[name="coupon_code"] .a-submit',
+                },
+                {
+                    content: "check refused message",
+                    trigger:
+                        '.alert-danger:contains("The program is not available for this order")',
+                    isCheck: true,
+                },
+            ]),
+    });
