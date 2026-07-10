@@ -5,6 +5,8 @@
 * Removes "Recipient Bank" from invoice report template
 * Allows to duplicate the invoice(s) by linking them to another company according
   to predefined mappings
+* In company form adds option to show/hide fiscal related columns in invoice list like
+  "Numero Fiscal" and "Factura Electronica"
 
 
 Duplicate to fiscal invoice

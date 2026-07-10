@@ -25,3 +25,8 @@ class Company(models.Model):
     fiscal_company_mapping_payment_term = fields.One2many(
         "res.company.fiscal.mapping.payment.term", "company_from"
     )
+
+    show_fiscal_related_columns = fields.Boolean(
+        "Show fiscal related columns",
+        help="Show fiscal related columns in invoice list",
+    )
