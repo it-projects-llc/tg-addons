@@ -159,7 +159,7 @@ class AccountMove(models.Model):
 
         if view_type == "tree" and not self.env.company.show_fiscal_related_columns:
             for node in arch.xpath(
-                "//field[@name='lastFiscalNumber']" "|//field[@name='status_FE']"
+                "//field[@name='lastFiscalNumber']|//field[@name='status_FE']"
             ):
                 node.attrib["column_invisible"] = "1"
 
