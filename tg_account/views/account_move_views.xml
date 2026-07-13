@@ -20,15 +20,29 @@
                 expr="//group[@name='accounting_info_group']/field[@name='company_id']"
                 position="after"
             >
-                <field name="must_be_duplicated" />
-                <field name="duplicated_fiscal_invoice" />
+                <field name="show_fiscal_related_fields" invisible="1" />
+                <field
+                    name="must_be_duplicated"
+                    invisible="not show_fiscal_related_fields"
+                />
+                <field
+                    name="duplicated_fiscal_invoice"
+                    invisible="not show_fiscal_related_fields"
+                />
             </xpath>
             <xpath
                 expr="//group[@id='other_tab_entry_group']//field[@name='company_id']"
                 position="after"
             >
-                <field name="must_be_duplicated" />
-                <field name="duplicated_fiscal_invoice" />
+                <field name="show_fiscal_related_fields" invisible="1" />
+                <field
+                    name="must_be_duplicated"
+                    invisible="not show_fiscal_related_fields"
+                />
+                <field
+                    name="duplicated_fiscal_invoice"
+                    invisible="not show_fiscal_related_fields"
+                />
             </xpath>
         </field>
     </record>
