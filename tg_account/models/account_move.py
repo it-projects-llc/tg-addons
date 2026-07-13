@@ -17,6 +17,13 @@ class AccountMove(models.Model):
     is_duplicated_invoice = fields.Boolean(
         compute="_compute_is_duplicated_invoice", store=False
     )
+    show_fiscal_related_fields = fields.Boolean(
+        compute="_compute_show_fiscal_related_fields"
+    )
+
+    def _compute_show_fiscal_related_fields(self):
+        for record in self:
+            record.show_fiscal_related_fields = bool(record.company_id.fiscal_company)
 
     def _compute_is_duplicated_invoice(self):
         self.env.cr.execute(
