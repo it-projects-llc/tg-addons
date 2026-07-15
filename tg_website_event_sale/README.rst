@@ -16,6 +16,8 @@
 
   * If resulted event list has only one event -> redirection to that event register link
 
+* Event-related product images are always seen in cart, no matter if user has access rights to this event or not
+
 Credits
 =======
 
