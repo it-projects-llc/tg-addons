@@ -1,14 +1,13 @@
-from odoo.tests.common import tagged
-
 from odoo.addons.base.tests.common import HttpCaseWithUserDemo
-from odoo.addons.website_event_sale.tests.common import TestWebsiteEventSaleCommon
 
 
-@tagged("post_install", "-at_install")
-class TestUi(HttpCaseWithUserDemo, TestWebsiteEventSaleCommon):
+class TGSaleLoyaltyCommon(HttpCaseWithUserDemo):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+
+        if cls.env["ir.module.module"]._get("payment_custom").state != "installed":
+            cls.skipTest("Transfer provider is not installed")
 
         cls.partner_panama = cls.env["res.partner"].create(
             {
@@ -19,6 +18,23 @@ class TestUi(HttpCaseWithUserDemo, TestWebsiteEventSaleCommon):
                 "street": "Streeet",
                 "city": "Panama",
                 "zip": "0801",
+                "phone": "+5072215502",
+            }
+        )
+
+        public_category = cls.env["product.public.category"].create(
+            {"name": "Public Category"}
+        )
+
+        cls.env["product.product"].create(
+            {
+                "name": "Small Cabinet",
+                "list_price": 100.0,
+                "type": "consu",
+                "is_published": True,
+                "sale_ok": True,
+                "public_categ_ids": [(4, public_category.id)],
+                "taxes_id": False,
             }
         )
 
@@ -72,11 +88,7 @@ class TestUi(HttpCaseWithUserDemo, TestWebsiteEventSaleCommon):
             }
         )
 
-    def test_buy_panama(self):
-        if self.env["ir.module.module"]._get("payment_custom").state != "installed":
-            self.skipTest("Transfer provider is not installed")
-
-        transfer_provider = self.env.ref("payment.payment_provider_transfer")
+        transfer_provider = cls.env.ref("payment.payment_provider_transfer")
         transfer_provider.write(
             {
                 "state": "enabled",
@@ -86,31 +98,4 @@ class TestUi(HttpCaseWithUserDemo, TestWebsiteEventSaleCommon):
         transfer_provider._transfer_ensure_pending_msg_is_set()
 
         #  Ensure the use of USD (company currency)
-        self.env["product.pricelist"].create({"name": "Public Pricelist"})
-
-        self.start_tour(
-            "/", "panama_event_buy_tickets", login="panama", step_delay=1000
-        )
-
-    def test_buy_not_panama(self):
-        if self.env["ir.module.module"]._get("payment_custom").state != "installed":
-            self.skipTest("Transfer provider is not installed")
-
-        transfer_provider = self.env.ref("payment.payment_provider_transfer")
-        transfer_provider.write(
-            {
-                "state": "enabled",
-                "is_published": True,
-            }
-        )
-        transfer_provider._transfer_ensure_pending_msg_is_set()
-
-        #  Ensure the use of USD (company currency)
-        self.env["product.pricelist"].create({"name": "Public Pricelist"})
-
-        self.start_tour(
-            "/",
-            f"not_panama_event_buy_tickets_and_try_apply_{self.ndp.discount_code}",
-            login="demo",
-            step_delay=1000,
-        )
+        cls.env["product.pricelist"].create({"name": "Public Pricelist"})

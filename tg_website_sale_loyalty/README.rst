@@ -34,7 +34,7 @@ Usage
 
 * Login as user, which nationality is included in discount program
 
-* Register in event
+* Buy anything in `/shop` or buy ticket in `/event`
 
 * RESULT: discount program is automatically applied, if minimal condition is met
 
