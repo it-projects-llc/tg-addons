@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="ndp_view_tree" model="ir.ui.view">
+        <field name="name">nationality.discount.program.tree</field>
+        <field name="model">nationality.discount.program</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="nationality" options="{'no_create': 1}" />
+                <field name="discount_program" options="{'no_create': 1}" />
+                <field name="discount_code" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </tree>
+        </field>
+    </record>
+</odoo>
