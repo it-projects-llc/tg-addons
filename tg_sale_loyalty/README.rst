@@ -4,6 +4,8 @@
 
 * Trims coupon code, when attempt to use in sale order
 
+* If product is reward of loyalty program, loyalty program can be accessed from smart button of products' form
+
 Loyalty Program
 ---------------
 
