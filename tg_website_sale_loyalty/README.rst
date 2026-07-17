@@ -16,7 +16,7 @@ Configuration method 1
 
 * Add rewards if not exist
 
-* In "Nationality programs" section add nationality
+* In "Apply to nationalities" section add nationality
 
 * Save
 
