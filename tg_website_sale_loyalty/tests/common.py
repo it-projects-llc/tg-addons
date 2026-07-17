@@ -7,7 +7,7 @@ class TGSaleLoyaltyCommon(HttpCaseWithUserDemo):
         super().setUpClass()
 
         if cls.env["ir.module.module"]._get("payment_custom").state != "installed":
-            cls.skipTest("Transfer provider is not installed")
+            cls.skipTest(cls, reason="Transfer provider is not installed")
 
         cls.partner_panama = cls.env["res.partner"].create(
             {
