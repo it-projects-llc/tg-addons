@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='currency_id']" position="after">
                 <field name="fiscal_company" options="{'no_create': 1}" />
+                <field name="show_fiscal_related_columns" />
             </xpath>
             <xpath expr="//notebook" position="inside">
                 <page

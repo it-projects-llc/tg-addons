@@ -152,3 +152,23 @@ class AccountMove(models.Model):
             data["invoice_date_due"] = invoice_date_due
 
         return data_list
+
+    @api.model
+    def _get_view(self, view_id=None, view_type="form", **options):
+        arch, view = super()._get_view(view_id, view_type, **options)
+
+        if view_type == "tree" and not self.env.company.show_fiscal_related_columns:
+            for node in arch.xpath(
+                "//field[@name='lastFiscalNumber']|//field[@name='status_FE']"
+            ):
+                node.attrib["column_invisible"] = "1"
+
+        return arch, view
+
+    @api.model
+    def _get_view_cache_key(self, view_id=None, view_type="form", **options):
+        key = super()._get_view_cache_key(view_id, view_type, **options)
+        if view_type != "tree":
+            return key
+
+        return key + (self.env.company.id,)
