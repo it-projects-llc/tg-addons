@@ -1,1 +1,1 @@
-https://github.com/odoo/enterprise
+https://github.com/odoo/enterprise 17.0
