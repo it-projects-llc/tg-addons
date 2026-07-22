@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="tg_pos_splitpayment.ActionpadWidget" t-inherit="point_of_sale.ActionpadWidget" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('pay')]" position="before">
+            <button class="button split-payment flex-fill btn btn-light py-2 mb-2 w-100" t-on-click="onClickSplitPayment">
+                <div class="d-flex align-items-center justify-content-center">
+                    <i class="fa fa-cut" role="img" aria-label="Split Payment" title="Split Payment" />
+                </div>
+                <span>Split Payment</span>
+            </button>
+        </xpath>
+    </t>
+</templates>
