@@ -1,19 +1,21 @@
 /** @odoo-module */
 
-import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment_screen";
+import { ReceiptScreen } from "@point_of_sale/app/screens/receipt_screen/receipt_screen";
 import { patch } from "@web/core/utils/patch";
 
-patch(PaymentScreen.prototype, {
-    async _finalizeValidation() {
-        await super._finalizeValidation(...arguments);
+patch(ReceiptScreen.prototype, {
+    orderDone() {
         if (this.pos.tgNextSplitOrders && this.pos.tgNextSplitOrders.length > 0) {
             const nextOrderUid = this.pos.tgNextSplitOrders.shift();
-            // get order from pos.orders
             const nextOrder = this.pos.orders.find(o => o.uid === nextOrderUid);
             if (nextOrder) {
+                this.pos.removeOrder(this.currentOrder);
                 this.pos.set_order(nextOrder);
+                this.pos.resetProductScreenSearch();
                 this.pos.showScreen("ProductScreen");
+                return;
             }
         }
+        super.orderDone(...arguments);
     }
 });

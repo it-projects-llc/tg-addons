@@ -5,5 +5,6 @@ class PosSession(models.Model):
 
     def _loader_params_pos_config(self):
         result = super()._loader_params_pos_config()
-        result['search_params']['fields'].append('pos_max_split_orders')
+        if result['search_params'].get('fields'):
+            result['search_params']['fields'].append('pos_max_split_orders')
         return result
