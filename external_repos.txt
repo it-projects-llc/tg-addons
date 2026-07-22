@@ -1,1 +1,1 @@
-https://github.com/odoo/enterprise 17.0 website_sale_renting
+https://github.com/odoo/enterprise 17.0 website_sale_renting,sale_renting
