@@ -113,23 +113,46 @@ export class SplitPaymentScreen extends Component {
         for (let j = 0; j < originalLines.length; j++) {
             const line = originalLines[j];
             const originalQty = line.get_quantity();
+            const unit = line.get_unit();
+            const rounding = unit ? unit.rounding : 0.01;
+            
+            let remainingQty = originalQty;
             
             for (let i = 0; i < splitsToCreate.length; i++) {
                 const split = splitsToCreate[i];
                 const ratio = split.amount / this.totalAmount;
-                const newQty = originalQty * ratio;
+                
+                let newQty;
+                if (i === splitsToCreate.length - 1) {
+                    newQty = remainingQty;
+                } else {
+                    const exactQty = originalQty * ratio;
+                    newQty = Math.round(exactQty / rounding) * rounding;
+                    newQty = parseFloat(newQty.toFixed(5)); // fix float precision
+                    remainingQty -= newQty;
+                    remainingQty = parseFloat(remainingQty.toFixed(5));
+                }
                 
                 if (i === 0) {
                     // Update original line
                     line.set_quantity(newQty);
                 } else {
-                    // Add line to new order by cloning
-                    const newLine = line.clone();
-                    newLine.order = newOrders[i];
-                    newLine.set_quantity(newQty);
-                    newOrders[i].add_orderline(newLine);
+                    if (newQty !== 0) {
+                        // Add line to new order by cloning
+                        const newLine = line.clone();
+                        newLine.order = newOrders[i];
+                        newLine.set_quantity(newQty);
+                        newOrders[i].add_orderline(newLine);
+                    }
                 }
             }
+        }
+
+        // Assign split group ID to all related orders
+        const splitGroupId = this.originalOrder.uid;
+        for (const order of newOrders) {
+            order.tgSplitGroupId = splitGroupId;
+            order.isSplitGroupPaid = false;
         }
 
         // Set next orders to show
@@ -138,7 +161,7 @@ export class SplitPaymentScreen extends Component {
         }
 
         this.pos.set_order(newOrders[0]);
-        this.pos.showScreen("ProductScreen");
+        this.pos.showScreen("PaymentScreen");
     }
 
     back() {
