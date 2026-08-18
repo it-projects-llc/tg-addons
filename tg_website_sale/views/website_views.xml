@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="website_show_sale_journals_action" model="ir.actions.server">
+        <field name="name">Sale Journals for Website</field>
+        <field name="model_id" ref="website.model_website" />
+        <field name="binding_model_id" ref="website.model_website" />
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('account.group_account_readonly'))]"
+        />
+        <field name="code">action = record._action_show_sale_journals()</field>
+    </record>
+</odoo>
