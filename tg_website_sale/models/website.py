@@ -19,7 +19,7 @@ class Website(models.Model):
         ]
 
         return {
-            "name": _("Journals"),
+            "name": _("Customer Journals"),
             "type": "ir.actions.act_window",
             "view_mode": "tree,form",
             "res_model": "account.journal",

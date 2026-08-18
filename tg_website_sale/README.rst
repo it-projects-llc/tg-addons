@@ -12,6 +12,10 @@
 
   * fixes product configurator modal showing incorrect period, that user did not choose
 
+* In website form:
+
+  * Added "actions -> Show customer journals"
+
 Credits
 =======
 
