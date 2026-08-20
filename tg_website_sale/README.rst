@@ -14,7 +14,8 @@
 
 * In website form:
 
-  * Added "actions -> Show customer journals"
+  * Added "actions -> Show customer journals".
+    Visible only for users with enabled accounting features
 
 Credits
 =======

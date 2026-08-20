@@ -25,3 +25,6 @@ class Website(models.Model):
             "res_model": "account.journal",
             "domain": domain,
         }
+
+    def action_show_sale_journals(self):
+        return self._action_show_sale_journals()
