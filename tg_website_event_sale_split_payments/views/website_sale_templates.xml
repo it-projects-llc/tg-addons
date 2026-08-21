@@ -51,6 +51,7 @@
                                     id="sp_payment_count"
                                     min="2"
                                     value="2"
+                                    required="required"
                                     aria-describedby="sp_payment_count"
                                 />
                             </div>
