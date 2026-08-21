@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+    <!--
     <record id="website_show_sale_journals_action" model="ir.actions.server">
         <field name="name">Show customer journals</field>
         <field name="model_id" ref="website.model_website" />
@@ -12,6 +13,7 @@
         />
         <field name="code">action = record._action_show_sale_journals()</field>
     </record>
+    -->
 
     <record id="website_view_form" model="ir.ui.view">
         <field name="name">website.form.tg</field>
