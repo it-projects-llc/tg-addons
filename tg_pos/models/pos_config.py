@@ -15,6 +15,9 @@ class PosConfig(models.Model):
     show_return_products = fields.Boolean(
         help="When enabled, shows 'Return Products' button in POS order form"
     )
+    show_invoice_button = fields.Boolean(
+        help="When enabled, shows 'Invoice' button in payment screen of POS"
+    )
 
     group_show_customer_button_id = fields.Many2one(
         comodel_name="res.groups",
