@@ -62,6 +62,7 @@ class PosSession(models.Model):
                 in groups,
                 hasGroupShowPMInProductScreen=config.group_show_pm_in_product_screen_id  # noqa: E501
                 in groups,
+                hasGroupShowRefundButton=config.group_show_refund_button_id in groups,
                 hasGroupEnablePricelistButton=config.group_enable_pricelist_button_id
                 in groups,
             )

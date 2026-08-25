@@ -14,6 +14,8 @@
 
 * Added user group "Point of Sale - Show +/- in product screen"
 
+* Added user group "Point of Sale - Show Refund button"
+
 * Added user group "Point of Sale - Enable pricelist button".
   If user belongs to this group, pricelist button will be enabled, otherwise disabled.
 
