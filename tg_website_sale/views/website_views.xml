@@ -26,7 +26,7 @@
                         class="oe_stat_button"
                         type="object"
                         name="action_show_sale_journals"
-                        string="Customer journals"
+                        string="Sales Journals"
                         groups="account.group_account_readonly"
                         icon="fa-usd"
                     >
