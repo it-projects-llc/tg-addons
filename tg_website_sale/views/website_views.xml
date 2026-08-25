@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--
+    <record id="website_show_sale_journals_action" model="ir.actions.server">
+        <field name="name">Show customer journals</field>
+        <field name="model_id" ref="website.model_website" />
+        <field name="binding_model_id" ref="website.model_website" />
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('account.group_account_readonly'))]"
+        />
+        <field name="code">action = record._action_show_sale_journals()</field>
+    </record>
+    -->
+
+    <record id="website_view_form" model="ir.ui.view">
+        <field name="name">website.form.tg</field>
+        <field name="model">website</field>
+        <field name="inherit_id" ref="website.view_website_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='domain']" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button
+                        class="oe_stat_button"
+                        type="object"
+                        name="action_show_sale_journals"
+                        string="Sales Journals"
+                        groups="account.group_account_readonly"
+                        icon="fa-usd"
+                    >
+                    </button>
+                </div>
+            </xpath>
+        </field>
+
+    </record>
+</odoo>

@@ -12,6 +12,11 @@
 
   * fixes product configurator modal showing incorrect period, that user did not choose
 
+* In website form:
+
+  * Added "actions -> Show customer journals".
+    Visible only for users with enabled accounting features
+
 Credits
 =======
 
