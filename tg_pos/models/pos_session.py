@@ -60,6 +60,8 @@ class PosSession(models.Model):
                 in groups,
                 hasGroupShowPMInPaymentScreen=config.group_show_pm_in_payment_screen_id  # noqa: E501
                 in groups,
+                hasGroupShowPMInProductScreen=config.group_show_pm_in_product_screen_id  # noqa: E501
+                in groups,
                 hasGroupEnablePricelistButton=config.group_enable_pricelist_button_id
                 in groups,
             )
