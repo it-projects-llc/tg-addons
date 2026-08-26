@@ -12,6 +12,9 @@ class PosConfig(models.Model):
     debug_auto_duplicate_invoices = fields.Boolean(
         "Debug automatic invoice duplication"
     )
+    show_return_products = fields.Boolean(
+        help="When enabled, shows 'Return Products' button in POS order form"
+    )
 
     group_show_customer_button_id = fields.Many2one(
         comodel_name="res.groups",

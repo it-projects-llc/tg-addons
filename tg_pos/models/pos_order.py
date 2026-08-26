@@ -13,6 +13,7 @@ class PosOrder(models.Model):
     _inherit = "pos.order"
 
     partner_id = fields.Many2one(ondelete="restrict")
+    show_return_products = fields.Boolean(related="config_id.show_return_products")
 
     def _generate_pos_order_invoice(self):
         res = super()._generate_pos_order_invoice()

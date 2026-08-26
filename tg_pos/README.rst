@@ -24,6 +24,9 @@
 
 * Disallows to delete contact, that is customer of existing pos order
 
+* Added option to show "Return Products" button in POS order form.
+  Option is named "Show Return Products"
+
 POS Shop usage
 --------------
 

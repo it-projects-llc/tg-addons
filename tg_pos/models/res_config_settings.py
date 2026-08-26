@@ -13,6 +13,9 @@ class ResConfigSettings(models.TransientModel):
     pos_show_auto_duplicate_invoices = fields.Boolean(
         related="pos_config_id.show_auto_duplicate_invoices", readonly=False
     )
+    pos_show_return_products = fields.Boolean(
+        related="pos_config_id.show_return_products", readonly=False
+    )
     pos_debug_auto_duplicate_invoices = fields.Boolean(
         related="pos_config_id.debug_auto_duplicate_invoices", readonly=False
     )
