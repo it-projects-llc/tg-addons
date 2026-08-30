@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="loyalty_program_view_form" model="ir.ui.view">
+        <field name="name">loyalty.program.view.tg.pos.loyalty</field>
+        <field name="model">loyalty.program</field>
+        <field name="inherit_id" ref="loyalty.loyalty_program_view_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//div[@id='o_loyalty_program_availabilities']"
+                position="after"
+            >
+                <field
+                    name="are_happy_hours_enabled"
+                    invisible="not pos_ok or program_type != 'promotion'"
+                />
+                <label
+                    class="o_form_label"
+                    for="happy_hours_monday"
+                    string="Weekdays"
+                    invisible="not pos_ok or not are_happy_hours_enabled"
+                />
+                <div
+                    id="o_loyalty_happy_hour_weeks"
+                    invisible="not pos_ok or not are_happy_hours_enabled"
+                >
+                    <span class="d-inline-flex text-break">
+                        <field name="happy_hours_monday" />
+                        <label for="happy_hours_monday" />
+                        <field name="happy_hours_tuesday" />
+                        <label for="happy_hours_tuesday" />
+                        <field name="happy_hours_wednesday" />
+                        <label for="happy_hours_wednesday" />
+                        <field name="happy_hours_thursday" />
+                        <label for="happy_hours_thursday" />
+                        <field name="happy_hours_friday" />
+                        <label for="happy_hours_friday" />
+                        <field name="happy_hours_saturday" />
+                        <label for="happy_hours_saturday" />
+                        <field name="happy_hours_sunday" />
+                        <label for="happy_hours_sunday" />
+                    </span>
+                </div>
+                <label
+                    for="happy_hours_from"
+                    string="Happy hours"
+                    invisible="not are_happy_hours_enabled"
+                />
+                <div class="o_row" invisible="not are_happy_hours_enabled">
+                    <field
+                        name="happy_hours_from"
+                        widget="float_time"
+                        required="are_happy_hours_enabled"
+                    /> -
+                    <field
+                        name="happy_hours_to"
+                        widget="float_time"
+                        required="are_happy_hours_enabled"
+                    />
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
