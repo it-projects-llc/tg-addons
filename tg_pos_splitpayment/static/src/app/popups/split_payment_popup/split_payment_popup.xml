@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="tg_pos_splitpayment.SplitPaymentPopup" owl="1">
+        <div class="popup popup-number">
+            <div class="modal-header">
+                <h4 class="modal-title title" t-esc="props.title" />
+            </div>
+            <main class="modal-body body text-center">
+                <p>How many orders to split into?</p>
+                <div class="d-flex justify-content-center align-items-center my-4">
+                    <button class="btn btn-secondary fs-1 px-4 py-2" t-on-click="decrement">-</button>
+                    <span class="fs-1 mx-4 fw-bolder" t-esc="state.splitParts"/>
+                    <button class="btn btn-secondary fs-1 px-4 py-2" t-on-click="increment">+</button>
+                </div>
+                <div t-if="state.errorMessage" class="text-danger mt-2" t-esc="state.errorMessage" />
+            </main>
+            <footer class="footer modal-footer">
+                <div class="button confirm btn btn-lg btn-primary" t-on-click="confirm">
+                    Ok
+                </div>
+                <div class="button cancel btn btn-lg btn-secondary" t-on-click="cancel">
+                    Cancel
+                </div>
+            </footer>
+        </div>
+    </t>
+</templates>

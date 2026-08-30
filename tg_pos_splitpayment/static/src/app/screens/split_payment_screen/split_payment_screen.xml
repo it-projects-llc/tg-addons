@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="tg_pos_splitpayment.SplitPaymentScreen" owl="1">
+        <div class="split-payment-screen screen h-100 bg-100">
+            <div class="screen-content d-flex flex-column h-100">
+                <div class="top-content d-flex align-items-center p-2 border-bottom bg-view">
+                    <button class="button back btn btn-lg btn-secondary me-2" t-on-click="back">
+                        <i class="fa fa-angle-double-left me-2"></i>Back
+                    </button>
+                    <div class="top-content-center flex-grow-1 text-center">
+                        <h1>Split Payment</h1>
+                    </div>
+                    <button class="button confirm btn btn-lg btn-primary ms-2" t-on-click="confirm">
+                        Confirm Split
+                    </button>
+                </div>
+                <div class="main-content d-flex flex-grow-1 overflow-hidden">
+                    <div class="left-content d-flex flex-column w-50 border-end bg-view overflow-y-auto">
+                        <t t-foreach="state.splits" t-as="split" t-key="split.id">
+                            <div class="split-order-line p-3 border-bottom cursor-pointer"
+                                 t-att-class="{ 'bg-primary text-white': state.selectedId === split.id, 'bg-light text-muted': split.isFirst }"
+                                 t-on-click="() => this.selectSplit(split.id)">
+                                <div class="d-flex justify-content-between fs-3">
+                                    <span t-esc="split.name" />
+                                    <span t-esc="env.utils.formatCurrency(split.amount)" />
+                                </div>
+                                <div t-if="split.isFirst" class="text-small opacity-75">
+                                    (Calculated automatically)
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                    <div class="right-content d-flex flex-column w-50 bg-view justify-content-center align-items-center">
+                        <div class="amount-input-display fs-1 mb-4 p-3 border rounded w-75 text-end bg-light fw-bolder"
+                             t-if="selectedSplit">
+                            <t t-esc="selectedSplit.amountStr || '0'" />
+                        </div>
+                        <div class="numpad-container w-75">
+                            <div class="row g-2 mb-2">
+                                <div class="col-4"><button class="btn btn-secondary w-100 py-3 fs-3" t-on-click="() => this.updateAmount('1')">1</button></div>
+                                <div class="col-4"><button class="btn btn-secondary w-100 py-3 fs-3" t-on-click="() => this.updateAmount('2')">2</button></div>
+                                <div class="col-4"><button class="btn btn-secondary w-100 py-3 fs-3" t-on-click="() => this.updateAmount('3')">3</button></div>
+                            </div>
+                            <div class="row g-2 mb-2">
+                                <div class="col-4"><button class="btn btn-secondary w-100 py-3 fs-3" t-on-click="() => this.updateAmount('4')">4</button></div>
+                                <div class="col-4"><button class="btn btn-secondary w-100 py-3 fs-3" t-on-click="() => this.updateAmount('5')">5</button></div>
+                                <div class="col-4"><button class="btn btn-secondary w-100 py-3 fs-3" t-on-click="() => this.updateAmount('6')">6</button></div>
+                            </div>
+                            <div class="row g-2 mb-2">
+                                <div class="col-4"><button class="btn btn-secondary w-100 py-3 fs-3" t-on-click="() => this.updateAmount('7')">7</button></div>
+                                <div class="col-4"><button class="btn btn-secondary w-100 py-3 fs-3" t-on-click="() => this.updateAmount('8')">8</button></div>
+                                <div class="col-4"><button class="btn btn-secondary w-100 py-3 fs-3" t-on-click="() => this.updateAmount('9')">9</button></div>
+                            </div>
+                            <div class="row g-2">
+                                <div class="col-3"><button class="btn btn-secondary w-100 py-3 fs-3" t-on-click="() => this.updateAmount('-')">-</button></div>
+                                <div class="col-3"><button class="btn btn-secondary w-100 py-3 fs-3" t-on-click="() => this.updateAmount('0')">0</button></div>
+                                <div class="col-3"><button class="btn btn-secondary w-100 py-3 fs-3" t-on-click="() => this.updateAmount('.')">.</button></div>
+                                <div class="col-3"><button class="btn btn-secondary w-100 py-3 fs-3" t-on-click="() => this.updateAmount('Backspace')">⌫</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
