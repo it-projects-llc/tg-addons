@@ -14,6 +14,11 @@
                 >
                     <field name="pos_show_return_products" />
                 </setting>
+                <setting
+                    help="When enabled, shows 'Invoice' button in payment screen of POS"
+                >
+                    <field name="pos_show_invoice_button" />
+                </setting>
             </xpath>
             <xpath expr="//block[@id='pos_accounting_section']" position="inside">
                 <field name="pos_show_auto_duplicate_invoices" invisible="1" />

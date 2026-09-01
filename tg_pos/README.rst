@@ -27,6 +27,8 @@
 * Added option to show "Return Products" button in POS order form.
   Option is named "Show Return Products"
 
+* Added option to show "Invoice" button in POS payment screen.
+
 POS Shop usage
 --------------
 

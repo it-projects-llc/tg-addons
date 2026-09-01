@@ -10,5 +10,8 @@
                 name="t-att-disabled"
             >!pos.user.hasGroupShowCustomerButton</attribute>
         </xpath>
+        <xpath expr="//button[hasclass('js_invoice')]" position="attributes">
+            <attribute name="t-if">pos.config.show_invoice_button</attribute>
+        </xpath>
     </t>
 </templates>
