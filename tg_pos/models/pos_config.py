@@ -27,6 +27,14 @@ class PosConfig(models.Model):
         comodel_name="res.groups",
         compute="_compute_groups_tg",
     )
+    group_show_pm_in_product_screen_id = fields.Many2one(
+        comodel_name="res.groups",
+        compute="_compute_groups_tg",
+    )
+    group_show_refund_button_id = fields.Many2one(
+        comodel_name="res.groups",
+        compute="_compute_groups_tg",
+    )
     group_enable_pricelist_button_id = fields.Many2one(
         comodel_name="res.groups",
         compute="_compute_groups_tg",
@@ -41,6 +49,12 @@ class PosConfig(models.Model):
                 ).id,
                 "group_show_pm_in_payment_screen_id": self.env.ref(
                     "tg_pos.group_show_pm_in_payment_screen"
+                ).id,
+                "group_show_pm_in_product_screen_id": self.env.ref(
+                    "tg_pos.group_show_pm_in_product_screen"
+                ).id,
+                "group_show_refund_button_id": self.env.ref(
+                    "tg_pos.group_show_refund_button"
                 ).id,
                 "group_enable_pricelist_button_id": self.env.ref(
                     "tg_pos.group_pos_enable_pricelist_button"
