@@ -54,13 +54,13 @@
                                 <t t-esc="s['name']" />
                             </option>
                         </t>
-                        <option data-custom="1">Custom</option>
+                        <option data-custom="1">Other</option>
                     </select>
                     <input
                         class="form-control"
                         type="text"
                         t-attf-data-name="#{registration_index}-#{question.partner_field_name}-#{question.id}"
-                        style="display: none"
+                        style="display: none; margin-top: 1em;"
                     />
                     <script type="text/javascript">
                         $(".marketing-question-select").on("change", function() {
