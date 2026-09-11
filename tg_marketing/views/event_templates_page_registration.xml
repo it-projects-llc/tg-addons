@@ -60,7 +60,6 @@
                         class="form-control"
                         type="text"
                         t-attf-data-name="#{registration_index}-#{question.partner_field_name}-#{question.id}"
-                        t-att-required="question.is_mandatory_answer"
                         style="display: none"
                     />
                     <script type="text/javascript">
@@ -69,10 +68,16 @@
                             var fieldName = $t.data("name");
                             if ($t.find("option[data-custom]:selected").length) {
                                 $t.removeAttr("name");
-                                $("input[data-name=" + fieldName + "]").attr("name", fieldName).show();
+                                $("input[data-name=" + fieldName + "]")
+                                .attr("name", fieldName)
+                                .attr("required", $t.attr("required"))
+                                .show();
                             } else {
                                 $t.attr("name", fieldName);
-                                $("input[data-name=" + fieldName + "]").removeAttr("name").hide();
+                                $("input[data-name=" + fieldName + "]")
+                                .removeAttr("name")
+                                .removeAttr("required")
+                                .hide();
                             }
                         });
                     </script>
