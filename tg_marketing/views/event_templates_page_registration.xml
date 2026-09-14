@@ -61,6 +61,7 @@
                         type="text"
                         t-attf-data-name="#{registration_index}-#{question.partner_field_name}-#{question.id}"
                         style="display: none; margin-top: 1em;"
+                        placeholder="Please specify here..."
                     />
                     <script type="text/javascript">
                         $(".marketing-question-select").on("change", function() {
