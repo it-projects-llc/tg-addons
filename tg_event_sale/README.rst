@@ -4,6 +4,8 @@
 
 * Shows payment transactions in confirmed registrations (TODO: add views)
 
+* In event form shows subtotal of related sale orders instead of sale order lines
+
 Credits
 =======
 
