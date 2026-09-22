@@ -9,6 +9,8 @@
 * Adds "Visible on current website" field in the event tree view
   and make it editable from this view directly
 
+* In event page "Back to events" link is removed
+
 Credits
 =======
 
