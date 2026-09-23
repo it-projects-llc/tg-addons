@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="navbar" inherit_id="website_event.navbar" priority="15">
+        <xpath expr="//a[@href='/event']/.." position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//h6[@t-field='event.name']" position="attributes">
+            <attribute name="t-attf-class" add="mt-3" separator=" " />
+        </xpath>
+    </template>
+</odoo>
