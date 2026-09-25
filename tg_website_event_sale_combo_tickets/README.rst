@@ -81,6 +81,8 @@ Accommodation - usage
 
 - Click "Checkout"
 
+- RESULT: in the address page you will see "Choose accommodation" instead of the confirm button.
+
 - RESULT: in the payment page you will see "Choose accommodation" instead of the payment button.
 
   After the "Choose accommodation" button is pressed, you will be redirected to the shop page with a preselected category configured earlier in the "configuration" step.

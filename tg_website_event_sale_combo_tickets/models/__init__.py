@@ -4,3 +4,5 @@ from . import event_ticket
 from . import res_config_settings
 from . import res_company
 from . import event_event
+from . import sale_order
+from . import website
