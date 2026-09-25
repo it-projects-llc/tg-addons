@@ -11,6 +11,8 @@
 
 * In event page "Back to events" link is removed
 
+* In event page "ticket popup" is automatically opened after visiting page
+
 Credits
 =======
 

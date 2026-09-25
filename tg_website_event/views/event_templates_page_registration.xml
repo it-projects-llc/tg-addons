@@ -8,5 +8,13 @@
         <xpath expr="//t[@t-snippet-call='website.s_share']/.." position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
+        <xpath expr="//t[@t-call='website_event.event_details']" position="inside">
+            <script>
+document.addEventListener("DOMContentLoaded", (event) => {
+  const btn = document.querySelector('button[data-bs-target="#modal_ticket_registration"]');
+  if (btn) btn.click();
+});
+            </script>
+        </xpath>
     </template>
 </odoo>
