@@ -11,6 +11,9 @@
 
 * In event page "Back to events" link is removed
 
+* In event page "ticket popup" is automatically opened after visiting page
+  Note: feature is disabled when running odoo with --test-enable
+
 Credits
 =======
 
