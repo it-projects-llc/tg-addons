@@ -92,3 +92,33 @@ class ProductTemplate(models.Model):
             )
         else:
             return [(make_panana_dt(min_start_date), make_panana_dt(max_end_date))]
+
+    def _get_combination_info(
+        self,
+        combination=False,
+        product_id=False,
+        add_qty=1.0,
+        parent_combination=False,
+        only_template=False,
+    ):
+        self.ensure_one()
+
+        combination = combination or self.env["product.template.attribute.value"]
+        parent_combination = (
+            parent_combination or self.env["product.template.attribute.value"]
+        )
+
+        if not product_id and not combination and not only_template:
+            combination = self._get_first_possible_combination(parent_combination)
+
+        res = super()._get_combination_info(
+            combination, product_id, add_qty, parent_combination, only_template
+        )
+
+        period_ptav = combination.filtered("is_period")
+        if period_ptav:
+            res.update(
+                start_date=period_ptav.start_date,
+                end_date=period_ptav.end_date,
+            )
+        return res
