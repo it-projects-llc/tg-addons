@@ -118,7 +118,7 @@ class ProductTemplate(models.Model):
         period_ptav = combination.filtered("is_period")
         if period_ptav:
             res.update(
-                start_date=period_ptav.start_date,
-                end_date=period_ptav.end_date,
+                start_date=make_panana_dt(period_ptav.start_date),
+                end_date=make_panana_dt(period_ptav.end_date),
             )
         return res
