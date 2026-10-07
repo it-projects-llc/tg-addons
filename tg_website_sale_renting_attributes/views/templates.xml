@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="rental_product"
+        inherit_id="website_sale.product"
+        name="Select pickup Date and Return Date"
+    >
+        <xpath
+            expr="//div[hasclass('js_main_product')]//t[@t-placeholder='select']"
+            position="after"
+        >
+            <div
+                class="o_not_editable"
+                t-if="combination_info.get('is_rental_via_attributes')"
+            >
+                <div class="mb-3 align-middle input-group-lg">
+                    <strong class="attribute_name">Rental Period</strong>
+                    <div class="oe_unremovable w-100">
+                        <div
+                            class="input-group date col-md-8 ps-0"
+                            id="rentingDatesPeriod"
+                        >
+                            <input
+                                type="text"
+                                name="renting_period_start_date"
+                                t-att-value="combination_info['start_date']"
+                                class="form-control"
+                                disabled="disabled"
+                            />
+                            <input
+                                type="text"
+                                name="renting_period_end_date"
+                                t-att-value="combination_info['end_date']"
+                                class="form-control"
+                                disabled="disabled"
+                            />
+                            <div class="input-group-text">
+                                <i class="fa fa-calendar" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

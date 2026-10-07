@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_template_form_view_rental" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.rental.tg.attributes</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale_renting.product_template_form_view_rental" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//div[@name='options']//field[@name='rent_ok']"
+                position="attributes"
+            >
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//div[@name='options']" position='inside'>
+                <span class="d-inline-flex">
+                    <field name="rent_via_period_ok" force_save="1" />
+                    <label for="rent_via_period_ok" />
+                </span>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_only_form_view" model="ir.ui.view">
+        <field name="name">product.template.product.form.tg.renting.attributes</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='attribute_line_ids']//field[@name='attribute_id']"
+                position="before"
+            >
+                <field name="attribute_domain" column_invisible="1" />
+            </xpath>
+            <xpath
+                expr="//field[@name='attribute_line_ids']//field[@name='attribute_id']"
+                position="attributes"
+            >
+                <attribute name="domain">attribute_domain</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
