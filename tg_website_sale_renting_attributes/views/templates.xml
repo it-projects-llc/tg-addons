@@ -19,6 +19,7 @@
                         <div
                             class="input-group date col-md-8 ps-0"
                             id="rentingDatesPeriod"
+                            t-att-data-deny-rent-this-product="deny_rent_this_product"
                         >
                             <input
                                 type="text"

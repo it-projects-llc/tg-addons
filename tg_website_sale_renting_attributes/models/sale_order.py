@@ -70,3 +70,11 @@ class SaleOrder(models.Model):
             return res
 
         return not any(self.mapped("order_line.product_id.rent_via_period_ok"))
+
+    def _can_rent_this_product(self, product):
+        if product.rent_via_period_ok and any(
+            self.mapped("order_line.product_id.rent_ok")
+        ):
+            return False
+
+        return super()._can_rent_this_product(product)
