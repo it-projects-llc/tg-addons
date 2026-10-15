@@ -24,7 +24,7 @@
         <xpath expr="//div[@id='rentingDates']/../.." position="attributes">
             <attribute
                 name="t-if"
-            >website_sale_order.has_rented_products and len(allowed_renting_periods) == 1</attribute>
+            >website_sale_order._show_renting_dates_on_cart()</attribute>
         </xpath>
         <xpath expr="//div[@id='rentingDates']" position="attributes">
             <attribute

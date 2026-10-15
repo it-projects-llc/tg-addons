@@ -19,4 +19,5 @@
         "views/product_template_views.xml",
     ],
     "demo": [],
+    "post_load": "post_load",
 }

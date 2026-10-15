@@ -17,35 +17,7 @@ class SaleOrder(models.Model):
                 if not line.product_id.rent_via_period_ok:
                     continue
 
-                period_ptav = line.product_no_variant_attribute_value_ids.filtered(
-                    "is_period"
-                )
-                if not period_ptav:
-                    raise UserError(
-                        _(
-                            "Period attribute is not set for product %s",
-                            line.product_id.display_name,
-                        )
-                    )
-                elif len(period_ptav) > 1:
-                    raise UserError(
-                        _(
-                            "Too many period attributes for product %s",
-                            line.product_id.display_name,
-                        )
-                    )
-
-                start_date = period_ptav.start_date
-                if not start_date:
-                    raise UserError(
-                        _("Period attribute %s does not have start date", period_ptav)
-                    )
-
-                end_date = period_ptav.end_date
-                if not end_date:
-                    raise UserError(
-                        _("Period attribute %s does not have end date", period_ptav)
-                    )
+                start_date, end_date = line._detect_start_end_date()
 
                 if expected_start_date and expected_start_date != start_date:
                     raise UserError(
@@ -91,3 +63,10 @@ class SaleOrder(models.Model):
         if should_enforce:
             self._enforce_rental_dates()
         return res
+
+    def _show_renting_dates_on_cart(self):
+        res = super()._show_renting_dates_on_cart()
+        if not res:
+            return res
+
+        return not any(self.mapped("order_line.product_id.rent_via_period_ok"))

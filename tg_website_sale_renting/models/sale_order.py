@@ -61,3 +61,9 @@ class SaleOrder(models.Model):
             return True
         else:
             return False
+
+    def _show_renting_dates_on_cart(self):
+        self.ensure_one()
+        return (
+            self.has_rented_products and len(self._get_allowed_renting_periods()) == 1
+        )
