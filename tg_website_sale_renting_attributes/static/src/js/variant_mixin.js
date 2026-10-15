@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
-import {deserializeDateTime, formatDate} from "@web/core/l10n/dates";
 import {_t} from "@web/core/l10n/translation";
+import {deserializeDateTime, formatDate} from "@web/core/l10n/dates";
 import VariantMixin from "@website_sale/js/sale_variant_mixin";
 import publicWidget from "@web/legacy/js/public/public_widget";
 
