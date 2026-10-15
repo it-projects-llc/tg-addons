@@ -7,7 +7,7 @@ from odoo.addons.tg_website_sale_renting.models.product_template import make_pan
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    rent_via_period_ok = fields.Boolean("Can be rented via attributes")
+    rent_via_period_ok = fields.Boolean("Can be Rented via attributes")
 
     @api.onchange("rent_via_period_ok")
     def _onchange_rent_via_period_ok(self):

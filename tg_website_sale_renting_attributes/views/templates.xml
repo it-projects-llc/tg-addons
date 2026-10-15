@@ -40,6 +40,11 @@
                         </div>
                     </div>
                 </div>
+                <div
+                    class="alert alert-danger"
+                    id="not-allowed-to-rent-msg"
+                    style="display: none"
+                />
             </div>
         </xpath>
     </template>
