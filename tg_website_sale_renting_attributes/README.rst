@@ -18,6 +18,7 @@ Configuration
 
   - Attribute values: several attribute values that will be displayed to customer.
     It expected that human readable dates will be used.
+    It is also suggested to input default start/end dates, which will be used for initial start/end value of period attributes in product form.
 
 * Main menu -> Sales -> Products
 

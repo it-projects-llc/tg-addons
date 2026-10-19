@@ -6,11 +6,25 @@
         <field name="inherit_id" ref="product.product_attribute_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='create_variant']" position="after">
-
                 <field
                     name="is_period"
                     readonly="number_related_products != 0"
                     invisible="create_variant != 'no_variant'"
+                />
+            </xpath>
+            <xpath
+                expr="//field[@name='value_ids']//field[@name='default_extra_price']"
+                position="before"
+            >
+                <field
+                    name="default_start_date"
+                    column_invisible="not parent.is_period"
+                    required="parent.is_period"
+                />
+                <field
+                    name="default_end_date"
+                    column_invisible="not parent.is_period"
+                    required="parent.is_period"
                 />
             </xpath>
         </field>

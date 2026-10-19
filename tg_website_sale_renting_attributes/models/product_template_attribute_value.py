@@ -6,9 +6,24 @@ class ProductTemplateAttributeValue(models.Model):
     _inherit = "product.template.attribute.value"
 
     is_period = fields.Boolean(related="attribute_id.is_period")
+    start_date = fields.Date(compute="_compute_start_date", store=True, readonly=False)
+    end_date = fields.Date(compute="_compute_end_date", store=True, readonly=False)
 
-    start_date = fields.Date()
-    end_date = fields.Date()
+    @api.depends(
+        "attribute_id.is_period", "product_attribute_value_id.default_start_date"
+    )
+    def _compute_start_date(self):
+        for record in self:
+            if record.attribute_id.is_period and not record.start_date:
+                record.start_date = record.product_attribute_value_id.default_start_date
+
+    @api.depends(
+        "attribute_id.is_period", "product_attribute_value_id.default_end_date"
+    )
+    def _compute_end_date(self):
+        for record in self:
+            if record.attribute_id.is_period and not record.end_date:
+                record.end_date = record.product_attribute_value_id.default_end_date
 
     @api.constrains("start_date", "end_date")
     def _check_period(self):
