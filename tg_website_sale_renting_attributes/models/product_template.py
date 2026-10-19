@@ -27,10 +27,13 @@ class ProductTemplate(models.Model):
                     _("Product cannot be rented with and without attributes")
                 )
 
-    @api.constrains("rent_ok", "rent_via_period_ok")
+    @api.constrains(
+        "rent_via_period_ok",
+        "attribute_line_ids.attribute_line_ids.attribute_id.is_period",
+    )
     def _check_rent_attributes(self):
         for record in self:
-            if record.rent_ok and not record.rent_via_period_ok:
+            if not record.rent_via_period_ok:
                 period_attibutes = record.attribute_line_ids.mapped(
                     "attribute_id"
                 ).filtered("is_period")

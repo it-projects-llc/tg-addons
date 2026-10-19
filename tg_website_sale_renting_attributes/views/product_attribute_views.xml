@@ -35,4 +35,25 @@
             </xpath>
         </field>
     </record>
+
+    <record id="product_template_attribute_value_view_tree" model="ir.ui.view">
+        <field name="name">product.template.attribute.value.view.tree.tg</field>
+        <field name="model">product.template.attribute.value</field>
+        <field
+            name="inherit_id"
+            ref="product.product_template_attribute_value_view_tree"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='price_extra']" position="before">
+                <field
+                    name="start_date"
+                    column_invisible="not context.get('show_period_start_end')"
+                />
+                <field
+                    name="end_date"
+                    column_invisible="not context.get('show_period_start_end')"
+                />
+            </xpath>
+        </field>
+    </record>
 </odoo>

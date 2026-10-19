@@ -10,10 +10,15 @@
                 position="attributes"
             >
                 <attribute name="force_save">1</attribute>
+                <attribute name="readonly">rent_via_period_ok</attribute>
             </xpath>
             <xpath expr="//div[@name='options']" position='inside'>
                 <span class="d-inline-flex">
-                    <field name="rent_via_period_ok" force_save="1" />
+                    <field
+                        name="rent_via_period_ok"
+                        readonly="rent_ok"
+                        force_save="1"
+                    />
                     <label for="rent_via_period_ok" />
                 </span>
             </xpath>
