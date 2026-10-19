@@ -18,6 +18,8 @@ class TestMain(SaleCommon):
                         0,
                         {
                             "name": "1-10",
+                            "default_start_date": date(2026, 9, 1),
+                            "default_end_date": date(2026, 9, 10),
                         },
                     ),
                     (
@@ -25,6 +27,8 @@ class TestMain(SaleCommon):
                         0,
                         {
                             "name": "11-20",
+                            "default_start_date": date(2026, 9, 11),
+                            "default_end_date": date(2026, 9, 20),
                         },
                     ),
                     (
@@ -32,6 +36,8 @@ class TestMain(SaleCommon):
                         0,
                         {
                             "name": "21-30",
+                            "default_start_date": date(2026, 9, 21),
+                            "default_end_date": date(2026, 9, 30),
                         },
                     ),
                 ],
@@ -75,22 +81,16 @@ class TestMain(SaleCommon):
 
         cls.ptav1.write(
             {
-                "start_date": date(2026, 9, 1),
-                "end_date": date(2026, 9, 10),
                 "price_extra": 10,
             }
         )
         cls.ptav2.write(
             {
-                "start_date": date(2026, 9, 11),
-                "end_date": date(2026, 9, 20),
                 "price_extra": 20,
             }
         )
         cls.ptav3.write(
             {
-                "start_date": date(2026, 9, 21),
-                "end_date": date(2026, 9, 30),
                 "price_extra": 30,
             }
         )
