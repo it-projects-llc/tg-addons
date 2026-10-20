@@ -39,6 +39,13 @@ class ProductTemplate(models.Model):
                         "that is marked as can be rented via attributes"
                     )
                 )
+            elif record.rent_via_period_ok and len(period_attributes) > 1:
+                raise ValidationError(
+                    _(
+                        "Only one period attribute can be used in product, "
+                        "that is marked as can be rented via attributes"
+                    )
+                )
             elif not record.rent_via_period_ok and period_attributes:
                 raise ValidationError(
                     _(
