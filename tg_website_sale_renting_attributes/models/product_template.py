@@ -27,23 +27,25 @@ class ProductTemplate(models.Model):
                     _("Product cannot be rented with and without attributes")
                 )
 
-    @api.constrains(
-        "rent_via_period_ok",
-        "attribute_line_ids.attribute_id.is_period",
-    )
     def _check_rent_attributes(self):
         for record in self:
-            if not record.rent_via_period_ok:
-                period_attibutes = record.attribute_line_ids.mapped(
-                    "attribute_id"
-                ).filtered("is_period")
-                if period_attibutes:
-                    raise ValidationError(
-                        _(
-                            "Cannot use period attributes, "
-                            "if product is not marked as can be rented via attributes"
-                        )
+            period_attributes = record.attribute_line_ids.mapped(
+                "attribute_id"
+            ).filtered("is_period")
+            if record.rent_via_period_ok and not period_attributes:
+                raise ValidationError(
+                    _(
+                        "No period attributes given for product, "
+                        "that is marked as can be rented via attributes"
                     )
+                )
+            elif not record.rent_via_period_ok and period_attributes:
+                raise ValidationError(
+                    _(
+                        "Cannot use period attributes, "
+                        "if product is not marked as can be rented via attributes"
+                    )
+                )
 
     def _get_product_price_context(self, combination):
         res = super()._get_product_price_context(combination)
@@ -73,4 +75,15 @@ class ProductTemplate(models.Model):
             end_date=make_panana_dt(product_or_template.env.context["end_date"]),
         )
 
+        return res
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        records._check_rent_attributes()
+        return records
+
+    def write(self, vals):
+        res = super().write(vals)
+        self._check_rent_attributes()
         return res
