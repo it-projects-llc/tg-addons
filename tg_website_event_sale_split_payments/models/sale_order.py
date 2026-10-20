@@ -10,6 +10,22 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     auto_confirm_invoices_for_plan = fields.Boolean()
+    show_prepare_first_plan_invoice = fields.Boolean(
+        compute="_compute_show_prepare_first_plan_invoice"
+    )
+
+    def _compute_show_prepare_first_plan_invoice(self):
+        for record in self:
+            if not record.use_invoice_plan:
+                record.show_prepare_first_plan_invoice = False
+
+            elif not record.invoice_plan_ids:
+                record.show_prepare_first_plan_invoice = False
+
+            else:
+                record.show_prepare_first_plan_invoice = not record.invoice_plan_ids[
+                    0
+                ].invoice_move_ids
 
     def _get_max_installments(self, interval, interval_type):
         max_installment_date = self._get_max_installment_date()
@@ -66,6 +82,12 @@ class SaleOrder(models.Model):
             },
         }
 
+    def prepare_first_plan_payment(self):
+        self.check_access_rights("write")
+        self.check_access_rule("write")
+        self.action_quotation_sent()
+        self._prepare_first_plan_payment()
+
     def _prepare_first_plan_payment(self):
         for plan in self.invoice_plan_ids:
             if not plan.invoice_move_ids:
@@ -115,6 +137,23 @@ class SaleOrder(models.Model):
 
         return invoice
 
+    def _is_amount_total_lt_min_deposit_abs(self):
+        amount_total = self.amount_total
+        min_deposit_abs = self.company_id.invoice_plan_min_deposit_abs
+
+        return amount_total < min_deposit_abs
+
+    def _calculate_min_max_deposit(self):
+        c = self.company_id
+
+        min_deposit_abs = c.invoice_plan_min_deposit_abs
+        min_deposit_ratio = c.invoice_plan_min_deposit_percent / 100
+        max_deposit_ratio = c.invoice_plan_max_deposit_percent / 100
+        min_deposit = int(max(min_deposit_ratio * self.amount_total, min_deposit_abs))
+        max_deposit = int(max_deposit_ratio * self.amount_total)
+
+        return min_deposit, max_deposit
+
     def _generate_invoice_plan_for_event(
         self,
         deposit,
@@ -124,10 +163,9 @@ class SaleOrder(models.Model):
         if not self.amount_total:
             raise UserError(_("No need to create plan for zero price quotation"))
 
-        company = self.company_id
+        if self._is_amount_total_lt_min_deposit_abs():
+            min_deposit_abs = self.company_id.invoice_plan_min_deposit_abs
 
-        min_deposit_abs = company.invoice_plan_min_deposit_abs
-        if self.amount_total < min_deposit_abs:
             raise UserError(
                 _(
                     "Payment splitting not allowed. "
@@ -143,10 +181,7 @@ class SaleOrder(models.Model):
                 )
             )
 
-        min_deposit_ratio = company.invoice_plan_min_deposit_percent / 100
-        max_deposit_ratio = company.invoice_plan_max_deposit_percent / 100
-        min_deposit = int(max(min_deposit_ratio * self.amount_total, min_deposit_abs))
-        max_deposit = int(max_deposit_ratio * self.amount_total)
+        min_deposit, max_deposit = self._calculate_min_max_deposit()
 
         if deposit < min_deposit:
             raise UserError(
@@ -252,3 +287,23 @@ class SaleOrder(models.Model):
             res[account] += qty
 
         return res
+
+    def action_confirm(self):
+        if self.env.context.get("validate_analytic"):
+            orders_to_check = self
+        else:
+            orders_to_check = self.browse()
+
+        for order in orders_to_check:
+            if not order.use_invoice_plan:
+                continue
+
+            move = order.invoice_plan_ids[0].invoice_move_ids
+
+            if move.payment_state not in ("in_payment", "paid"):
+                raise UserError(
+                    _(
+                        "For split payments you should mark the first invoice as paid to confirm the order"  # noqa: E501
+                    )
+                )
+        return super().action_confirm()

@@ -19,6 +19,7 @@ class SaleOrder(models.Model):
     use_invoice_plan = fields.Boolean(
         default=False,
         copy=False,
+        readonly=True,
     )
     invoice_plan_process = fields.Boolean(
         string="Invoice Plan In Process",

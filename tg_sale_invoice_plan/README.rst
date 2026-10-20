@@ -14,6 +14,10 @@ Some changes:
 
 * Changed acceess rights
 
+* "Use invoice plan" fields is readonly
+
+* Removed "Create/Remove invoice plan" buttons
+
 Description
 -----------
 
