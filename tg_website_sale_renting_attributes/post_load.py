@@ -1,5 +1,8 @@
 def post_load():
     from odoo.addons.sale_renting.models.sale_order_line import SaleOrderLine
+    from odoo.addons.tg_website_sale_renting.models.product_template import (
+        make_panana_dt,
+    )
 
     def _get_sale_order_line_multiline_description_sale(self):
         res = super(SaleOrderLine, self)._get_sale_order_line_multiline_description_sale()
@@ -8,8 +11,8 @@ def post_load():
             if self.product_id.rent_via_period_ok:
                 start_date, end_date = self._detect_start_end_date()
                 self.order_id.write({
-                    "rental_start_date": start_date,
-                    "rental_return_date": end_date,
+                    "rental_start_date": make_panana_dt(start_date),
+                    "rental_return_date": make_panana_dt(end_date),
                 })
             else:
                 self.order_id._rental_set_dates()
