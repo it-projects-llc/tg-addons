@@ -29,7 +29,7 @@ class ProductTemplate(models.Model):
 
     @api.constrains(
         "rent_via_period_ok",
-        "attribute_line_ids.attribute_line_ids.attribute_id.is_period",
+        "attribute_line_ids.attribute_id.is_period",
     )
     def _check_rent_attributes(self):
         for record in self:
