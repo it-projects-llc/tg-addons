@@ -1,6 +1,8 @@
 from odoo import _, api, models
 from odoo.exceptions import UserError
 
+from odoo.addons.tg_website_sale_renting.models.product_template import make_panana_dt
+
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
@@ -35,7 +37,7 @@ class SaleOrder(models.Model):
                             expected_end_date=expected_end_date,
                             description_from_expected=line_with_expected.display_name,
                             given_end_date=end_date,
-                            description_from_given=line.display_name,
+                            description_from_givem=line.display_name,
                         )
                     )
 
@@ -44,8 +46,8 @@ class SaleOrder(models.Model):
                 line_with_expected = line
 
             if line_with_expected:
-                record.rental_start_date = expected_start_date
-                record.rental_return_date = expected_end_date
+                record.rental_start_date = make_panana_dt(expected_start_date)
+                record.rental_return_date = make_panana_dt(expected_end_date)
 
     @api.model_create_multi
     def create(self, vals_list):
