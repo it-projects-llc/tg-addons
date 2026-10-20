@@ -1,6 +1,8 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
+from odoo.addons.tg_website_sale_renting.models.product_template import make_panana_dt
+
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
@@ -52,4 +54,4 @@ class SaleOrderLine(models.Model):
                 _("Period attribute %s does not have end date", period_ptav)
             )
 
-        return start_date, end_date
+        return make_panana_dt(start_date), make_panana_dt(end_date)
