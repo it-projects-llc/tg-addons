@@ -5,6 +5,8 @@
 * Quick friday fix to make reports work without depending on current website.
   See https://it-projects.info/web#id=3634&cids=1&menu_id=81&model=project.task&view_type=form
 
+* Datetime fields are shown with browser detected timezone
+
 Credits
 =======
 
