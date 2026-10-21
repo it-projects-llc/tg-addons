@@ -83,6 +83,8 @@ class SaleOrder(models.Model):
         }
 
     def prepare_first_plan_payment(self):
+        if self.state != "draft":
+            raise UserError(_("This action is for draft sale orders"))
         self.check_access_rights("write")
         self.check_access_rule("write")
         self.action_quotation_sent()
