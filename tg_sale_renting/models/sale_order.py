@@ -16,7 +16,12 @@ class SaleOrder(models.Model):
         store=True,
     )
 
-    @api.depends("is_rental_order", "order_line.invoice_lines.move_id.amount_residual")
+    @api.depends(
+        "is_rental_order",
+        "amount_total",
+        "currency_id",
+        "order_line.invoice_lines.move_id.amount_residual",
+    )
     def _compute_payment_status(self):
         for order in self:
             if not order.is_rental_order:
@@ -40,13 +45,21 @@ class SaleOrder(models.Model):
             amounts = []
             for payment in payments:
                 amounts.append(
-                    payment.currency_id._convert(payment.amount, order.currency_id)
+                    payment.currency_id._convert(
+                        payment.amount,
+                        order.currency_id,
+                        order.company_id,
+                        payment.date,
+                    )
                 )
 
-            if sum(amounts) == 0:
+            amount_paid = sum(amounts)
+            if order.currency_id.is_zero(amount_paid):
                 order.payment_status = "not_paid"
 
-            elif sum(amounts) < order.amount_total:
+            elif (
+                order.currency_id.compare_amounts(amount_paid, order.amount_total) == -1
+            ):
                 order.payment_status = "partial"
 
             else:
