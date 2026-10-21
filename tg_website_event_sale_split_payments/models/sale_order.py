@@ -91,6 +91,7 @@ class SaleOrder(models.Model):
         self.sudo()._prepare_first_plan_payment()
 
     def _prepare_first_plan_payment(self):
+        self = self.with_company(self.company_id)
         for plan in self.invoice_plan_ids:
             if not plan.invoice_move_ids:
                 is_first_plan = plan == self.invoice_plan_ids[0]
