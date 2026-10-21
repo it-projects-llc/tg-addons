@@ -25,21 +25,6 @@ By standard feature, user can gradually create partial invoices, one by
 one. This module add ability to create invoices based on the predefined
 invoice plan, either all at once, or one by one.
 
-Usage
------
-
-- Create new sales quotation as per normal process
-- Select option "Use Invoice Plan", a new Invoice Plan tab will appear
-- Click on "=\> Create Invoice Plan" link to open invoice planning
-  wizard
-- Do plan for number of installment and/or advance, start date and
-  interval
-- Double check that each advance/installment has correct plan percentage
-- After confirm sales order, now we have new option to "Create Invoice
-  by Plan"
-- User can create only next invoice, or create all the rest invoices at
-  the same time
-
 Credits
 =======
 
