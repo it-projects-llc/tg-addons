@@ -86,7 +86,7 @@ class SaleOrder(models.Model):
         self.check_access_rights("write")
         self.check_access_rule("write")
         self.action_quotation_sent()
-        self._prepare_first_plan_payment()
+        self.sudo()._prepare_first_plan_payment()
 
     def _prepare_first_plan_payment(self):
         for plan in self.invoice_plan_ids:
