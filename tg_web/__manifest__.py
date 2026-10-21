@@ -10,7 +10,7 @@
     ],
     "assets": {
         "web.assets_backend": [
-            ("after", "web/static/src/core/**/*", "tg_web/static/src/views/**/*"),
+            ("after", "web/static/src/core/**/*", "tg_web/static/src/core/**/*"),
         ],
     },
     "data": [],
