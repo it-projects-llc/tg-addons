@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_attribute_view_form" model="ir.ui.view">
+        <field name="name">product.attribute.form.tg</field>
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.product_attribute_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='create_variant']" position="after">
+                <field
+                    name="is_period"
+                    readonly="number_related_products != 0"
+                    invisible="create_variant != 'no_variant'"
+                />
+            </xpath>
+            <xpath
+                expr="//field[@name='value_ids']//field[@name='default_extra_price']"
+                position="before"
+            >
+                <field
+                    name="default_start_date"
+                    column_invisible="not parent.is_period"
+                    required="parent.is_period"
+                />
+                <field
+                    name="default_end_date"
+                    column_invisible="not parent.is_period"
+                    required="parent.is_period"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_attribute_value_view_form" model="ir.ui.view">
+        <field name="name">product.template.attribute.value.form.tg</field>
+        <field name="model">product.template.attribute.value</field>
+        <field
+            name="inherit_id"
+            ref="product.product_template_attribute_value_view_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='price_extra']" position="before">
+                <field name="is_period" invisible="1" />
+                <field
+                    name="start_date"
+                    invisible="not is_period"
+                    required="is_period"
+                />
+                <field name="end_date" invisible="not is_period" required="is_period" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_attribute_value_view_tree" model="ir.ui.view">
+        <field name="name">product.template.attribute.value.view.tree.tg</field>
+        <field name="model">product.template.attribute.value</field>
+        <field
+            name="inherit_id"
+            ref="product.product_template_attribute_value_view_tree"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='price_extra']" position="before">
+                <field
+                    name="start_date"
+                    column_invisible="not context.get('show_period_start_end')"
+                />
+                <field
+                    name="end_date"
+                    column_invisible="not context.get('show_period_start_end')"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
