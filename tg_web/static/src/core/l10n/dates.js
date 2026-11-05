@@ -6,6 +6,8 @@ const originalFormatDateTime = dates.formatDateTime;
 
 dates.formatDateTime = function () {
     let res = originalFormatDateTime(...arguments);
-    res += " (" + Intl.DateTimeFormat().resolvedOptions().timeZone + ")";
+    if (res) {
+        res += " (" + Intl.DateTimeFormat().resolvedOptions().timeZone + ")";
+    }
     return res;
 };
