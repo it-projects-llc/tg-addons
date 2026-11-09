@@ -152,6 +152,33 @@ The payments should be done from invoice pages instead.
 
 .. image:: static/description/images/image10.png
 
+Usage in backend
+----------------
+
+- Open quotation form
+
+- Actions -> Split payments
+
+- Input values
+
+- Press "Split"
+
+- RESULT: in sale order "Prepare invoices" button will appear and invoice plan in generated in "Invoice plan" tab
+
+- Press "Prepare invoices"
+
+- RESULT: invoices for down payment will be created
+
+- Press "Confirm"
+
+- RESULT: quotation won't be confirmed. Message will appear: For split payments you should mark the first invoice as paid to confirm the order
+
+- Go to first posted invoice via "Invoices" smart button
+
+- Apply payment for this invoice
+
+- RESULT: related sale order is confirmed
+
 Credits
 =======
 

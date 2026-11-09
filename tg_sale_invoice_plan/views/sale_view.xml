@@ -59,13 +59,6 @@
             </xpath>
             <xpath expr="//button[@name='payment_action_capture']" position="before">
                 <field name="invoice_plan_process" invisible="1" />
-                <button
-                    name="%(action_view_sale_make_planned_invoice)d"
-                    string="Create Invoice by Plan"
-                    type="action"
-                    class="btn-primary"
-                    invisible="not invoice_plan_process"
-                />
             </xpath>
             <xpath
                 expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][1]"
@@ -85,21 +78,6 @@
             </xpath>
             <xpath expr="/form/sheet/notebook/page" position="after">
                 <page string="Invoice Plan" invisible="not use_invoice_plan">
-                    <button
-                        name="%(action_sale_create_invoice_plan)d"
-                        string="⇒ Create Invoice Plan"
-                        type="action"
-                        class="oe_link"
-                        invisible="invoice_plan_ids or invoice_count > 0"
-                    />
-                    <button
-                        name="remove_invoice_plan"
-                        string="⇒ Remove Invoice Plan"
-                        type="object"
-                        class="oe_link"
-                        invisible="not invoice_plan_ids or invoice_count > 0"
-                        confirm="Are you sure to remove this invoice plan?"
-                    />
                     <field
                         name="invoice_plan_ids"
                         context="{'tree_view_ref': 'sale_invoice_plan.view_sale_invoice_plan_tree'}"

@@ -19,32 +19,19 @@ class WebsiteSaleSplitPaymentController(WebsiteSale):
         if not website_sale_order or website_sale_order._is_public_order():
             return resp
 
-        amount_total = website_sale_order.amount_total
-        min_deposit_abs = website_sale_order.company_id.invoice_plan_min_deposit_abs
-
-        if amount_total < min_deposit_abs:
+        if website_sale_order._is_amount_total_lt_min_deposit_abs():
             return resp
 
         split_payment_periods = website_sale_order._get_allowed_split_payment_periods()
         if not split_payment_periods:
             return resp
 
-        min_deposit_percent = (
-            website_sale_order.company_id.invoice_plan_min_deposit_percent
-        )
-        max_deposit_percent = (
-            website_sale_order.company_id.invoice_plan_max_deposit_percent
-        )
+        min_deposit, max_deposit = website_sale_order._calculate_min_max_deposit()
 
         resp.qcontext.update(
             show_split_order=True,
-            min_deposit=int(
-                max(
-                    min_deposit_percent * amount_total / 100,
-                    min_deposit_abs,
-                )
-            ),
-            max_deposit=int(max_deposit_percent * amount_total / 100),
+            min_deposit=min_deposit,
+            max_deposit=max_deposit,
             max_installments_data=json.dumps(
                 {k: v["max_installments"] for k, v in split_payment_periods.items()}
             ),
