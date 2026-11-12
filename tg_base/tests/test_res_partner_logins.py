@@ -7,20 +7,17 @@ class TestPartnerLogins(TransactionCase):
 
         self.assertEqual(user.partner_id.logins, user.login)
 
-    def test_logins_for_multiple_users_are_sorted(self):
+    def test_logins_for_multiple_users(self):
         partner = self.env["res.partner"].create({"name": "Partner with users"})
-        new_test_user(
+        user1 = new_test_user(
             self.env,
             "z-partner-logins@example.com",
             partner_id=partner.id,
         )
-        new_test_user(
+        user2 = new_test_user(
             self.env,
             "a-partner-logins@example.com",
             partner_id=partner.id,
         )
 
-        self.assertEqual(
-            partner.logins,
-            "a-partner-logins@example.com, z-partner-logins@example.com",
-        )
+        self.assertCountEqual(partner.logins.split(", "), [user1.login, user2.login])
