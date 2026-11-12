@@ -84,3 +84,6 @@ docs/_build/
 !static/lib/
 
 *.mrbob.ini
+
+.agents/
+.codex/

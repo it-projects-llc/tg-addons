@@ -9,4 +9,4 @@ class Partner(models.Model):
     @api.depends("user_ids.login")
     def _compute_logins(self):
         for partner in self:
-            partner.logins = ", ".join(partner.mapped("user_ids.login"))
+            partner.logins = ", ".join(sorted(partner.mapped("user_ids.login")))
