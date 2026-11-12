@@ -27,6 +27,61 @@ class TestPartnerEmailCheck(Base):
             {"name": "alsotest", "email": "mail@testignore.com"}
         )
 
+    def _signup_user(self, email):
+        return self.env["res.users"]._signup_create_user(
+            {"name": email, "login": email}
+        )
+
+    def test_signup_links_user_to_contact_by_email(self):
+        self.disallow_duplicates()
+        email = "signup-contact@example.com"
+        contact = self.env["res.partner"].create(
+            {"name": "Signup contact", "email": email, "type": "contact"}
+        )
+
+        user = self._signup_user(email)
+
+        self.assertEqual(user.partner_id, contact)
+
+    def test_signup_links_user_to_contact_by_normalized_email(self):
+        self.disallow_duplicates()
+        contact = self.env["res.partner"].create(
+            {
+                "name": "Normalized signup contact",
+                "email": "example@acme.com",
+                "type": "contact",
+            }
+        )
+
+        user = self._signup_user("EXAMPLE@ACME.COM")
+
+        self.assertEqual(user.partner_id, contact)
+
+    def test_signup_prefers_contact_over_invoice_address(self):
+        self.disallow_duplicates()
+        email = "signup-contact-invoice@example.com"
+        contact = self.env["res.partner"].create(
+            {"name": "Signup contact", "email": email, "type": "contact"}
+        )
+        self.env["res.partner"].create(
+            {"name": "Signup invoice address", "email": email, "type": "invoice"}
+        )
+
+        user = self._signup_user(email)
+
+        self.assertEqual(user.partner_id, contact)
+
+    def test_signup_does_not_link_user_to_invoice_address(self):
+        self.disallow_duplicates()
+        email = "signup-invoice@example.com"
+        invoice_address = self.env["res.partner"].create(
+            {"name": "Signup invoice address", "email": email, "type": "invoice"}
+        )
+
+        user = self._signup_user(email)
+
+        self.assertNotEqual(user.partner_id, invoice_address)
+
     # ------------------
     # following methods were copied from original partner_email_check
     # assertRaises param are replaced from UserError to SignupError
