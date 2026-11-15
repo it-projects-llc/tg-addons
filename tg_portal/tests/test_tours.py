@@ -12,3 +12,17 @@ class TestPortalPassportTour(HttpCaseWithUserPortal):
         self.assertEqual(partner.passport, "PassportTest")
         self.assertEqual(partner.cedula, "CedulaTest")
         self.assertTrue(partner.has_cedula)
+
+    def test_portal_account_required_fields_without_cedula(self):
+        self.start_tour(
+            "/my",
+            "tg_portal.portal_account_required_without_cedula",
+            login="portal",
+        )
+
+    def test_portal_account_required_fields_with_cedula(self):
+        self.start_tour(
+            "/my",
+            "tg_portal.portal_account_required_with_cedula",
+            login="portal",
+        )
