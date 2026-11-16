@@ -34,11 +34,11 @@ Allows to proceed any TIN/RUC numbers as soon as they start with 'RUC'
 Usage
 =====
 
--  Open any Partner Form
--  Click ``[Edit]``
--  Update **VAT** field with any string starts with 'RUC'
--  Click ``[Save]``
--  Result: **VAT** Number is saved
+- Open any Partner Form
+- Click ``[Edit]``
+- Update **VAT** field with any string starts with 'RUC'
+- Click ``[Save]``
+- Result: **VAT** Number is saved
 
 Bug Tracker
 ===========
@@ -61,9 +61,9 @@ Authors
 Contributors
 ------------
 
--  Alexandr Kolushov (https://github.com/KolushovAlexandr)
--  Victor Bykov (https://github.com/BykovVik)
--  Eugene Molotov (https://github.com/em230418)
+- Alexandr Kolushov (https://github.com/KolushovAlexandr)
+- Victor Bykov (https://github.com/BykovVik)
+- Eugene Molotov (https://github.com/em230418)
 
 Maintainers
 -----------
