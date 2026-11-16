@@ -88,7 +88,9 @@ function portalAccountSteps({hasCedula}) {
                     throw new Error("Identification fields are not initially empty");
                 }
                 if (!cedula.classList.contains("invisible")) {
-                    throw new Error("Cedula is visible while its checkbox is unchecked");
+                    throw new Error(
+                        "Cedula is visible while its checkbox is unchecked"
+                    );
                 }
             },
         },
@@ -100,7 +102,9 @@ function portalAccountSteps({hasCedula}) {
                 content: "Check 'I have Cedula'",
                 trigger: 'input[name="has_cedula"]',
                 run: () => {
-                    $('input[name="has_cedula"]').prop("checked", true).trigger("change");
+                    $('input[name="has_cedula"]')
+                        .prop("checked", true)
+                        .trigger("change");
                 },
             },
             {
@@ -118,18 +122,17 @@ function portalAccountSteps({hasCedula}) {
             run: "click",
             extra_trigger: "form[action='/my/account']",
         },
-        ...(
-            hasCedula
-                ? [
-                      ["cedula", "Cedula"],
-                      ["birthdate_date", "Date of Birth"],
-                      ["nationality_id", "Country of Citizenship"],
-                  ]
-                : [
-                      ["passport", "Passport"],
-                      ["birthdate_date", "Date of Birth"],
-                      ["nationality_id", "Country of Citizenship"],
-                  ]
+        ...(hasCedula
+            ? [
+                  ["cedula", "Cedula"],
+                  ["birthdate_date", "Date of Birth"],
+                  ["nationality_id", "Country of Citizenship"],
+              ]
+            : [
+                  ["passport", "Passport"],
+                  ["birthdate_date", "Date of Birth"],
+                  ["nationality_id", "Country of Citizenship"],
+              ]
         ).map(([field, label]) => ({
             content: `Ensure ${label} is highlighted as required`,
             trigger: `form[action='/my/account'] [name="${field}"].is-invalid`,
@@ -140,14 +143,18 @@ function portalAccountSteps({hasCedula}) {
     return steps;
 }
 
-registry.category("web_tour.tours").add("tg_portal.portal_account_required_without_cedula", {
-    test: true,
-    url: "/my",
-    steps: () => portalAccountSteps({hasCedula: false}),
-});
+registry
+    .category("web_tour.tours")
+    .add("tg_portal.portal_account_required_without_cedula", {
+        test: true,
+        url: "/my",
+        steps: () => portalAccountSteps({hasCedula: false}),
+    });
 
-registry.category("web_tour.tours").add("tg_portal.portal_account_required_with_cedula", {
-    test: true,
-    url: "/my",
-    steps: () => portalAccountSteps({hasCedula: true}),
-});
+registry
+    .category("web_tour.tours")
+    .add("tg_portal.portal_account_required_with_cedula", {
+        test: true,
+        url: "/my",
+        steps: () => portalAccountSteps({hasCedula: true}),
+    });

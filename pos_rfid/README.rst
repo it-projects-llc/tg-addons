@@ -45,29 +45,29 @@ E.g. ``9cc29d808 >> 042080000008``
 Configuration
 =============
 
--  Open "Point of Sale" app
--  Open "Configutration" -> "Settings"
--  Choose POS
--  Enable "HEX Barcode" option
+- Open "Point of Sale" app
+- Open "Configutration" -> "Settings"
+- Choose POS
+- Enable "HEX Barcode" option
 
 Usage
 =====
 
--  Open POS
--  Scan RFID
--  RESULT: POS reacts in the same way as if RFID was scanned via normal
-   RFID reader
+- Open POS
+- Scan RFID
+- RESULT: POS reacts in the same way as if RFID was scanned via normal
+  RFID reader
 
 NFC scanning
 ------------
 
--  Make sure, NFC is available in your client device
--  Open POS
--  RESULT: You will see red NFC icon near avatar
--  Click on red NFC icon, enable NFC in your browser
--  RESULT: NFC icon is green
--  Put NFC-card under client device
--  RESULT: NFC is scanned as barcode
+- Make sure, NFC is available in your client device
+- Open POS
+- RESULT: You will see red NFC icon near avatar
+- Click on red NFC icon, enable NFC in your browser
+- RESULT: NFC icon is green
+- Put NFC-card under client device
+- RESULT: NFC is scanned as barcode
 
 Bug Tracker
 ===========
@@ -90,10 +90,10 @@ Authors
 Contributors
 ------------
 
--  Ivan Yelizariev (https://github.com/yelizariev)
--  Alexandr Kolusov (https://github.com/KolushovAlexandr)
--  Artem Rafailov (https://github.com/Ommo73)
--  Eugene Molotov (https://github.com/em230418)
+- Ivan Yelizariev (https://github.com/yelizariev)
+- Alexandr Kolusov (https://github.com/KolushovAlexandr)
+- Artem Rafailov (https://github.com/Ommo73)
+- Eugene Molotov (https://github.com/em230418)
 
 Maintainers
 -----------
