@@ -33,7 +33,12 @@ class EventGuest(models.Model):
         index=True, required=True, default=lambda self: self._default_code()
     )
 
-    invite_url = fields.Char("Invite URL", compute="_compute_invite_url", store=True)
+    invite_url = fields.Char(
+        "Invite URL",
+        compute="_compute_invite_url",
+        store=True,
+        groups="base.group_user",
+    )
 
     invited_by = fields.Many2one("res.partner", readonly=True)
     guest_of = fields.Many2one("res.partner")
