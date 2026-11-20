@@ -33,10 +33,10 @@ class EventGuest(models.Model):
         index=True, required=True, default=lambda self: self._default_code()
     )
 
-    invite_url = fields.Char("Invite URL", compute="_compute_invite_url", store=False)
+    invite_url = fields.Char("Invite URL", compute="_compute_invite_url", store=True)
+
     invited_by = fields.Many2one("res.partner", readonly=True)
     guest_of = fields.Many2one("res.partner")
-
     result_partner = fields.Many2one(
         "res.partner", string="Related partner", readonly=True
     )
@@ -82,8 +82,14 @@ class EventGuest(models.Model):
     def _compute_invite_url(self):
         for guest in self:
             if guest.event:
-                if guest.guest_partner:
+                partner = guest.guest_partner
+
+                if partner.user_ids:
                     path = "/my/account"
+                elif partner:
+                    path = partner.with_context(
+                        signup_valid=True, create_user=True
+                    )._get_signup_url_for_action(url="/my/account")[partner.id]  # noqa: B950 E501
                 else:
                     path = f"/web/signup?guest_register_code={guest.code}&redirect=%2Fmy%2Faccount"  # noqa: B950 E501
 
