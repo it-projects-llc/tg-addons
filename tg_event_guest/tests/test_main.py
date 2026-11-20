@@ -43,7 +43,7 @@ class TestMain(TransactionCase):
             }
         )
 
-    def t1est_signup_01(self):
+    def test_signup_01(self):
         Users = self.Users
         event = self.event
 
