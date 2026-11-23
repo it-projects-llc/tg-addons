@@ -1,6 +1,6 @@
 {
     "name": """Event guests""",
-    "version": "17.0.0.2.0",
+    "version": "17.0.0.2.1",
     "author": "IT-Projects LLC",
     "support": "it@it-projects.info",
     "website": "https://github.com/it-projects-llc/tg-addons",
